@@ -1,0 +1,21 @@
+Naming conventions:
+	XML: snake_case (e.g. layout_custom)	
+	Java: camelCase
+		class:     starting with capital letter (e.g. MyClass.class)
+		variable: no capital (e.g. myVariable)
+		consts : all caps, divided with underscores (e.g. NOTIFICATION_TITLE_KEY)
+
+
+
+	widgets: widget type at beginning of ID (e.g. for a Button btn_mybutton in xml, btnMybutton in java)
+		for shortname of widgets see list below
+
+
+Button: btn
+TextView: txt
+EditText: edt
+FloatingActionButton: fbtn
+.
+.
+.
+		
