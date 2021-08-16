@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Personal Agent</string>
+    <string name="morning_notification_title">Guten morgen!</string>
+    <string name="evening_notification_title">Heute alles erldigt?</string>
+    <string name="morning_notification_text">Schau dir an was du heute zu tun hast</string>
+    <string name="evening_notification_text">Nicht vergessen deine Aufgaben abzuhaken</string>
 </resources>
