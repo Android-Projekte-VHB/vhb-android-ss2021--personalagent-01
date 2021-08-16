@@ -1,4 +1,4 @@
-package com.ristudios.personalagent.utils;
+package com.ristudios.personalagent.utils.notifications;
 
 
 import android.app.Notification;
@@ -23,6 +23,9 @@ public class NotificationHelper {
     public static final boolean AUTOCANCEL = true;
     public static final boolean NO_AUTOCANCEL = false;
     public static final String MAIN_NOTIFICATION_CHANNEL_ID = "allNotifications";
+
+    public static final int MORNING_NOTIFICATION_ID = 1;
+    public static final int EVENING_NOTIFICATION_ID = 2;
 
 
     public NotificationHelper(Context context) {
@@ -81,7 +84,8 @@ public class NotificationHelper {
 
     /**
      * Creates a new NotificationChannel. This is needed on Android Oreo (SDK VERSION 26) or higher
-     * in order to display notifications
+     * in order to display notifications.
+     * Code snippets taken from <a href="https://developer.android.com/training/notify-user/build-notification">https://developer.android.com/training/notify-user/build-notification</a>
      * @param context applicationContext
      * @param name name of the channel
      * @param description description of the channel
