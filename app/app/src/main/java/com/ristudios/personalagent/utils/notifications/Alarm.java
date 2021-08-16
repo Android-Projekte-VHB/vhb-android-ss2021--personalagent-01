@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.ristudios.personalagent.MainActivity;
 import com.ristudios.personalagent.R;
 
 import java.lang.annotation.ElementType;
@@ -17,11 +18,18 @@ import java.lang.annotation.Target;
 
 public class Alarm extends BroadcastReceiver {
 
-    public static final String MORNING_ALARM = "com.ristudios.ALARM_MORNING_TRIGGERED";
-    public static final String EVENING_ALARM = "com.ristudios.ALARM_EVENING_TRIGGERED";
-    public static final int REQUEST_MORNING = 99;
-    public static final int REQUEST_EVENING = 199;
+    public static final String TYPE_MORNING_ALARM = "com.ristudios.ALARM_MORNING_TRIGGERED";
+    public static final String TYPE_EVENING_ALARM = "com.ristudios.ALARM_EVENING_TRIGGERED";
+    public static final int REQUEST_CODE_MORNING = 99;
+    public static final int REQUEST_CODE_EVENING = 199;
 
+    /**
+     * Create a new instance of the class Alarm.
+     */
+    public Alarm()
+    {
+
+    }
 
     /**
      * Shows a notification, the content of the Notification is based on the intent action.
@@ -31,17 +39,22 @@ public class Alarm extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         NotificationHelper notificationHelper = new NotificationHelper(context);
+        Intent sender = new Intent(context, MainActivity.class);
         Log.d("ALARM_KEY", "Alarm received");
-        if (intent.getAction().equals(Alarm.MORNING_ALARM)){
+        if (intent.getAction().equals(Alarm.TYPE_MORNING_ALARM)){
             Log.d("ALARM_KEY", "An Alarm for morning was triggered");
-            //TODO: replace hardcoded Strings with string resources
-            Notification notification = notificationHelper.createNotification("Good morning!", "Click here to see your todolist for today", R.drawable.ic_test_24dp, NotificationHelper.AUTOCANCEL, null);
+            String title = context.getResources().getString(R.string.morning_notification_title);
+            String message = context.getResources().getString(R.string.morning_notification_text);
+            PendingIntent pendingIntent = notificationHelper.createContentIntent(sender, NotificationHelper.NOTIFICATION_REQUEST_CODE_EVENING);
+            Notification notification = notificationHelper.createNotification(title, message, R.drawable.ic_test_24dp, NotificationHelper.AUTOCANCEL, pendingIntent);
             notificationHelper.showNotification(NotificationHelper.MORNING_NOTIFICATION_ID, notification);
         }
-        else if (intent.getAction().equals(Alarm.EVENING_ALARM)){
+        else if (intent.getAction().equals(Alarm.TYPE_EVENING_ALARM)){
             Log.d("ALARM_KEY", "An Alarm for evening was triggered");
-            //TODO: replace hardcoded Strings with string resources
-            Notification notification = notificationHelper.createNotification("Good evening!", "Already checked of everything from the list?", R.drawable.ic_test_24dp, NotificationHelper.AUTOCANCEL, null);
+            String title = context.getResources().getString(R.string.evening_notification_title);
+            String message = context.getResources().getString(R.string.evening_notification_text);
+            PendingIntent pendingIntent = notificationHelper.createContentIntent(sender, NotificationHelper.NOTIFICATION_REQUEST_CODE_EVENING);
+            Notification notification = notificationHelper.createNotification(title, message, R.drawable.ic_test_24dp, NotificationHelper.AUTOCANCEL, pendingIntent);
             notificationHelper.showNotification(NotificationHelper.EVENING_NOTIFICATION_ID, notification);
         }
         else {
@@ -49,18 +62,13 @@ public class Alarm extends BroadcastReceiver {
         }
     }
 
-    public Alarm()
-    {
-
-    }
-
     /**
      * Sets a repeating Alarm that calls onReceive of Alarm.
      * @param context Application context
      * @param triggerAt The time at which the Alarm is triggered for the first time.
      * @param interval The interval in which the alarm is repeated.
-     * @param requestCode The requestCode of the Alarm. <p><font color = "green"> Should use an AlarmRequest constant.</font></p>
-     * @param type The type of the Alarm. <p><font color = "green"> Should use an AlarmType constant.</font></p>
+     * @param requestCode The requestCode of the Alarm. <p><font color = "orange"> Should use a constant defined in Alarm.class.</font></p>
+     * @param type The type of the Alarm. <p><font color = "orange"> Should use a constant defined in Alarm.class.</font></p>
      */
     public void setRepeatingAlarm(Context context, long triggerAt, long interval, int requestCode, String type)
     {
@@ -74,8 +82,8 @@ public class Alarm extends BroadcastReceiver {
     /**
      * Cancels an Alarm.
      * @param context Application context.
-     * @param requestCode The requestCode of the Alarm.<p><font color = "green"> Should use an AlarmRequest constant.</font></p>
-     * @param type The type of the Alarm. <p><font color = "green"> Should use a TimeConstant constant.</font></p>
+     * @param requestCode The requestCode of the Alarm.<p><font color = "green"> Should use a constant defined in Alarm.class.</font></p>
+     * @param type The type of the Alarm. <p><font color = "green"> Should use a constant defined in Alarm.class.</font></p>
      */
     public void cancelAlarm(Context context, int requestCode,String type)
     {
@@ -86,17 +94,5 @@ public class Alarm extends BroadcastReceiver {
         alarmManager.cancel(sender);
     }
 
-    /**@Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.PARAMETER)
-    public @interface AlarmType {
-        public static final String MORNING_ALARM = "com.ristudios.ALARM_MORNING_TRIGGERED";
-        public static final String EVENING_ALARM = "com.ristudios.ALARM_EVENING_TRIGGERED";
-    }
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.PARAMETER)
-    public @interface AlarmRequest {
-        public static final int REQUEST_MORNING = 99;
-        public static final int REQUEST_EVENING = 199;
-    }*/
 }
