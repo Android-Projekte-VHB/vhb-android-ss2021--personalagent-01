@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ristudios.personalagent">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -11,17 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalAgent">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.activities.WeeklyOverviewActivity"></activity>
+        <activity android:name=".ui.activities.SettingsActivity" />
+        <activity android:name=".ui.activities.CalenderActivity" />
+        <activity android:name=".ui.activities.BaseActivity" />
+        <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".utils.notifications.Alarm" android:exported="true">
+
+        <receiver
+            android:name=".utils.notifications.Alarm"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.ristudios.ALARM_EVENING_TRIGGERED" />
-                <action android:name="com.ristudios.ALARM_MORNING_TRIGGERED"/>
+                <action android:name="com.ristudios.ALARM_MORNING_TRIGGERED" />
             </intent-filter>
         </receiver>
     </application>

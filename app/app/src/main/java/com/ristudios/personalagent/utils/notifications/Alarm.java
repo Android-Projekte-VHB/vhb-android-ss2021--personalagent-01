@@ -8,13 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.ristudios.personalagent.MainActivity;
+import com.ristudios.personalagent.ui.activities.MainActivity;
 import com.ristudios.personalagent.R;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
 public class Alarm extends BroadcastReceiver {
 
