@@ -11,9 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalAgent">
-        <activity android:name=".ui.activities.WeeklyOverviewActivity"></activity>
-        <activity android:name=".ui.activities.SettingsActivity" />
-        <activity android:name=".ui.activities.CalenderActivity" />
+        <activity android:name=".ui.activities.WeeklyOverviewActivity"
+            android:parentActivityName=".ui.activities.MainActivity"/>
+        <activity android:name=".ui.activities.SettingsActivity"
+            android:parentActivityName=".ui.activities.MainActivity"/>
+        <activity android:name=".ui.activities.CalendarActivity"
+            android:parentActivityName=".ui.activities.MainActivity"/>
         <activity android:name=".ui.activities.BaseActivity" />
         <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
