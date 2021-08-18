@@ -4,8 +4,16 @@
     <string name="evening_notification_title">Heute alles erldigt?</string>
     <string name="morning_notification_text">Schau dir an was du heute zu tun hast</string>
     <string name="evening_notification_text">Nicht vergessen deine Aufgaben abzuhaken</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_open">Öffnet die Navigation</string>
+    <string name="drawer_close">Schließt die Navigation</string>
+    <string name="settings">Einstellungen</string>
+    <string name="weekly_overview">Wochenübersicht</string>
+    <string name="calendar">Kalender</string>
+    <string name="start">Start</string>
+    <string name="options">Optionen</string>
+    <string name="navigation">Navigation</string>
+    <string name="notification_channel_name">Benachrichtigungen</string>
+    <string name="notification_channel_description">Alle Benachrichtigungen werde über diesen Kanal geschickt</string>
+
+
 </resources>

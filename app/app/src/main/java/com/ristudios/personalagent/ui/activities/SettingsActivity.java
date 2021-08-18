@@ -15,7 +15,9 @@ public class SettingsActivity extends BaseActivity {
         setContentView(R.layout.activity_settings);
         super.onCreate(savedInstanceState);
         initBurgerMenu();
-        getSupportActionBar().setTitle("Einstellungen");
+        getSupportActionBar().setTitle(getResources().getString(R.string.settings));
+
+
 
 
     }
