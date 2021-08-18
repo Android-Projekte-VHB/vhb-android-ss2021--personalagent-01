@@ -27,7 +27,7 @@ public class Alarm extends BroadcastReceiver {
     }
 
     /**
-     * Shows a notification, the content of the Notification is based on the intent action.
+     * Shows a notification, the content of the Notification is based on the intent action. 
      * @param context Application context.
      * @param intent The Intent calling this receiver.
      */
@@ -40,7 +40,7 @@ public class Alarm extends BroadcastReceiver {
             Log.d("ALARM_KEY", "An Alarm for morning was triggered");
             String title = context.getResources().getString(R.string.morning_notification_title);
             String message = context.getResources().getString(R.string.morning_notification_text);
-            PendingIntent pendingIntent = notificationHelper.createContentIntent(sender, NotificationHelper.NOTIFICATION_REQUEST_CODE_EVENING);
+            PendingIntent pendingIntent = notificationHelper.createContentIntent(sender, NotificationHelper.NOTIFICATION_REQUEST_CODE_MORNING);
             Notification notification = notificationHelper.createNotification(title, message, R.drawable.ic_test_24dp, NotificationHelper.AUTOCANCEL, pendingIntent);
             notificationHelper.showNotification(NotificationHelper.MORNING_NOTIFICATION_ID, notification);
         }
