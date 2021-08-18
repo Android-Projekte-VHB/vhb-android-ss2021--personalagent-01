@@ -14,4 +14,6 @@
     <string name="navigation">Navigation</string>
     <string name="notification_channel_name">Benachrichtigungen</string>
     <string name="notification_channel_description">Alle Benachrichtigungen werde über diesen Kanal geschickt</string>
+
+
 </resources>

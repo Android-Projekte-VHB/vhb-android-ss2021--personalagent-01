@@ -1,18 +1,24 @@
 package com.ristudios.personalagent.ui.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 import com.ristudios.personalagent.R;
+import com.ristudios.personalagent.utils.notifications.Alarm;
 
+/**
+ * Activity that is responsible for handling the settings of the app.
+ */
 public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_settings);
         super.onCreate(savedInstanceState);
-        initBurger();
+        initBurgerMenu();
         getSupportActionBar().setTitle(getResources().getString(R.string.settings));
+
+
+
+
     }
 }
