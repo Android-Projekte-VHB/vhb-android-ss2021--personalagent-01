@@ -11,6 +11,11 @@ import android.util.Log;
 import com.ristudios.personalagent.ui.activities.MainActivity;
 import com.ristudios.personalagent.R;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 public class Alarm extends BroadcastReceiver {
 
     public static final String TYPE_MORNING_ALARM = "com.ristudios.ALARM_MORNING_TRIGGERED";
@@ -75,7 +80,8 @@ public class Alarm extends BroadcastReceiver {
     }
 
     /**
-     * Cancels an Alarm.
+     * Cancels an Alarm. The requestCode of the Alarm to be cancelled as well as the type must match with
+     * the requestCode and type of the Alarm.
      * @param context Application context.
      * @param requestCode The requestCode of the Alarm.<p><font color = "green"> Should use a constant defined in Alarm.class.</font></p>
      * @param type The type of the Alarm. <p><font color = "green"> Should use a constant defined in Alarm.class.</font></p>
@@ -88,6 +94,7 @@ public class Alarm extends BroadcastReceiver {
         PendingIntent sender = PendingIntent.getBroadcast(context, requestCode, intent, 0);
         alarmManager.cancel(sender);
     }
+
 
 
 }
