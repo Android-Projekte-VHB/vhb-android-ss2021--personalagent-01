@@ -6,7 +6,7 @@ import com.ristudios.personalagent.R;
 import com.ristudios.personalagent.utils.notifications.Alarm;
 
 /**
- * Activity that is responsible for handling the settings of the app.
+ * Responsible for handling the settings of the app.
  */
 public class SettingsActivity extends BaseActivity {
 

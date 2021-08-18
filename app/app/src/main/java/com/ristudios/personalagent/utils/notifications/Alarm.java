@@ -24,7 +24,7 @@ public class Alarm extends BroadcastReceiver {
     public static final int REQUEST_CODE_EVENING = 199;
 
     /**
-     * Create a new instance of the class Alarm.
+     * Creates a new instance of the class Alarm.
      */
     public Alarm()
     {
@@ -83,8 +83,8 @@ public class Alarm extends BroadcastReceiver {
      * Cancels an Alarm. The requestCode of the Alarm to be cancelled as well as the type must match with
      * the requestCode and type of the Alarm.
      * @param context Application context.
-     * @param requestCode The requestCode of the Alarm.<p><font color = "green"> Should use a constant defined in Alarm.class.</font></p>
-     * @param type The type of the Alarm. <p><font color = "green"> Should use a constant defined in Alarm.class.</font></p>
+     * @param requestCode The requestCode of the Alarm.<p><font color = "orange"> Should use a constant defined in Alarm.class.</font></p>
+     * @param type The type of the Alarm. <p><font color = "orange"> Should use a constant defined in Alarm.class.</font></p>
      */
     public void cancelAlarm(Context context, int requestCode,String type)
     {

@@ -15,7 +15,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.ristudios.personalagent.R;
 
 /**
- * Handles the creation of the Burgermenu. Every other activity should inherit from BaseActivity.
+ * Handles the creation of the BurgerMenu. Every other activity should inherit from BaseActivity.
  */
 public class BaseActivity extends AppCompatActivity implements DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -88,23 +88,25 @@ public class BaseActivity extends AppCompatActivity implements DrawerLayout.Draw
         switch (item.getItemId()) {
 
             case R.id.nav_Start: {
-
                 launchMainActivity(classname);
                 break;
             }
 
             case R.id.nav_calender: {
+                mDrawerLayout.closeDrawers();
                 launchCalendarActivity(classname);
                 break;
             }
 
             case R.id.nav_settings: {
+                mDrawerLayout.closeDrawers();
                 launchSettingsActivity(classname);
                 break;
             }
 
             case R.id.nav_weekly: {
-                launchWeeklyoverviewActivity(classname);
+                mDrawerLayout.closeDrawers();
+                launchWeeklyOverviewActivity(classname);
                 break;
             }
 
@@ -123,7 +125,7 @@ public class BaseActivity extends AppCompatActivity implements DrawerLayout.Draw
      *
      * @param classname The name of the class currently active.
      */
-    private void launchWeeklyoverviewActivity(String classname) {
+    private void launchWeeklyOverviewActivity(String classname) {
 
         if (!classname.equals("WeeklyOverviewActivity")) {
             Intent intent = new Intent(this, WeeklyOverviewActivity.class);
@@ -167,15 +169,13 @@ public class BaseActivity extends AppCompatActivity implements DrawerLayout.Draw
     }
 
     /**
-     * Launches the {@link MainActivity} if the params are correct.
+     * Goes back to the {@link MainActivity} if the params are correct.
      *
      * @param classname The name of the class currently active.
      */
     private void launchMainActivity(String classname) {
 
         if (!classname.equals("MainActivity")) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
             finish();
         }
     }

@@ -5,6 +5,9 @@ import android.os.Bundle;
 import com.ristudios.personalagent.R;
 import com.ristudios.personalagent.utils.notifications.NotificationHelper;
 
+/**
+ * LauncherActivity, shows tasks for current day as well as weather information.
+ */
 public class MainActivity extends BaseActivity {
 
     @Override
@@ -13,6 +16,13 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         initBurgerMenu();
         getSupportActionBar().setTitle(getResources().getString(R.string.start));
+        setupNotificationChannel();
+    }
+
+    /**
+     *
+     */
+    private void setupNotificationChannel() {
         NotificationHelper notificationHelper = new NotificationHelper(this);
         notificationHelper.createNotificationChannel(this,
                 getResources().getString(R.string.notification_channel_name),
