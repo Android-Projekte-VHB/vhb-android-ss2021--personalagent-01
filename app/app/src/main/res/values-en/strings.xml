@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Personal Agent</string>
+    <string name="morning_notification_title">Good morning!</string>
+    <string name="evening_notification_title">Everything done for today?</string>
+    <string name="morning_notification_text">Take a look at your tasks for today</string>
+    <string name="evening_notification_text">Don\'t forget to cross off all finished tasks</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="settings">Settings</string>
+    <string name="weekly_overview">Weekly overview</string>
+    <string name="calendar">Calendar</string>
+    <string name="start">Start</string>
+    <string name="options">Options</string>
+    <string name="navigation">Navigation</string>
+    <string name="notification_channel_name">Notifiactions</string>
+    <string name="notification_channel_description">Handles all notifications</string>
+</resources>

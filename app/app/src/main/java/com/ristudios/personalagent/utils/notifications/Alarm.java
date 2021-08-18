@@ -27,7 +27,7 @@ public class Alarm extends BroadcastReceiver {
     }
 
     /**
-     * Shows a notification, the content of the Notification is based on the intent action. 
+     * Shows a notification, the content of the Notification is based on the intent action.
      * @param context Application context.
      * @param intent The Intent calling this receiver.
      */

@@ -17,9 +17,12 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
         initBurger();
-        getSupportActionBar().setTitle("Start");
+        getSupportActionBar().setTitle(getResources().getString(R.string.start));
         NotificationHelper notificationHelper = new NotificationHelper(this);
-        notificationHelper.createNotificationChannel(this, "Main Channel", "Handles all notifications", NotificationHelper.MAIN_NOTIFICATION_CHANNEL_ID);
+        notificationHelper.createNotificationChannel(this,
+                getResources().getString(R.string.notification_channel_name),
+                getResources().getString(R.string.notification_channel_description),
+                NotificationHelper.MAIN_NOTIFICATION_CHANNEL_ID);
     }
 
 

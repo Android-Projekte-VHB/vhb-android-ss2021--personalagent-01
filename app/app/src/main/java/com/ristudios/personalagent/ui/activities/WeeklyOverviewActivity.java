@@ -13,6 +13,6 @@ public class WeeklyOverviewActivity extends BaseActivity {
         setContentView(R.layout.activity_weekly_overview);
         super.onCreate(savedInstanceState);
         initBurger();
-        getSupportActionBar().setTitle("Wochenübersicht");
+        getSupportActionBar().setTitle(getResources().getString(R.string.weekly_overview));
     }
 }

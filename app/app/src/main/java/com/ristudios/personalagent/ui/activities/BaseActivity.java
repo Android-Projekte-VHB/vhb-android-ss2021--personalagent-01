@@ -44,7 +44,7 @@ public class BaseActivity extends AppCompatActivity implements DrawerLayout.Draw
     protected void initToolbar() {
         toolbar = findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("PersonalAgent");
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
     }
 
     protected void initToggle() {

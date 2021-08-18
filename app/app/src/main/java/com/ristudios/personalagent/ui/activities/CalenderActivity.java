@@ -13,6 +13,6 @@ public class CalenderActivity extends BaseActivity {
         setContentView(R.layout.activity_calender);
         super.onCreate(savedInstanceState);
         initBurger();
-        getSupportActionBar().setTitle("Kalender");
+        getSupportActionBar().setTitle(getResources().getString(R.string.calendar));
     }
 }
