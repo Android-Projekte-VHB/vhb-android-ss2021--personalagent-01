@@ -34,10 +34,10 @@ public class NotificationHelper {
     public static final String MAIN_NOTIFICATION_CHANNEL_ID = "allNotifications";
 
     //constants with IDs and RequestCodes, values chosen randomly.
-    public static final int MORNING_NOTIFICATION_ID = 1;
-    public static final int EVENING_NOTIFICATION_ID = 2;
-    public static final int NOTIFICATION_REQUEST_CODE_MORNING = 1;
-    public static final int NOTIFICATION_REQUEST_CODE_EVENING = 2;
+    public static final int MORNING_NOTIFICATION_ID = 9;
+    public static final int EVENING_NOTIFICATION_ID = 11;
+    public static final int NOTIFICATION_REQUEST_CODE_MORNING = 9;
+    public static final int NOTIFICATION_REQUEST_CODE_EVENING = 11;
 
 
     public NotificationHelper(Context context) {
