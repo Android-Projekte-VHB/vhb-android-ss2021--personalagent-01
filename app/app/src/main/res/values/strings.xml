@@ -1,19 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Personal Agent</string>
-    <string name="morning_notification_title">Guten morgen!</string>
-    <string name="evening_notification_title">Heute alles erldigt?</string>
-    <string name="morning_notification_text">Schau dir an was du heute zu tun hast</string>
-    <string name="evening_notification_text">Nicht vergessen deine Aufgaben abzuhaken</string>
-    <string name="drawer_open">Öffnet die Navigation</string>
-    <string name="drawer_close">Schließt die Navigation</string>
-    <string name="settings">Einstellungen</string>
-    <string name="weekly_overview">Wochenübersicht</string>
-    <string name="calendar">Kalender</string>
-    <string name="start">Start</string>
-    <string name="options">Optionen</string>
-    <string name="navigation">Navigation</string>
-    <string name="notification_channel_name">Benachrichtigungen</string>
-    <string name="notification_channel_description">Alle Benachrichtigungen werde über diesen Kanal geschickt</string>
+<string name="app_name">Personal Agent</string>
+<string name="morning_notification_title">Good morning!</string>
+<string name="evening_notification_title">Everything done for today?</string>
+<string name="morning_notification_text">Take a look at your tasks for today</string>
+<string name="evening_notification_text">Don\'t forget to cross off all finished tasks</string>
+<string name="drawer_open">Open navigation drawer</string>
+<string name="drawer_close">Close navigation drawer</string>
+<string name="settings">Settings</string>
+<string name="weekly_overview">Weekly overview</string>
+<string name="calendar">Calendar</string>
+<string name="start">Start</string>
+<string name="options">Options</string>
+<string name="navigation">Navigation</string>
+<string name="notification_channel_name">Notifiactions</string>
+<string name="notification_channel_description">Handles all notifications</string>
 
+
+
+    <string-array name="morning_notification_titles">
+        <item>Good morning!</item>
+        <item>Did you sleep well?</item>
+        <item>Let\'s get started!</item>
+    </string-array>
+    <string-array name="morning_notification_messages">
+        <item>Let\'s see what\'s on the todo list</item>
+        <item>Take a look at your tasks for today</item>
+        <item>Ready for your daily tasks?</item>
+    </string-array>
+    <string-array name="evening_notification_titles">
+        <item>Everything done for today?</item>
+        <item>How was your day?</item>
+    </string-array>
+    <string-array name="evening_notification_messages">
+        <item>Don\'t forget to cross off all finished tasks</item>
+        <item>Cross off tasks to collect all your points</item>
+        <item>Reward yourself and get your points</item>
+    </string-array>
 
 </resources>

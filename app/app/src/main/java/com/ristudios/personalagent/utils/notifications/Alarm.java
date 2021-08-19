@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.ristudios.personalagent.ui.activities.MainActivity;
 import com.ristudios.personalagent.R;
+import com.ristudios.personalagent.utils.Utils;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -40,25 +41,19 @@ public class Alarm extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         NotificationHelper notificationHelper = new NotificationHelper(context);
         Intent sender = new Intent(context, MainActivity.class);
-        Log.d("ALARM_KEY", "Alarm received");
         if (intent.getAction().equals(Alarm.TYPE_MORNING_ALARM)){
-            Log.d("ALARM_KEY", "An Alarm for morning was triggered");
-            String title = context.getResources().getString(R.string.morning_notification_title);
-            String message = context.getResources().getString(R.string.morning_notification_text);
+            String title = Utils.getRandomNotificationString(context, Utils.TYPE_MORNING_TITLE);
+            String message = Utils.getRandomNotificationString(context, Utils.TYPE_MORNING_MESSAGE);
             PendingIntent pendingIntent = notificationHelper.createContentIntent(sender, NotificationHelper.NOTIFICATION_REQUEST_CODE_MORNING);
             Notification notification = notificationHelper.createNotification(title, message, R.drawable.ic_test_24dp, NotificationHelper.AUTOCANCEL, pendingIntent);
             notificationHelper.showNotification(NotificationHelper.MORNING_NOTIFICATION_ID, notification);
         }
         else if (intent.getAction().equals(Alarm.TYPE_EVENING_ALARM)){
-            Log.d("ALARM_KEY", "An Alarm for evening was triggered");
-            String title = context.getResources().getString(R.string.evening_notification_title);
-            String message = context.getResources().getString(R.string.evening_notification_text);
+            String title = Utils.getRandomNotificationString(context, Utils.TYPE_EVENING_TITLE);
+            String message = Utils.getRandomNotificationString(context, Utils.TYPE_EVENING_MESSAGE);
             PendingIntent pendingIntent = notificationHelper.createContentIntent(sender, NotificationHelper.NOTIFICATION_REQUEST_CODE_EVENING);
             Notification notification = notificationHelper.createNotification(title, message, R.drawable.ic_test_24dp, NotificationHelper.AUTOCANCEL, pendingIntent);
             notificationHelper.showNotification(NotificationHelper.EVENING_NOTIFICATION_ID, notification);
-        }
-        else {
-            Log.d("ALARM_KEY", "Something went wrong with the action of the Intent");
         }
     }
 

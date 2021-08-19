@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Personal Agent</string>
+    <string name="morning_notification_title">Guten morgen!</string>
+    <string name="evening_notification_title">Heute alles erldigt?</string>
+    <string name="morning_notification_text">Schau dir an was du heute zu tun hast</string>
+    <string name="evening_notification_text">Nicht vergessen deine Aufgaben abzuhaken</string>
+    <string name="drawer_open">Öffnet die Navigation</string>
+    <string name="drawer_close">Schließt die Navigation</string>
+    <string name="settings">Einstellungen</string>
+    <string name="weekly_overview">Wochenübersicht</string>
+    <string name="calendar">Kalender</string>
+    <string name="start">Start</string>
+    <string name="options">Optionen</string>
+    <string name="navigation">Navigation</string>
+    <string name="notification_channel_name">Benachrichtigungen</string>
+    <string name="notification_channel_description">Alle Benachrichtigungen werde über diesen Kanal geschickt</string>
+
+
+
+    <string-array name="morning_notification_titles">
+        <item>Guten morgen!</item>
+        <item>Gut geschlafen!</item>
+        <item>Los geht der neue Tag!</item>
+    </string-array>
+    <string-array name="morning_notification_messages">
+        <item>Schau dir an was du heute zu tun hast</item>
+        <item>Schau gleich nach was heute ansteht</item>
+        <item>Bereit für deine heutigen Aufgaben?</item>
+    </string-array>
+    <string-array name="evening_notification_titles">
+        <item>Heute alles erledigt?</item>
+        <item>Wie war dein Tag?</item>
+    </string-array>
+    <string-array name="evening_notification_messages">
+        <item>Nicht vergessen deine Aufgaben abzuhaken</item>
+        <item>Hake alle erledigten Aufgaben ab um deine Punkte zu erhalten</item>
+        <item>Belohne dich und hol gleich deine Punkte ab</item>
+    </string-array>
+
+</resources>
