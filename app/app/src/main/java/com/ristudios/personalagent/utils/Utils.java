@@ -1,11 +1,14 @@
 package com.ristudios.personalagent.utils;
 
 
+import android.app.AlarmManager;
 import android.content.Context;
 
 import androidx.annotation.IntRange;
 
 import com.ristudios.personalagent.R;
+import com.ristudios.personalagent.utils.notifications.Alarm;
+import com.ristudios.personalagent.utils.notifications.NotificationHelper;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -17,11 +20,15 @@ public final class Utils {
 
     public static final String NOTIFICATION_MORNING_ENABLED = "notificationsMorningKey";
     public static final String NOTIFICATION_EVENING_ENABLED = "notificationsEveningKey";
-    public static final String LOG_ALARM = "ALARM_KEY";
-    public static final int TYPE_MORNING_MESSAGE = 558;
-    public static final int TYPE_MORNING_TITLE = 559;
-    public static final int TYPE_EVENING_MESSAGE = 560;
-    public static final int TYPE_EVENING_TITLE = 561;
+
+    //all int constants are given random ints.
+    public static final int TYPE_MORNING_MESSAGE = 50;
+    public static final int TYPE_MORNING_TITLE = 51;
+    public static final int TYPE_EVENING_MESSAGE = 60;
+    public static final int TYPE_EVENING_TITLE = 61;
+
+
+    //region alarm-related
 
 
     /**
@@ -65,8 +72,42 @@ public final class Utils {
         return currentZonedTime.toInstant().toEpochMilli() + timeTillAlarm;
     }
 
+    /**
+     * Sets up alarms depending on the settings.
+     * @param context Application context.
+     */
+    public static void setupAlarms(Context context){
+        Alarm alarm = new Alarm();
 
+        //TODO: Adjust time according to user selection, check if user has disabled Notifications
+        long triggerAt = Utils.millisForAlarm(7, 0);
+        alarm.setRepeatingAlarm(context, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
+        triggerAt = Utils.millisForAlarm(19, 0);
+        alarm.setRepeatingAlarm(context, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
+    }
 
+    /**
+     * Cancels an alarm specified by requestCode and type.
+     * @param context Application context.
+     * @param requestCode The requestCode of the Alarm.<p><font color = "orange"> Should use a constant defined in Alarm.class.</font></p>
+     * @param type The type of the Alarm. <p><font color = "orange"> Should use a constant defined in Alarm.class.</font></p>
+     */
+    public static void cancelAlarm(Context context, int requestCode, String type)
+    {
+        Alarm alarm = new Alarm();
+        alarm.cancelAlarm(context, requestCode, type);
+    }
+
+    //endregion
+
+    //region notification-related
+
+    /**
+     * Returns a random string that is used for a notification title or message.
+     * @param context Application context.
+     * @param type Type of string (e.g. a title for a notification in the morning)
+     * @return random String
+     */
     public static String getRandomNotificationString(Context context, int type) {
 
         String rndString = "";
@@ -86,6 +127,13 @@ public final class Utils {
 
         }
 
+    /**
+     * Returns a random string dependant on the chosen array.
+     * @param context Application context.
+     * @param rndString the String to return
+     * @param p the id of the array
+     * @return random String from array p
+     */
         private static String getRandomString (Context context, String rndString, int p){
             Random random = new Random();
 
@@ -104,6 +152,20 @@ public final class Utils {
             }
             return rndString;
         }
+
+    /**
+     * Sends a simple notification, used for bugfixing and testing.
+     * @param context Application context.
+     */
+    public static void sendTest(Context context){
+        NotificationHelper notificationHelper = new NotificationHelper(context);
+        notificationHelper.showNotification(-10, notificationHelper.createNotification("title", "test", R.drawable.ic_test_24dp, false, null));
+    }
+
+    //endregion
+
+
+
 
 
 }
