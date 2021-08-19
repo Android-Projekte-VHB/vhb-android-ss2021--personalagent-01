@@ -4,6 +4,9 @@ import android.os.Bundle;
 
 import com.ristudios.personalagent.R;
 
+/**
+ * Responsible for displaying a calendar.
+ */
 public class CalendarActivity extends BaseActivity {
 
     @Override

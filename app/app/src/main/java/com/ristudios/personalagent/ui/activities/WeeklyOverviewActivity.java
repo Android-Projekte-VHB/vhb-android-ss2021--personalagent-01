@@ -4,6 +4,9 @@ import android.os.Bundle;
 
 import com.ristudios.personalagent.R;
 
+/**
+ * Responsible for displaying a weekly overview.
+ */
 public class WeeklyOverviewActivity extends BaseActivity {
 
     @Override
