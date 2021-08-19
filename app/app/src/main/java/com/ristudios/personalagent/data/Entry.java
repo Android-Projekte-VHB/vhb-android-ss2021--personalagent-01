@@ -15,7 +15,7 @@ public class Entry {
 
 
     /*@TODO Mary: Turn both category and points/difficulty into enums
-        Category Enum: should contain the 3 different categories 'work', 'hobby' and 'appointment'
+        Category Enum: should contain the 4 different categories 'work', 'hobby', 'fitness' and 'appointment'
         Difficulty Enum: should contain the 3 different levels of difficulty 'easy', 'medium' and 'hard' as an identifier and the rewarded points for completion (10,20,30?)
     */
 
