@@ -19,7 +19,7 @@
 
     <string-array name="morning_notification_titles">
         <item>Guten morgen!</item>
-        <item>Gut geschlafen!</item>
+        <item>Gut geschlafen?</item>
         <item>Los geht der neue Tag!</item>
     </string-array>
     <string-array name="morning_notification_messages">
@@ -30,11 +30,12 @@
     <string-array name="evening_notification_titles">
         <item>Heute alles erledigt?</item>
         <item>Wie war dein Tag?</item>
+        <item>Ein weiterer Tag vorüber</item>
     </string-array>
     <string-array name="evening_notification_messages">
-        <item>Nicht vergessen deine Aufgaben abzuhaken</item>
+        <item>Vergiss nicht deine Aufgaben abzuhaken</item>
         <item>Hake alle erledigten Aufgaben ab um deine Punkte zu erhalten</item>
-        <item>Belohne dich und hol gleich deine Punkte ab</item>
+        <item>Hol gleich deine Punkte ab</item>
     </string-array>
 
 </resources>
