@@ -31,6 +31,7 @@
     <string-array name="evening_notification_titles">
         <item>Everything done for today?</item>
         <item>How was your day?</item>
+        <item>Another day over</item>
     </string-array>
     <string-array name="evening_notification_messages">
         <item>Don\'t forget to cross off all finished tasks</item>

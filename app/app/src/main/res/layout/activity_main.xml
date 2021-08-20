@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity">
 
+
+    <include layout="@layout/drawer_layout"
+        android:id="@+id/drawer_layout"/>
+    <include layout="@layout/toolbar_layout"
+        android:id="@+id/custom_toolbar"/>
+
     <LinearLayout
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="100dp"
@@ -62,12 +68,8 @@
     </LinearLayout>
 
 
-    <include layout="@layout/drawer_layout"
-        android:id="@+id/drawer_layout"
-        />
-    <include layout="@layout/toolbar_layout"
-        android:id="@+id/custom_toolbar"
-        />
+    
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

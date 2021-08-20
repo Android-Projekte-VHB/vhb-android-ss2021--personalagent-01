@@ -41,12 +41,14 @@ public class Alarm extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         NotificationHelper notificationHelper = new NotificationHelper(context);
         Intent sender = new Intent(context, MainActivity.class);
+        Log.d(Utils.LOG_ALARM, "Alarm received!");
         if (intent.getAction().equals(Alarm.TYPE_MORNING_ALARM)){
             String title = Utils.getRandomNotificationString(context, Utils.TYPE_MORNING_TITLE);
             String message = Utils.getRandomNotificationString(context, Utils.TYPE_MORNING_MESSAGE);
             PendingIntent pendingIntent = notificationHelper.createContentIntent(sender, NotificationHelper.NOTIFICATION_REQUEST_CODE_MORNING);
             Notification notification = notificationHelper.createNotification(title, message, R.drawable.ic_test_24dp, NotificationHelper.AUTOCANCEL, pendingIntent);
             notificationHelper.showNotification(NotificationHelper.MORNING_NOTIFICATION_ID, notification);
+            Log.d(Utils.LOG_ALARM, "Alarm for morning!");
         }
         else if (intent.getAction().equals(Alarm.TYPE_EVENING_ALARM)){
             String title = Utils.getRandomNotificationString(context, Utils.TYPE_EVENING_TITLE);
@@ -54,6 +56,7 @@ public class Alarm extends BroadcastReceiver {
             PendingIntent pendingIntent = notificationHelper.createContentIntent(sender, NotificationHelper.NOTIFICATION_REQUEST_CODE_EVENING);
             Notification notification = notificationHelper.createNotification(title, message, R.drawable.ic_test_24dp, NotificationHelper.AUTOCANCEL, pendingIntent);
             notificationHelper.showNotification(NotificationHelper.EVENING_NOTIFICATION_ID, notification);
+            Log.d(Utils.LOG_ALARM, "Alarm for evening!");
         }
     }
 
@@ -70,7 +73,7 @@ public class Alarm extends BroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, Alarm.class);
         intent.setAction(type);
-        PendingIntent sender = PendingIntent.getBroadcast(context, requestCode, intent, 0);
+        PendingIntent sender = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAt, interval, sender);
     }
 
