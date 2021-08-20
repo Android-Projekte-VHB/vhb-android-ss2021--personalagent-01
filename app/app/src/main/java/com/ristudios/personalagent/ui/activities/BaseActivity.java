@@ -88,6 +88,7 @@ public class BaseActivity extends AppCompatActivity implements DrawerLayout.Draw
         switch (item.getItemId()) {
 
             case R.id.nav_Start: {
+                mDrawerLayout.closeDrawers();
                 launchMainActivity(classname);
                 break;
             }

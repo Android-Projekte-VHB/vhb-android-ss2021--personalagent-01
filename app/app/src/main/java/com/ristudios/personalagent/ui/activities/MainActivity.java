@@ -52,6 +52,7 @@ public class MainActivity extends BaseActivity {
         alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
 
         //NOTE: To change the timing (or rather anything about an alarm) it is necessary to first cancel the old alarm before setting the new one, otherwise android will not set a new alarm
+        //NOTE: Setting PendingIntent to FLAG_UPDATE_CURRENT seems to fix this problem. Further testing is required
         //alarm.cancelAlarm(this, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
         //alarm.cancelAlarm(this, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
 
