@@ -24,6 +24,7 @@ public class MainActivity extends BaseActivity {
         initBurgerMenu();
         getSupportActionBar().setTitle(getResources().getString(R.string.start));
         setupNotificationChannel();
+        initializeAlarms();
     }
 
     /**
@@ -35,9 +36,12 @@ public class MainActivity extends BaseActivity {
                 getResources().getString(R.string.notification_channel_name),
                 getResources().getString(R.string.notification_channel_description),
                 NotificationHelper.MAIN_NOTIFICATION_CHANNEL_ID);
-        initializeAlarms();
+
     }
 
+    /**
+     * Initializes the alarms depending on the settings
+     */
     private void initializeAlarms() {
         //TODO: Check if user has disabled notifications for morning/evening
         //TODO: Check at what time the user wants to receive notifications
@@ -46,6 +50,10 @@ public class MainActivity extends BaseActivity {
         alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
         triggerAt = Utils.millisForAlarm(19, 0);
         alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
+
+        //NOTE: To change the timing (or rather anything about an alarm) it is necessary to first cancel the old alarm before setting the new one, otherwise android will not set a new alarm
+        //alarm.cancelAlarm(this, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
+        //alarm.cancelAlarm(this, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
 
     }
 
