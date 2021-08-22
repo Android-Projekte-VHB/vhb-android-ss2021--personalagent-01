@@ -16,6 +16,11 @@
 <string name="notification_channel_name">Notifiactions</string>
 <string name="notification_channel_description">Handles all notifications</string>
 
+//categories
+<string name="work">work</string>
+<string name="fitness">fitness</string>
+<string name="hobby">hobby</string>
+<string name="appointment">appointment</string>
 
 
     <string-array name="morning_notification_titles">

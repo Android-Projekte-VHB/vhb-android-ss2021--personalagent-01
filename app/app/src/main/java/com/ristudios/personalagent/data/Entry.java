@@ -9,17 +9,12 @@ public class Entry {
 
     private final String uuid;
     private final String name;
-    private final String category; //Will be Enum
-    private final String difficulty; //Will be Enum
+    private final Category category;
+    private final Difficulty difficulty;
     private final long date;
 
 
-    /*@TODO Mary: Turn both category and points/difficulty into enums
-        Category Enum: should contain the 4 different categories 'work', 'hobby', 'fitness' and 'appointment'
-        Difficulty Enum: should contain the 3 different levels of difficulty 'easy', 'medium' and 'hard' as an identifier and the rewarded points for completion (10,20,30?)
-    */
-
-    public Entry(String name, String category, String difficulty, long date){
+    public Entry(String name, Category category, Difficulty difficulty, long date){
         this.uuid = UUID.randomUUID().toString();
         this.name = name;
         this.category = category;
@@ -31,11 +26,11 @@ public class Entry {
         return name;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public String getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 

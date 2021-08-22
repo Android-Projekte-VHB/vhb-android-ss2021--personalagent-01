@@ -16,7 +16,7 @@ public class Weather {
         this.imageURL = imageURL;
         this.maxTemp = maxTemp;
         this.minTemp = minTemp;
-        this.precipitation = minTemp;
+        this.precipitation = precipitation;
     }
 
     public static Weather fromJSONObject(JSONObject object) throws JSONException {
