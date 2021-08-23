@@ -13,7 +13,7 @@
 <string name="start">Start</string>
 <string name="options">Options</string>
 <string name="navigation">Navigation</string>
-<string name="notification_channel_name">Notifiactions</string>
+<string name="notification_channel_name">Notifications</string>
 <string name="notification_channel_description">Handles all notifications</string>
 
 //categories
@@ -21,6 +21,23 @@
 <string name="fitness">fitness</string>
 <string name="hobby">hobby</string>
 <string name="appointment">appointment</string>
+
+//Settings
+<string name="settings_category_notifications_title">Notifications</string>
+<string name="settings_notification_switch_summary">Enable Notifications</string>
+<string name="settings_notification_time_one_title">Notification Time 1</string>
+<string name="settings_notification_time_two_title">Notification Time 2</string>
+<string name="settings_notification_time_summary">Set a time to receive notifications</string>
+
+<string name="settings_category_permissions_title">Permission</string>
+<string name="settings_location_permission_title">Location</string>
+<string name="settings_location_permission_summary">Allow accessing your Location to provide Weather Information</string>
+
+<string name="settings_category_pa_title">PersonalAgent</string>
+<string name="settings_pa_username_title">Username</string>
+<string name="settings_pa_username_summary">Set how the PersonalAgent should call you</string>
+<string name="settings_pa_weekly_goal_title">Weekly Goal</string>
+<string name="settings_pa_weekly_goal_summary">Set your weekly Point Goal</string>
 
 
     <string-array name="morning_notification_titles">

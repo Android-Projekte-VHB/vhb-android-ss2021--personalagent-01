@@ -15,14 +15,19 @@ import java.util.Random;
 
 public final class Utils {
 
-    public static final String NOTIFICATION_MORNING_ENABLED = "notificationsMorningKey";
-    public static final String NOTIFICATION_EVENING_ENABLED = "notificationsEveningKey";
     public static final String LOG_ALARM = "ALARM_KEY";
     public static final int TYPE_MORNING_MESSAGE = 558;
     public static final int TYPE_MORNING_TITLE = 559;
     public static final int TYPE_EVENING_MESSAGE = 560;
     public static final int TYPE_EVENING_TITLE = 561;
 
+    //SharedPreferences Keys
+    public static final String SP_NOTIFICATION_ENABLED_KEY = "notification_switch";
+    public static final String SP_NOTIFICATION_TIME_ONE_KEY = "notification_time_one";
+    public static final String SP_NOTIFICATION_TIME_TWO_KEY = "notification_time_two";
+    public static final String SP_LOCATION_PERMISSION_KEY = "permission_switch";
+    public static final String SP_USERNAME_KEY = "username";
+    public static final String SP_WEEKLY_GOAL_KEY = "weekly_point_goal";
 
     /**
      * Returns the current time considering the systems default timezone.

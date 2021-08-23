@@ -33,8 +33,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener {
     private TextView tempTV, tempMaxTV, tempMinTV, precipitationTV;
     private ImageView weatherIcon;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);

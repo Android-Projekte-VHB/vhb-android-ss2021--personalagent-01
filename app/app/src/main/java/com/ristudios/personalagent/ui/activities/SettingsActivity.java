@@ -16,9 +16,6 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         initBurgerMenu();
         getSupportActionBar().setTitle(getResources().getString(R.string.settings));
-
-
-
-
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, new SettingsFragment()).commit();
     }
 }
