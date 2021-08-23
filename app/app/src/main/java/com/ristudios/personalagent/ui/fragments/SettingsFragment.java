@@ -1,5 +1,6 @@
 package com.ristudios.personalagent.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -21,6 +22,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private SwitchPreference notificationPref, permissionPref;
     private EditTextPreference   weeklyGoalPref, usernamePref;
     private Preference notificationTimeOnePref, notificationTimeTwoPref;
+    private TimeModeListener listener;
+
+    @Override
+    public void onAttach(@NonNull @NotNull Context context) {
+        super.onAttach(context);
+        listener = (TimeModeListener) context;
+    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -37,14 +45,18 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 showTimePickerDialog(getActivity().findViewById(R.id.notification_one_preference));
+                listener.onTimeModeChanged(1);
                 return false;
             }
         });
 
         notificationTimeTwoPref.setOnPreferenceClickListener(p -> {
             showTimePickerDialog(getActivity().findViewById(R.id.notification_two_preference));
+            listener.onTimeModeChanged(-1);
             return false;
         });
+
+
     }
 
     public void showTimePickerDialog(View view){
@@ -59,5 +71,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         notificationTimeTwoPref = findPreference(Utils.SP_NOTIFICATION_TIME_TWO_KEY);
         weeklyGoalPref = findPreference(Utils.SP_WEEKLY_GOAL_KEY);
         usernamePref = findPreference(Utils.SP_USERNAME_KEY);
+    }
+
+    public interface TimeModeListener{
+        void onTimeModeChanged(int mode);
     }
 }

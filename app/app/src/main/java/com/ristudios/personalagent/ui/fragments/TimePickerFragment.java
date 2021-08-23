@@ -2,9 +2,8 @@ package com.ristudios.personalagent.ui.fragments;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.SharedPreferences;
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -13,10 +12,11 @@ import androidx.fragment.app.DialogFragment;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DateFormat;
 import java.time.LocalTime;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+
+    TimeSetListener listener;
 
     @NonNull
     @NotNull
@@ -27,9 +27,17 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     }
 
     @Override
+    public void onAttach(@NonNull @NotNull Context context) {
+        super.onAttach(context);
+        listener = (TimeSetListener) context;
+    }
+
+    @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        //TODO: Save changes in Prefs, adjust alarms.
-        Log.d("TIMEPICKER_KEY", "Time set to " + hourOfDay +":"+ minute);
-        
+        listener.onTimeDataSet(hourOfDay, minute);
+    }
+
+    public interface TimeSetListener{
+        void onTimeDataSet(int h, int m);
     }
 }

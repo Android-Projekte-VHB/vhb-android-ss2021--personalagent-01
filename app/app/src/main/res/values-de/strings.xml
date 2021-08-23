@@ -24,8 +24,8 @@
     //Settings
     <string name="settings_category_notifications_title">Benachrichtigungen</string>
     <string name="settings_notification_switch_summary">Aktiviere Benachrichtigungen</string>
-    <string name="settings_notification_time_one_title">Benachrichtungszeitpunkt 1</string>
-    <string name="settings_notification_time_two_title">Benachrichtungszeitpunkt 2</string>
+    <string name="settings_notification_time_one_title">Benachrichtungszeitpunkt morgens</string>
+    <string name="settings_notification_time_two_title">Benachrichtungszeitpunkt abends</string>
     <string name="settings_notification_time_summary">Lege die Zeit fest, an der du Benachrichtigungen erhalten möchtest</string>
 
     <string name="settings_category_permissions_title">Berechtigungen</string>

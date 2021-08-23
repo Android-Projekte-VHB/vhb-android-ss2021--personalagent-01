@@ -28,6 +28,10 @@ public final class Utils {
     public static final String SP_LOCATION_PERMISSION_KEY = "permission_switch";
     public static final String SP_USERNAME_KEY = "username";
     public static final String SP_WEEKLY_GOAL_KEY = "weekly_point_goal";
+    public static final String SP_NOTIFICATION_TIME_ONE_HOUR_KEY = "notification_time_one_hour";
+    public static final String SP_NOTIFICATION_TIME_TWO_HOUR_KEY = "notification_time_two_hour";
+    public static final String SP_NOTIFICATION_TIME_ONE_MINUTE_KEY = "notification_time_one_minute";
+    public static final String SP_NOTIFICATION_TIME_TWO_MINUTE_KEY = "notification_time_two_minute";
 
     /**
      * Returns the current time considering the systems default timezone.
