@@ -1,10 +1,13 @@
-package com.ristudios.personalagent.ui.activities;
+package com.ristudios.personalagent.ui.fragments;
 
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 
@@ -16,7 +19,8 @@ import org.jetbrains.annotations.NotNull;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     private SwitchPreference notificationPref, permissionPref;
-    private EditTextPreference notificationTimeOnePref, notificationTimeTwoPref, weeklyGoalPref, usernamePref;
+    private EditTextPreference   weeklyGoalPref, usernamePref;
+    private Preference notificationTimeOnePref, notificationTimeTwoPref;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -28,6 +32,24 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             }
         });
+
+        notificationTimeOnePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                showTimePickerDialog(getActivity().findViewById(R.id.notification_one_preference));
+                return false;
+            }
+        });
+
+        notificationTimeTwoPref.setOnPreferenceClickListener(p -> {
+            showTimePickerDialog(getActivity().findViewById(R.id.notification_two_preference));
+            return false;
+        });
+    }
+
+    public void showTimePickerDialog(View view){
+        DialogFragment fragment = new TimePickerFragment();
+        fragment.show(getActivity().getSupportFragmentManager(), "myApp:timePicker");
     }
 
     private void bindPrefs(){

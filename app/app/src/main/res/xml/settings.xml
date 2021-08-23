@@ -15,17 +15,20 @@
             android:title="@string/settings_category_notifications_title"
             />
 
-        <androidx.preference.EditTextPreference
-            android:key="notification_time_one"
+        <androidx.preference.Preference
+            android:id="@+id/notification_one_preference"
             android:dependency="notification_switch"
-            android:title="@string/settings_notification_time_one_title"
-            android:summary="@string/settings_notification_time_summary"
-            android:dialogTitle="@string/settings_notification_time_one_title"
             android:dialogMessage="@string/settings_notification_time_summary"
+            android:dialogTitle="@string/settings_notification_time_one_title"
+            android:key="notification_time_one"
+            android:summary="@string/settings_notification_time_summary"
+            android:title="@string/settings_notification_time_one_title"
             >
-        </androidx.preference.EditTextPreference>
 
-        <androidx.preference.EditTextPreference
+        </androidx.preference.Preference>
+
+        <androidx.preference.Preference
+            android:id="@+id/notification_two_preference"
             android:key="notification_time_two"
             android:dependency="notification_switch"
             android:title="@string/settings_notification_time_two_title"
@@ -33,7 +36,7 @@
             android:dialogTitle="@string/settings_notification_time_two_title"
             android:dialogMessage="@string/settings_notification_time_summary"
             >
-        </androidx.preference.EditTextPreference>
+        </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory
