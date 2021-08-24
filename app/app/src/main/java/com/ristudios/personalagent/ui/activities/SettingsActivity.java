@@ -42,23 +42,22 @@ public class SettingsActivity extends BaseActivity implements TimePickerFragment
             long triggerAt = Utils.millisForAlarm(h, m);
             //alarm.cancelAlarm(getApplicationContext(), Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
             alarm.setRepeatingAlarm(getApplicationContext(), triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
-            Toast.makeText(this, "Data saved!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.toast_time_set_succes), Toast.LENGTH_SHORT).show();
         }
         else if (mode == -1){ //HINT: Time for evening notifications
             prefs.edit().putInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, h).putInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, m).apply();
             long triggerAt = Utils.millisForAlarm(h, m);
             //alarm.cancelAlarm(getApplicationContext(), Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
             alarm.setRepeatingAlarm(getApplicationContext(), triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
-            Toast.makeText(this, "Data saved!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.toast_time_set_succes), Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(this, "Something went wrong, please try restarting the app", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.toast_time_set_failure), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onTimeDataSet(int h, int m) {
-        Log.d("TIMEPICKER_KEY", "Time set to " + h +":"+ m + " with TimeMode " +mode);
         writeDataToPrefs(h, m);
     }
 

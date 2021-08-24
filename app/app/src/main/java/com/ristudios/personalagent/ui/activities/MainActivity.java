@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener {
         initUI();
         initAPI();
         getSupportActionBar().setTitle(getResources().getString(R.string.start));
-        //initializeAlarms(); TODO: fix app so alarms will be cancelled when user changes prefs in settings
+        initializeAlarms();
     }
 
     private void initData() {
@@ -96,11 +96,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initializeAlarms();
-    }
+
 
     /**
      * Initializes the alarms depending on the settings
@@ -111,16 +107,13 @@ public class MainActivity extends BaseActivity implements WeatherDataListener {
         Alarm alarm = new Alarm();
         if (prefs.getBoolean(Utils.SP_NOTIFICATION_ENABLED_KEY, true)) {
             long triggerAt = Utils.millisForAlarm(prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7), prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
-            Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
+
             alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
 
             triggerAt = Utils.millisForAlarm(prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, 7), prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, 0));
             alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
+            Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
             Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, 0));
-        } else {
-            alarm.cancelAlarm(getApplicationContext(), Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
-            alarm.cancelAlarm(getApplicationContext(), Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
-            Log.d(Utils.LOG_ALARM, "Alarms have been cancelled (hopefully)");
         }
 
 

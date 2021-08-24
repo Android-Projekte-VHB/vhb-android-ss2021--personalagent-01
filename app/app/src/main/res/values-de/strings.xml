@@ -38,6 +38,11 @@
     <string name="settings_pa_weekly_goal_title">Wochenziel</string>
     <string name="settings_pa_weekly_goal_summary">Lege dein Punkteziel pro Woche fest</string>
 
+    <string name="toast_time_set_succes">Änderungen gespeichert</string>
+    <string name="toast_time_set_failure">Etwas ist schief gelaufen</string>
+    <string name="toast_notifications_disabled">Benachrichtigungen wurden deaktiviert</string>
+    <string name="toast_notifications_enabled">Benachrichtigungen wurden aktiviert</string>
+
     <string-array name="morning_notification_titles">
         <item>Guten morgen!</item>
         <item>Gut geschlafen?</item>
