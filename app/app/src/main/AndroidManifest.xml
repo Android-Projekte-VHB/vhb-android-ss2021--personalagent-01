@@ -4,8 +4,9 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -14,12 +15,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalAgent">
-        <activity android:name=".ui.activities.WeeklyOverviewActivity"
-            android:parentActivityName=".ui.activities.MainActivity"/>
-        <activity android:name=".ui.activities.SettingsActivity"
-            android:parentActivityName=".ui.activities.MainActivity"/>
-        <activity android:name=".ui.activities.CalendarActivity"
-            android:parentActivityName=".ui.activities.MainActivity"/>
+
+
+        <activity
+            android:name=".ui.activities.WeeklyOverviewActivity"
+            android:parentActivityName=".ui.activities.MainActivity" />
+        <activity
+            android:name=".ui.activities.SettingsActivity"
+            android:parentActivityName=".ui.activities.MainActivity" />
+        <activity
+            android:name=".ui.activities.CalendarActivity"
+            android:parentActivityName=".ui.activities.MainActivity" />
         <activity android:name=".ui.activities.BaseActivity" />
         <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
@@ -28,6 +34,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".utils.BootCompleteReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
         <receiver
             android:name=".utils.notifications.Alarm"
