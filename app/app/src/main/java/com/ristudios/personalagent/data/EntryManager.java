@@ -31,11 +31,7 @@ public class EntryManager {
     }
 
     public ArrayList<Entry> getCurrentEntries() {
-        ArrayList<Entry> currentEntries = new ArrayList<>();
-        for (Entry entry: entries) {
-            currentEntries.add(entry.copy());
-        }
-        return currentEntries;
+        return new ArrayList<>(entries);
     }
 
     public void requestUpdate() {
