@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.preference.PreferenceManager;
 import com.bumptech.glide.Glide;
@@ -53,7 +51,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         super.onCreate(savedInstanceState);
         setupNotificationChannel();
         initBurgerMenu();
-        initData();
         initUI();
         initData();
         initAPI();
@@ -64,6 +61,9 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     private void initData() {
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        manager = new EntryManager(this, this);
+        entryAdapter = new EntryAdapter(this);
+        recyclerView.setAdapter(entryAdapter);
     }
 
 
@@ -76,14 +76,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         tempMinTV = findViewById(R.id.minTV);
         precipitationTV = findViewById(R.id.precipitationTV);
         recyclerView = findViewById(R.id.recycler_view_entries);
-    }
-
-    private void initData() {
-        manager = new EntryManager(this, this);
-        entryAdapter = new EntryAdapter(this);
-        recyclerView.setAdapter(entryAdapter);
-        entryAdapter.setEntries(manager.getCurrentEntries());
-        entryAdapter.notifyDataSetChanged();
     }
 
     private void initAPI() {
@@ -156,6 +148,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     @Override
     public void onEntryListUpdated() {
-        entryAdapter.notifyDataSetChanged();
+        entryAdapter.updateEntries(manager.getCurrentEntries());
     }
 }

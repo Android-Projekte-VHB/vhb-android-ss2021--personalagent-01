@@ -40,8 +40,9 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryViewHolder> {
         holder.bindView(entry);
     }
 
-    public void setEntries(ArrayList<Entry> entries) {
-        currentEntries = entries;
+    public void updateEntries(ArrayList<Entry> entries) {
+        currentEntries.clear();
+        currentEntries.addAll(entries);
         this.notifyDataSetChanged();
     }
 
