@@ -2,17 +2,17 @@ package com.ristudios.personalagent.ui.activities;
 
 import android.Manifest;
 import android.app.AlarmManager;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.preference.PreferenceManager;
 import com.bumptech.glide.Glide;
 import com.ristudios.personalagent.R;
 import com.ristudios.personalagent.data.Category;
@@ -28,7 +28,6 @@ import com.ristudios.personalagent.utils.notifications.Alarm;
 import com.ristudios.personalagent.utils.notifications.NotificationHelper;
 
 
-
 /**
  * LauncherActivity, shows tasks for current day as well as weather information.
  */
@@ -40,26 +39,37 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     private static final int REQUEST_LOCATION_PERMISSIONS = 10;
     private TextView tempTV, tempMaxTV, tempMinTV, precipitationTV;
     private ImageView weatherIcon;
+
     private RecyclerView recyclerView;
     private EntryAdapter entryAdapter;
     private EntryManager manager;
+
+    private SharedPreferences prefs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
+        setupNotificationChannel();
         initBurgerMenu();
+        initData();
         initUI();
         initData();
         initAPI();
         getSupportActionBar().setTitle(getResources().getString(R.string.start));
-        setupNotificationChannel();
         initializeAlarms();
     }
 
 
+    private void initData() {
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    }
+
+
+
     //TODO: SUBJECT TO CHANGE! only for testing purposes - nothing final
-    private void initUI(){
+    private void initUI() {
         tempTV = findViewById(R.id.tv);
         weatherIcon = findViewById(R.id.imageEEEE);
         tempMaxTV = findViewById(R.id.maxTV);
@@ -76,7 +86,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         entryAdapter.notifyDataSetChanged();
     }
 
-    private void initAPI(){
+    private void initAPI() {
         requestLocationPermissions();
         provider = new WeatherDataProvider(getApplicationContext(), this);
         provider.update();
@@ -110,24 +120,25 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     }
 
+
+
     /**
      * Initializes the alarms depending on the settings
      */
     private void initializeAlarms() {
-        //TODO: Check if user has disabled notifications for morning/evening
-        //TODO: Check at what time the user wants to receive notifications
+
+        //TODO: fix app so alarms will be cancelled when user changes prefs in settings
         Alarm alarm = new Alarm();
-        long triggerAt = Utils.millisForAlarm(7, 0);
-        alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
-        triggerAt = Utils.millisForAlarm(19, 0);
-        alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
+        if (prefs.getBoolean(Utils.SP_NOTIFICATION_ENABLED_KEY, true)) {
+            long triggerAt = Utils.millisForAlarm(prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7), prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
 
+            alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
 
-        //NOTE: To change the timing (or rather anything about an alarm) it is necessary to first cancel the old alarm before setting the new one, otherwise android will not set a new alarm
-        //NOTE: Setting PendingIntent to FLAG_UPDATE_CURRENT seems to fix this problem. Further testing is required
-        //alarm.cancelAlarm(this, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
-        //alarm.cancelAlarm(this, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
-
+            triggerAt = Utils.millisForAlarm(prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, 7), prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, 0));
+            alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
+            Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
+            Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, 0));
+        }
 
 
     }
@@ -137,9 +148,9 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     public void onWeatherDataUpdated() {
         Weather weather = provider.getWeather();
         tempTV.setText(weather.getTemperature() + "°C");
-        tempMinTV.setText("Min: " + weather.getMinTemp()  + "°C");
-        tempMaxTV.setText("Max: " + weather.getMaxTemp()  + "°C");
-        precipitationTV.setText("Niederschlag: " +(int) weather.getPrecipitation() + "%");
+        tempMinTV.setText("Min: " + weather.getMinTemp() + "°C");
+        tempMaxTV.setText("Max: " + weather.getMaxTemp() + "°C");
+        precipitationTV.setText("Niederschlag: " + (int) weather.getPrecipitation() + "%");
         Glide.with(this).load(weather.getImageURL()).into(weatherIcon);
     }
 

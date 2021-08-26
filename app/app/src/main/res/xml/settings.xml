@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <androidx.preference.PreferenceCategory
+        android:title="@string/settings_category_notifications_title"
+        >
+
+        <androidx.preference.SwitchPreference
+            android:defaultValue="true"
+            android:key="notification_switch"
+            android:summary="@string/settings_notification_switch_summary"
+            android:title="@string/settings_category_notifications_title"
+            />
+
+        <androidx.preference.Preference
+            android:id="@+id/notification_one_preference"
+            android:dependency="notification_switch"
+            android:dialogMessage="@string/settings_notification_time_summary"
+            android:dialogTitle="@string/settings_notification_time_one_title"
+            android:key="notification_time_one"
+            android:summary="@string/settings_notification_time_summary"
+            android:title="@string/settings_notification_time_one_title"
+            >
+
+        </androidx.preference.Preference>
+
+        <androidx.preference.Preference
+            android:id="@+id/notification_two_preference"
+            android:key="notification_time_two"
+            android:dependency="notification_switch"
+            android:title="@string/settings_notification_time_two_title"
+            android:summary="@string/settings_notification_time_summary"
+            android:dialogTitle="@string/settings_notification_time_two_title"
+            android:dialogMessage="@string/settings_notification_time_summary"
+            >
+        </androidx.preference.Preference>
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory
+        android:title="@string/settings_category_permissions_title"
+        >
+        <androidx.preference.SwitchPreference
+            android:defaultValue="true"
+            android:key="permission_switch"
+            android:summary="@string/settings_location_permission_summary"
+            android:title="@string/settings_location_permission_title"
+            />
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory
+        android:title="@string/settings_category_pa_title"
+        >
+
+        <androidx.preference.EditTextPreference
+            android:key="username"
+            android:title="@string/settings_pa_username_title"
+            android:summary="@string/settings_pa_username_summary"
+            android:dialogTitle="@string/settings_pa_username_title"
+            android:dialogMessage="@string/settings_pa_username_summary"
+
+            />
+
+        <androidx.preference.EditTextPreference
+            android:title="@string/settings_pa_weekly_goal_title"
+            android:key="weekly_point_goal"
+            android:summary="@string/settings_pa_weekly_goal_summary"
+            />
+
+    </androidx.preference.PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

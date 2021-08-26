@@ -13,7 +13,7 @@
     <string name="options">Optionen</string>
     <string name="navigation">Navigation</string>
     <string name="notification_channel_name">Benachrichtigungen</string>
-    <string name="notification_channel_description">Alle Benachrichtigungen werde über diesen Kanal geschickt</string>
+    <string name="notification_channel_description">Alle Benachrichtigungen werden über diesen Kanal geschickt</string>
 
     //categories
     <string name="work">Arbeit</string>
@@ -21,6 +21,27 @@
     <string name="hobby">Hobby</string>
     <string name="appointment">Termin</string>
 
+    //Settings
+    <string name="settings_category_notifications_title">Benachrichtigungen</string>
+    <string name="settings_notification_switch_summary">Aktiviere Benachrichtigungen</string>
+    <string name="settings_notification_time_one_title">Benachrichtungszeitpunkt morgens</string>
+    <string name="settings_notification_time_two_title">Benachrichtungszeitpunkt abends</string>
+    <string name="settings_notification_time_summary">Lege die Zeit fest, an der du Benachrichtigungen erhalten möchtest</string>
+
+    <string name="settings_category_permissions_title">Berechtigungen</string>
+    <string name="settings_location_permission_title">Standort</string>
+    <string name="settings_location_permission_summary">Erlaube deinen Standort zu erfassen, um Wetterdaten zu erhalten</string>
+
+    <string name="settings_category_pa_title">PersonalAgent</string>
+    <string name="settings_pa_username_title">Nutzername</string>
+    <string name="settings_pa_username_summary">Lege fest, wie dich dein PersonalAgent nennen soll</string>
+    <string name="settings_pa_weekly_goal_title">Wochenziel</string>
+    <string name="settings_pa_weekly_goal_summary">Lege dein Punkteziel pro Woche fest</string>
+
+    <string name="toast_time_set_succes">Änderungen gespeichert</string>
+    <string name="toast_time_set_failure">Etwas ist schief gelaufen</string>
+    <string name="toast_notifications_disabled">Benachrichtigungen wurden deaktiviert</string>
+    <string name="toast_notifications_enabled">Benachrichtigungen wurden aktiviert</string>
 
     <string-array name="morning_notification_titles">
         <item>Guten morgen!</item>
