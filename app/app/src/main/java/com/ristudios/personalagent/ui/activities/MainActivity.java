@@ -7,14 +7,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.ristudios.personalagent.R;
+import com.ristudios.personalagent.data.Category;
+import com.ristudios.personalagent.data.Difficulty;
+import com.ristudios.personalagent.data.Entry;
+import com.ristudios.personalagent.data.EntryManager;
 import com.ristudios.personalagent.data.api.Weather;
 import com.ristudios.personalagent.data.api.WeatherDataListener;
 import com.ristudios.personalagent.data.api.WeatherDataProvider;
+import com.ristudios.personalagent.ui.adapter.EntryAdapter;
 import com.ristudios.personalagent.utils.Utils;
 import com.ristudios.personalagent.utils.notifications.Alarm;
 import com.ristudios.personalagent.utils.notifications.NotificationHelper;
@@ -25,15 +33,16 @@ import com.ristudios.personalagent.utils.notifications.NotificationHelper;
  * LauncherActivity, shows tasks for current day as well as weather information.
  */
 
-public class MainActivity extends BaseActivity implements WeatherDataListener {
+public class MainActivity extends BaseActivity implements WeatherDataListener, EntryManager.EntryManagerListener {
 
     //For API-testing
     private WeatherDataProvider provider;
     private static final int REQUEST_LOCATION_PERMISSIONS = 10;
     private TextView tempTV, tempMaxTV, tempMinTV, precipitationTV;
     private ImageView weatherIcon;
-
-
+    private RecyclerView recyclerView;
+    private EntryAdapter entryAdapter;
+    private EntryManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +50,12 @@ public class MainActivity extends BaseActivity implements WeatherDataListener {
         super.onCreate(savedInstanceState);
         initBurgerMenu();
         initUI();
+        initData();
         initAPI();
         getSupportActionBar().setTitle(getResources().getString(R.string.start));
         setupNotificationChannel();
         initializeAlarms();
     }
-
-    /**
-     *
-     */
 
 
     //TODO: SUBJECT TO CHANGE! only for testing purposes - nothing final
@@ -59,6 +65,15 @@ public class MainActivity extends BaseActivity implements WeatherDataListener {
         tempMaxTV = findViewById(R.id.maxTV);
         tempMinTV = findViewById(R.id.minTV);
         precipitationTV = findViewById(R.id.precipitationTV);
+        recyclerView = findViewById(R.id.recycler_view_entries);
+    }
+
+    private void initData() {
+        manager = new EntryManager(this, this);
+        entryAdapter = new EntryAdapter(this);
+        recyclerView.setAdapter(entryAdapter);
+        entryAdapter.setEntries(manager.getCurrentEntries());
+        entryAdapter.notifyDataSetChanged();
     }
 
     private void initAPI(){
@@ -126,5 +141,10 @@ public class MainActivity extends BaseActivity implements WeatherDataListener {
         tempMaxTV.setText("Max: " + weather.getMaxTemp()  + "°C");
         precipitationTV.setText("Niederschlag: " +(int) weather.getPrecipitation() + "%");
         Glide.with(this).load(weather.getImageURL()).into(weatherIcon);
+    }
+
+    @Override
+    public void onEntryListUpdated() {
+        entryAdapter.notifyDataSetChanged();
     }
 }

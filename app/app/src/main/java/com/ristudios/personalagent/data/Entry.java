@@ -37,4 +37,12 @@ public class Entry {
     public long getDate() {
         return date;
     }
+
+    public String getId() {
+        return uuid;
+    }
+
+    public Entry copy() {
+        return new Entry(name, category, difficulty, date);
+    }
 }
