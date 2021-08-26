@@ -12,11 +12,6 @@ import com.ristudios.personalagent.ui.activities.MainActivity;
 import com.ristudios.personalagent.R;
 import com.ristudios.personalagent.utils.Utils;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 public class Alarm extends BroadcastReceiver {
 
     public static final String TYPE_MORNING_ALARM = "com.ristudios.ALARM_MORNING_TRIGGERED";
@@ -46,7 +41,7 @@ public class Alarm extends BroadcastReceiver {
             String title = Utils.getRandomNotificationString(context, Utils.TYPE_MORNING_TITLE);
             String message = Utils.getRandomNotificationString(context, Utils.TYPE_MORNING_MESSAGE);
             PendingIntent pendingIntent = notificationHelper.createContentIntent(sender, NotificationHelper.NOTIFICATION_REQUEST_CODE_MORNING);
-            Notification notification = notificationHelper.createNotification(title, message, R.drawable.ic_test_24dp, NotificationHelper.AUTOCANCEL, pendingIntent);
+            Notification notification = notificationHelper.createNotification(title, message, R.drawable.android_mascot_30dp, NotificationHelper.AUTOCANCEL, pendingIntent);
             notificationHelper.showNotification(NotificationHelper.MORNING_NOTIFICATION_ID, notification);
             Log.d(Utils.LOG_ALARM, "Alarm for morning!");
         }
@@ -54,7 +49,7 @@ public class Alarm extends BroadcastReceiver {
             String title = Utils.getRandomNotificationString(context, Utils.TYPE_EVENING_TITLE);
             String message = Utils.getRandomNotificationString(context, Utils.TYPE_EVENING_MESSAGE);
             PendingIntent pendingIntent = notificationHelper.createContentIntent(sender, NotificationHelper.NOTIFICATION_REQUEST_CODE_EVENING);
-            Notification notification = notificationHelper.createNotification(title, message, R.drawable.ic_test_24dp, NotificationHelper.AUTOCANCEL, pendingIntent);
+            Notification notification = notificationHelper.createNotification(title, message, R.drawable.android_mascot_30dp, NotificationHelper.AUTOCANCEL, pendingIntent);
             notificationHelper.showNotification(NotificationHelper.EVENING_NOTIFICATION_ID, notification);
             Log.d(Utils.LOG_ALARM, "Alarm for evening!");
         }

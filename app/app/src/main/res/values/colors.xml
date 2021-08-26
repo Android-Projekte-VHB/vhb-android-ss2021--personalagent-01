@@ -14,4 +14,10 @@
     <color name="fitness_color">#218c74</color>
     <color name="appointment_color">#B33771</color>
 
+    //mascot (difficulty)
+    <color name="easy">#4cd137</color>
+    <color name="medium">#fed330</color>
+    <color name="hard">#eb2f06</color>
+
+
 </resources>
