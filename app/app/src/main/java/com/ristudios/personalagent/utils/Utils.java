@@ -8,9 +8,16 @@ import androidx.annotation.IntRange;
 import com.ristudios.personalagent.R;
 
 import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalField;
 import java.util.Random;
 
 public final class Utils {
@@ -20,8 +27,10 @@ public final class Utils {
     public static final int TYPE_MORNING_TITLE = 559;
     public static final int TYPE_EVENING_MESSAGE = 560;
     public static final int TYPE_EVENING_TITLE = 561;
+    public static final int REQUEST_LOCATION_PERMISSIONS = 10;
 
-    //SharedPreferences Keys
+    //region SharedPreferences Keys
+
     public static final String SP_NOTIFICATION_ENABLED_KEY = "notification_switch";
     public static final String SP_NOTIFICATION_TIME_ONE_KEY = "notification_time_one";
     public static final String SP_NOTIFICATION_TIME_TWO_KEY = "notification_time_two";
@@ -33,6 +42,10 @@ public final class Utils {
     public static final String SP_NOTIFICATION_TIME_ONE_MINUTE_KEY = "notification_time_one_minute";
     public static final String SP_NOTIFICATION_TIME_TWO_MINUTE_KEY = "notification_time_two_minute";
 
+    //endregion
+
+    //region java.time converters and utils
+
     /**
      * Returns the current time considering the systems default timezone.
      * @return current Time (as ZonedDateTime).
@@ -41,7 +54,6 @@ public final class Utils {
     {
         return ZonedDateTime.now(ZoneId.systemDefault());
     }
-
 
     /**
      * Returns the time (in milliseconds) at a specific point in the future that can be passed to AlarmManager.
@@ -74,6 +86,63 @@ public final class Utils {
         return currentZonedTime.toInstant().toEpochMilli() + timeTillAlarm;
     }
 
+    /**
+     * Converts hour and minute to the epoch milli for the current day, used to get the time for an
+     * entry.
+     * @param hour The hour of the entry.
+     * @param minute The minute of the entry.
+     * @return The milliseconds representing today at the time hour:minute.
+     */
+    public static long millisForEntry(int hour, int minute)
+    {
+        ZonedDateTime currentTime = Utils.getCurrentZonedTime();
+        LocalTime specific = LocalTime.of(hour, minute);
+        return currentTime.with(specific).toInstant().toEpochMilli();
+    }
+
+    /**
+     * Converts milliseconds into a ZonedDateTime, used for converting the long date of entries back to
+     * an actual date
+     * @param millis the milliseconds of the entry
+     * @return ZonedDateTime representing the time of the entry
+     */
+    public static ZonedDateTime getDateFromMillis(long millis){
+        ZonedDateTime date = ZonedDateTime.now(ZoneId.systemDefault());
+        return date.with(Instant.ofEpochMilli(millis));
+    }
+
+    /**
+     * Formats a ZonedDateTime to display hours and minutes.
+     * @param zonedDateTime The Date to be formatted.
+     * @return Formatted String HH:mm
+     */
+    public static String getFormattedTime(ZonedDateTime zonedDateTime)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return formatter.format(zonedDateTime);
+    }
+
+    /**
+     * Formats a ZonedDateTime to display the current date
+     * @param zonedDateTime The Date to be formatted.
+     * @return Formatted String dd.MM.yyyy
+     */
+    public static String getFormattedDate(ZonedDateTime zonedDateTime){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return formatter.format(zonedDateTime);
+    }
+
+    /**
+     * Formats a ZonedDateTime to display the current date with time
+     * @param zonedDateTime The Date to be formatted.
+     * @return Formatted String dd.MM.yyyy HH:mm
+     */
+    public static String getFormattedDateTime(ZonedDateTime zonedDateTime){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        return formatter.format(zonedDateTime);
+    }
+
+    //endregion
 
 
     public static String getRandomNotificationString(Context context, int type) {
