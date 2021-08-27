@@ -8,10 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.preference.PreferenceManager;
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ristudios.personalagent.R;
 import com.ristudios.personalagent.data.Category;
 import com.ristudios.personalagent.data.Difficulty;
@@ -21,20 +25,22 @@ import com.ristudios.personalagent.data.api.Weather;
 import com.ristudios.personalagent.data.api.WeatherDataListener;
 import com.ristudios.personalagent.data.api.WeatherDataProvider;
 import com.ristudios.personalagent.ui.adapter.EntryAdapter;
+import com.ristudios.personalagent.ui.fragments.AddEntryDialogFragment;
 import com.ristudios.personalagent.utils.Utils;
 import com.ristudios.personalagent.utils.notifications.Alarm;
 import com.ristudios.personalagent.utils.notifications.NotificationHelper;
+
+import java.time.format.DateTimeFormatter;
 
 
 /**
  * LauncherActivity, shows tasks for current day as well as weather information.
  */
 
-public class MainActivity extends BaseActivity implements WeatherDataListener, EntryManager.EntryManagerListener {
+public class MainActivity extends BaseActivity implements WeatherDataListener, EntryManager.EntryManagerListener, AddEntryDialogFragment.AddEntryDialogClickListener {
 
     //For API-testing
     private WeatherDataProvider provider;
-    private static final int REQUEST_LOCATION_PERMISSIONS = 10;
     private TextView tempTV, tempMaxTV, tempMinTV, precipitationTV;
     private ImageView weatherIcon;
 
@@ -76,6 +82,11 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         tempMinTV = findViewById(R.id.minTV);
         precipitationTV = findViewById(R.id.precipitationTV);
         recyclerView = findViewById(R.id.recycler_view_entries);
+        FloatingActionButton fabAddEntry = findViewById(R.id.fab_add_entry);
+        fabAddEntry.setOnClickListener(v -> {
+            DialogFragment dialog = new AddEntryDialogFragment();
+            dialog.show(getSupportFragmentManager(), "AddEntryDialog");
+        });
     }
 
     private void initAPI() {
@@ -89,13 +100,13 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     private void requestLocationPermissions() {
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
-        requestPermissions(permissions, REQUEST_LOCATION_PERMISSIONS);
+        requestPermissions(permissions, Utils.REQUEST_LOCATION_PERMISSIONS);
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[]
             grantResults) {
         switch (requestCode) {
-            case REQUEST_LOCATION_PERMISSIONS:
+            case Utils.REQUEST_LOCATION_PERMISSIONS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     break;
                 }
@@ -149,5 +160,17 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     @Override
     public void onEntryListUpdated() {
         entryAdapter.updateEntries(manager.getCurrentEntries());
+    }
+
+    @Override
+    public void onPositiveClicked(String name, int hour, int minute, Category category, Difficulty difficulty) {
+        Entry entry = new Entry(name, category, difficulty, Utils.millisForEntry(hour, minute));
+        manager.addEntry(entry);
+        Log.d("JAVA_TIME", "Item added with time " + Utils.getFormattedDateTime(Utils.getDateFromMillis(entry.getDate())));
+    }
+
+    @Override
+    public void onNegativeClicked() {
+        Toast.makeText(this, "Eintrag verworfen", Toast.LENGTH_SHORT).show();
     }
 }

@@ -16,11 +16,37 @@
 <string name="notification_channel_name">Notifications</string>
 <string name="notification_channel_description">Handles all notifications</string>
 
+
 //categories
 <string name="work">work</string>
 <string name="fitness">fitness</string>
 <string name="hobby">hobby</string>
 <string name="appointment">appointment</string>
+
+
+    //dialog add entry
+
+    <string-array name="category_array">
+        <item>work</item>
+        <item>hobby</item>
+        <item>fitness</item>
+        <item>appointment</item>
+    </string-array>
+
+    <string-array name="difficulty_array">
+        <item>easy</item>
+        <item>medium</item>
+        <item>hard</item>
+    </string-array>
+
+    <string name="entry_name">Name</string>
+    <string name="category">Category</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="time">Time</string>
+    <string name="dialog_yes_option">Add</string>
+    <string name="dialog_no_option">Dismiss</string>
+    <string name="toast_entry_invalid_name">Please enter a name</string>
+    <string name="toast_entry_invalid_time">Please enter a valid time</string>
 
 //Settings
 <string name="settings_category_notifications_title">Notifications</string>
