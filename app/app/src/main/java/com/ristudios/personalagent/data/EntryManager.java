@@ -22,13 +22,6 @@ public class EntryManager {
         listener.onEntryListUpdated();
     }
 
-    public void deleteEntry(Entry entry) {
-        for (Entry currentEntry: entries) {
-            if(entry.getId().equals(currentEntry.getId())) {
-                entries.remove(entry);
-            }
-        }
-    }
 
     public void removeEntry(Entry entry){
         Iterator<Entry> iter = entries.iterator();
@@ -37,6 +30,12 @@ public class EntryManager {
             if (str.getId().equals(entry.getId()))
                 iter.remove();
         }
+    }
+
+    public void addEntryAtPosition(int position, Entry entry)
+    {
+        entries.add(position, entry);
+        listener.onEntryListUpdated();
     }
 
     public ArrayList<Entry> getCurrentEntries() {

@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,10 +23,6 @@ import androidx.preference.PreferenceManager;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.preference.PreferenceManager;
-import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.ristudios.personalagent.R;
@@ -37,7 +34,7 @@ import com.ristudios.personalagent.data.api.Weather;
 import com.ristudios.personalagent.data.api.WeatherDataListener;
 import com.ristudios.personalagent.data.api.WeatherDataProvider;
 import com.ristudios.personalagent.ui.adapter.EntryAdapter;
-import com.ristudios.personalagent.ui.fragments.AddEntryDialogFragment;
+import com.ristudios.personalagent.ui.fragments.AddOrUpdateEntryDialogFragment;
 import com.ristudios.personalagent.utils.Utils;
 import com.ristudios.personalagent.utils.notifications.Alarm;
 import com.ristudios.personalagent.utils.notifications.NotificationHelper;
@@ -45,16 +42,13 @@ import com.ristudios.personalagent.utils.notifications.NotificationHelper;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.time.format.DateTimeFormatter;
-
-
 
 /**
  * LauncherActivity, shows tasks for current day as well as weather information.
  */
 
 
-public class MainActivity extends BaseActivity implements WeatherDataListener, EntryManager.EntryManagerListener, AddEntryDialogFragment.AddEntryDialogClickListener, EntryAdapter.OnEntryEditedListener {
+public class MainActivity extends BaseActivity implements WeatherDataListener, EntryManager.EntryManagerListener, AddOrUpdateEntryDialogFragment.AddEntryDialogClickListener, EntryAdapter.OnEntryEditedListener {
 
 
     //For API-testing
@@ -106,9 +100,10 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         iconDelete = Utils.drawableToBitmap(getDrawable(R.drawable.ic_baseline_delete_sweep_32));
         initAdapterGestures();
 
-        FloatingActionButton fabAddEntry = findViewById(R.id.fab_add_entry);
-        fabAddEntry.setOnClickListener(v -> {
-            DialogFragment dialog = new AddEntryDialogFragment();
+        Button btnNewEntry = findViewById(R.id.btn_new_entry);
+        btnNewEntry.setOnClickListener(v -> {
+            AddOrUpdateEntryDialogFragment dialog = new AddOrUpdateEntryDialogFragment();
+            dialog.setMode(1);
             dialog.show(getSupportFragmentManager(), "AddEntryDialog");
         });
 
@@ -189,6 +184,10 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     //TODO: FÜR PATRICK
     @Override
     public void onEntryEdited(Entry entry, int position) {
+        AddOrUpdateEntryDialogFragment dialog = new AddOrUpdateEntryDialogFragment();
+        dialog.setMode(-1);
+        dialog.setEntry(entry, position);
+        dialog.show(getSupportFragmentManager(), "AddEntryDialog");
 
     }
 
@@ -276,15 +275,31 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
 
     @Override
-    public void onPositiveClicked(String name, int hour, int minute, Category category, Difficulty difficulty) {
+    public void onItemNew(String name, int hour, int minute, Category category, Difficulty difficulty) {
         Entry entry = new Entry(name, category, difficulty, Utils.millisForEntry(hour, minute));
         manager.addEntry(entry);
         Log.d("JAVA_TIME", "Item added with time " + Utils.getFormattedDateTime(Utils.getDateFromMillis(entry.getDate())));
     }
 
     @Override
-    public void onNegativeClicked() {
-        Toast.makeText(this, "Eintrag verworfen", Toast.LENGTH_SHORT).show();
+    public void onItemUpdate(String name, int hour, int minute, Category category, Difficulty difficulty, Entry oldEntry, int position) {
+        manager.removeEntry(oldEntry);
+        //entryAdapter.notifyItemRemoved(position);
+        //entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
+        Entry entry = new Entry(name, category, difficulty, Utils.millisForEntry(hour, minute));
+        manager.addEntryAtPosition(position, entry);
+        entryAdapter.notifyDataSetChanged();
+        Toast.makeText(this, getString(R.string.toast_changes_successful), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNegativeClicked(int mode) {
+        if (mode == 1) {
+            Toast.makeText(this, getString(R.string.toast_new_entry_discarded), Toast.LENGTH_SHORT).show();
+        }
+        else if (mode == -1){
+            Toast.makeText(this, getString(R.string.toast_changes_discarded), Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

@@ -15,6 +15,10 @@
 <string name="navigation">Navigation</string>
 <string name="notification_channel_name">Notifications</string>
 <string name="notification_channel_description">Handles all notifications</string>
+    <string name="btn_new_entry_text">Add entry</string>
+    <string name="toast_changes_successful">Changes successful</string>
+    <string name="toast_changes_discarded">Changes discarded</string>
+    <string name="toast_new_entry_discarded">Entry discarded</string>
 
 
 //categories
@@ -37,13 +41,14 @@
         <item>easy</item>
         <item>medium</item>
         <item>hard</item>
+        <item>none</item>
     </string-array>
 
     <string name="entry_name">Name</string>
     <string name="category">Category</string>
     <string name="difficulty">Difficulty</string>
     <string name="time">Time</string>
-    <string name="dialog_yes_option">Add</string>
+    <string name="dialog_yes_option">Save</string>
     <string name="dialog_no_option">Dismiss</string>
     <string name="toast_entry_invalid_name">Please enter a name</string>
     <string name="toast_entry_invalid_time">Please enter a valid time</string>

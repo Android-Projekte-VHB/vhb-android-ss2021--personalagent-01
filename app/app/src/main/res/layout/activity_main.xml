@@ -85,12 +85,15 @@
 
         </LinearLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_add_entry"
-                android:layout_width="match_parent"
+
+            <Button
+                android:id="@+id/btn_new_entry"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:clickable="true"
-                app:srcCompat="@android:drawable/ic_menu_add" />
+                android:backgroundTint="@color/teal_200"
+                android:text="@string/btn_new_entry_text" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_entries"
