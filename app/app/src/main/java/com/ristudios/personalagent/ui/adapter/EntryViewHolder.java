@@ -2,8 +2,6 @@ package com.ristudios.personalagent.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,13 +20,16 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
     private TextView textView;
     private ImageView imageView;
     private ConstraintLayout constraint;
+    private OnEntryClickedListener listener;
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    public EntryViewHolder(@NonNull @NotNull View itemView) {
+    public EntryViewHolder(@NonNull @NotNull View itemView, OnEntryClickedListener listener) {
         super(itemView);
+        this.listener = listener;
         textView = itemView.findViewById(R.id.entry_text);
         imageView = itemView.findViewById(R.id.difficulty_indicator);
         constraint = itemView.findViewById(R.id.entry_constraint);
+
     }
 
     public void bindView(Entry entry) {
@@ -36,6 +37,13 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
         imageView.setImageResource(R.drawable.android_mascot_30dp);
         setBackgroundForCategory(entry);
         setDifficultyIndicator(entry);
+        constraint.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                listener.onEntryClicked(getAdapterPosition());
+                return false;
+            }
+        });
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -73,5 +81,8 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
             default:
                 break;
         }
+    }
+    public interface OnEntryClickedListener {
+        void onEntryClicked(int position);
     }
 }
