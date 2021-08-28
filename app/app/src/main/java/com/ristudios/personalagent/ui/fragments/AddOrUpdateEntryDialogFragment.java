@@ -22,18 +22,24 @@ import androidx.fragment.app.DialogFragment;
 import com.ristudios.personalagent.R;
 import com.ristudios.personalagent.data.Category;
 import com.ristudios.personalagent.data.Difficulty;
+import com.ristudios.personalagent.data.Entry;
+import com.ristudios.personalagent.utils.Utils;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 
-public class AddEntryDialogFragment extends DialogFragment {
+public class AddOrUpdateEntryDialogFragment extends DialogFragment {
 
     private AddEntryDialogClickListener listener;
     private EditText edtName, edtHours, edtMinutes;
     private Spinner spnCategory, spnDifficulty;
     private TextView txtTimeSeparator, txtTimeHeader;
+    private int mode; //1 for new entry, -1 for editing an existing one+
+    private Entry entry;
+    private int position;
 
     @Override
     public void onAttach(@NonNull @NotNull Context context) {
@@ -41,10 +47,59 @@ public class AddEntryDialogFragment extends DialogFragment {
         listener = (AddEntryDialogClickListener) context;
     }
 
+
+    public void setMode(int mode){
+        this.mode = mode;
+    }
+
+    public void setEntry(Entry entry, int position){
+        this.entry = entry;
+        this.position = position;
+    }
+
+    public void setData()
+    {
+        if (entry != null) {
+            edtName.setText(entry.getName());
+            switch (entry.getCategory()) {
+                case WORK:
+                    spnCategory.setSelection(0);
+                    break;
+                case HOBBY:
+                    spnCategory.setSelection(1);
+                    break;
+                case FITNESS:
+                    spnCategory.setSelection(2);
+                    break;
+                case APPOINTMENT:
+                    spnCategory.setSelection(3);
+                    break;
+            }
+            switch (entry.getDifficulty()) {
+                case EASY:
+                    spnDifficulty.setSelection(0);
+                    break;
+                case MEDIUM:
+                    spnDifficulty.setSelection(1);
+                    break;
+                case HARD:
+                    spnDifficulty.setSelection(2);
+                    break;
+                case NONE:
+                    spnDifficulty.setSelection(3);
+                    spnDifficulty.setEnabled(false);
+            }
+            ZonedDateTime zonedDateTime = Utils.getDateFromMillis(entry.getDate());
+            edtHours.setText(String.valueOf(zonedDateTime.getHour()));
+            edtMinutes.setText(String.valueOf(zonedDateTime.getMinute()));
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         initViews();
+        setData();
         adjustLayout();
 
     }
@@ -63,8 +118,8 @@ public class AddEntryDialogFragment extends DialogFragment {
                 .setNegativeButton(getResources().getString(R.string.dialog_no_option), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        AddEntryDialogFragment.this.getDialog().cancel();
-                        listener.onNegativeClicked();
+                        AddOrUpdateEntryDialogFragment.this.getDialog().dismiss();
+                        listener.onNegativeClicked(mode);
                     }
                 }).create();
 
@@ -83,7 +138,12 @@ public class AddEntryDialogFragment extends DialogFragment {
                             {
                                 if (timeValuesValid())
                                 {
-                                    listener.onPositiveClicked(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty());
+                                    if (mode == 1) {
+                                        listener.onItemNew(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty());
+                                    }
+                                    else if (mode == -1){
+                                        listener.onItemUpdate(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty(), entry, position);
+                                    }
                                     dialog.dismiss();
                                 }
                                 else {
@@ -105,6 +165,11 @@ public class AddEntryDialogFragment extends DialogFragment {
         return dialog;
     }
 
+
+
+
+    //region information collectors
+
     private void checkForTime() {
         if (spnCategory.getSelectedItemPosition() != 3) {
             if (!timeSet()){
@@ -113,9 +178,6 @@ public class AddEntryDialogFragment extends DialogFragment {
             }
         }
     }
-
-
-    //region information collectors
 
 
     private String getResultName() {
@@ -161,6 +223,8 @@ public class AddEntryDialogFragment extends DialogFragment {
             case 2:
                 selected = Difficulty.HARD;
                 break;
+            case 3: selected = Difficulty.NONE;
+            break;
         }
         return selected;
     }
@@ -229,14 +293,32 @@ public class AddEntryDialogFragment extends DialogFragment {
                     edtMinutes.setVisibility(View.VISIBLE);
                     txtTimeSeparator.setVisibility(View.VISIBLE);
                     txtTimeHeader.setVisibility(View.VISIBLE);
+                    spnDifficulty.setSelection(3);
+                    spnDifficulty.setEnabled(false);
                 } else {
 
                     edtHours.setVisibility(View.GONE);
                     edtMinutes.setVisibility(View.GONE);
                     txtTimeSeparator.setVisibility(View.GONE);
                     txtTimeHeader.setVisibility(View.GONE);
+                    spnDifficulty.setSelection(0);
+                    spnDifficulty.setEnabled(true);
 
                 }
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spnDifficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (position == 3 && spnCategory.getSelectedItemPosition() != 3){
+                        spnDifficulty.setSelection(0);
+                    }
             }
 
             @Override
@@ -249,8 +331,8 @@ public class AddEntryDialogFragment extends DialogFragment {
     //endregion
 
     public interface AddEntryDialogClickListener {
-        void onPositiveClicked(String name, int hour, int minute, Category category, Difficulty difficulty);
-
-        void onNegativeClicked();
+        void onItemNew(String name, int hour, int minute, Category category, Difficulty difficulty);
+        void onItemUpdate(String name, int hour, int minute, Category category, Difficulty difficulty, Entry oldEntry, int position);
+        void onNegativeClicked(int mode);
     }
 }

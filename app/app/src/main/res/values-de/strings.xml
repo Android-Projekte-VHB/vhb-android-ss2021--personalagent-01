@@ -14,6 +14,10 @@
     <string name="navigation">Navigation</string>
     <string name="notification_channel_name">Benachrichtigungen</string>
     <string name="notification_channel_description">Alle Benachrichtigungen werden über diesen Kanal geschickt</string>
+    <string name="btn_new_entry_text">Eintrag hinzufügen</string>
+    <string name="toast_changes_successful">Änderungen gespeichert</string>
+    <string name="toast_changes_discarded">Änderungen verworfen</string>
+    <string name="toast_new_entry_discarded">Eintrag verworfen</string>
 
 
     //categories
@@ -35,10 +39,11 @@
         <item>einfach</item>
         <item>mittel</item>
         <item>schwer</item>
+        <item>Keine</item>
     </string-array>
 
     <string name="entry_name">Name</string>
-    <string name="dialog_yes_option">Hinzufügen</string>
+    <string name="dialog_yes_option">Speichern</string>
     <string name="dialog_no_option">Verwerfen</string>
     <string name="category">Kategorie</string>
     <string name="difficulty">Schwierigkeit</string>
