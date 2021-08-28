@@ -4,18 +4,30 @@ import android.Manifest;
 import android.app.AlarmManager;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.preference.PreferenceManager;
+import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
+
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.preference.PreferenceManager;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.ristudios.personalagent.R;
 import com.ristudios.personalagent.data.Category;
 import com.ristudios.personalagent.data.Difficulty;
@@ -30,25 +42,32 @@ import com.ristudios.personalagent.utils.Utils;
 import com.ristudios.personalagent.utils.notifications.Alarm;
 import com.ristudios.personalagent.utils.notifications.NotificationHelper;
 
+
+import org.jetbrains.annotations.NotNull;
+
 import java.time.format.DateTimeFormatter;
+
 
 
 /**
  * LauncherActivity, shows tasks for current day as well as weather information.
  */
 
-public class MainActivity extends BaseActivity implements WeatherDataListener, EntryManager.EntryManagerListener, AddEntryDialogFragment.AddEntryDialogClickListener {
+
+public class MainActivity extends BaseActivity implements WeatherDataListener, EntryManager.EntryManagerListener, AddEntryDialogFragment.AddEntryDialogClickListener, EntryAdapter.OnEntryEditedListener {
+
 
     //For API-testing
     private WeatherDataProvider provider;
     private TextView tempTV, tempMaxTV, tempMinTV, precipitationTV;
     private ImageView weatherIcon;
-
     private RecyclerView recyclerView;
     private EntryAdapter entryAdapter;
     private EntryManager manager;
-
     private SharedPreferences prefs;
+    private Paint swipeColor = new Paint();
+    private Bitmap iconCheck, iconDelete;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -67,11 +86,11 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     private void initData() {
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
         manager = new EntryManager(this, this);
-        entryAdapter = new EntryAdapter(this);
+        entryAdapter = new EntryAdapter(this, this);
         recyclerView.setAdapter(entryAdapter);
     }
-
 
 
     //TODO: SUBJECT TO CHANGE! only for testing purposes - nothing final
@@ -82,11 +101,17 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         tempMinTV = findViewById(R.id.minTV);
         precipitationTV = findViewById(R.id.precipitationTV);
         recyclerView = findViewById(R.id.recycler_view_entries);
+
+        iconCheck = Utils.drawableToBitmap(getDrawable(R.drawable.ic_baseline_check_32));
+        iconDelete = Utils.drawableToBitmap(getDrawable(R.drawable.ic_baseline_delete_sweep_32));
+        initAdapterGestures();
+
         FloatingActionButton fabAddEntry = findViewById(R.id.fab_add_entry);
         fabAddEntry.setOnClickListener(v -> {
             DialogFragment dialog = new AddEntryDialogFragment();
             dialog.show(getSupportFragmentManager(), "AddEntryDialog");
         });
+
     }
 
     private void initAPI() {
@@ -123,8 +148,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     }
 
-
-
     /**
      * Initializes the alarms depending on the settings
      */
@@ -142,7 +165,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
             Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
             Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, 0));
         }
-
 
     }
 
@@ -162,6 +184,97 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         entryAdapter.updateEntries(manager.getCurrentEntries());
     }
 
+
+
+    //TODO: FÜR PATRICK
+    @Override
+    public void onEntryEdited(Entry entry, int position) {
+
+    }
+
+    private void initAdapterGestures(){
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(@NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, @NonNull @NotNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull @NotNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                Entry deletedEntry = manager.getCurrentEntries().get(position);
+
+                switch (direction){
+                    case ItemTouchHelper.LEFT:
+                        Entry finalDeletedEntry = deletedEntry;
+                        Snackbar.make(recyclerView, manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName() + " deleted!", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                manager.addEntry(finalDeletedEntry);
+                                entryAdapter.notifyItemRemoved(position);
+                                entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
+                                entryAdapter.updateEntries(manager.getCurrentEntries());
+                            }
+                        }).show();
+                        manager.removeEntry(manager.getCurrentEntries().remove(position));
+                        entryAdapter.notifyItemRemoved(position);
+                        entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
+                        entryAdapter.updateEntries(manager.getCurrentEntries());
+                        break;
+
+                    case ItemTouchHelper.RIGHT:
+                        finalDeletedEntry = deletedEntry;
+                        Snackbar.make(recyclerView, manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName()+ " completed! You've earned " + manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getDifficulty().points + " points!", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                manager.addEntry(finalDeletedEntry);
+                                entryAdapter.notifyItemRemoved(position);
+                                entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
+                                entryAdapter.updateEntries(manager.getCurrentEntries());
+                            }
+                        }).show();
+                        manager.removeEntry(manager.getCurrentEntries().remove(position));
+                        entryAdapter.notifyItemRemoved(position);
+                        entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
+                        entryAdapter.updateEntries(manager.getCurrentEntries());
+                        break;
+                }
+            }
+
+            @Override
+            public void onChildDraw(@NonNull @NotNull Canvas c, @NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    // Get RecyclerView item from the ViewHolder
+                    View itemView = viewHolder.itemView;
+                    if (dX > 0) {
+
+                        swipeColor.setColor(itemView.getResources().getColor(R.color.easy, null));
+                        // Draw Rect with varying right side, equal to displacement dX
+                        c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX,
+                                (float) itemView.getBottom(), swipeColor);
+                        c.drawBitmap(iconCheck, (float) itemView.getLeft(), (float) itemView.getTop(), swipeColor);
+                    } else {
+                        /* Set your color for negative displacement */
+                        swipeColor.setColor(itemView.getResources().getColor(R.color.hard, null));
+                        // Draw Rect with varying left side, equal to the item's right side plus negative displacement dX
+                        c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
+                                (float) itemView.getRight(), (float) itemView.getBottom(), swipeColor);
+                        c.drawBitmap(iconDelete, (float) itemView.getLeft() + itemView.getWidth() -100, (float) itemView.getTop(), swipeColor);
+
+                    }
+
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                }
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+    }
+
+
     @Override
     public void onPositiveClicked(String name, int hour, int minute, Category category, Difficulty difficulty) {
         Entry entry = new Entry(name, category, difficulty, Utils.millisForEntry(hour, minute));
@@ -173,4 +286,5 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     public void onNegativeClicked() {
         Toast.makeText(this, "Eintrag verworfen", Toast.LENGTH_SHORT).show();
     }
+
 }

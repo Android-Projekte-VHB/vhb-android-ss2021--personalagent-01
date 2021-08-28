@@ -2,6 +2,10 @@ package com.ristudios.personalagent.utils;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 import androidx.annotation.IntRange;
 
@@ -48,10 +52,10 @@ public final class Utils {
 
     /**
      * Returns the current time considering the systems default timezone.
+     *
      * @return current Time (as ZonedDateTime).
      */
-    public static ZonedDateTime getCurrentZonedTime()
-    {
+    public static ZonedDateTime getCurrentZonedTime() {
         return ZonedDateTime.now(ZoneId.systemDefault());
     }
 
@@ -59,25 +63,23 @@ public final class Utils {
      * Returns the time (in milliseconds) at a specific point in the future that can be passed to AlarmManager.
      * If the specified time of the day has already passed today, returns the value of that time for the next day, else
      * returns the value of that time for today dependant on the systems default timezone.
-     * @param hour The hour of the specified time.
+     *
+     * @param hour   The hour of the specified time.
      * @param minute The minute of the specified time.
      * @return the milliseconds of the specified time, starting from epoch (Jan. 1st 1970, 00:00:00 localTime)
-     *
+     * <p>
      * Credit to stackoverflow user Basil Bourque for providing code at stackoverflow.
      * See <a href="https://stackoverflow.com/questions/68840037/java-how-to-get-specific-point-in-the-future-in-millis">
-     *     https://stackoverflow.com/questions/68840037/java-how-to-get-specific-point-in-the-future-in-millis
-     *     </a>
+     * https://stackoverflow.com/questions/68840037/java-how-to-get-specific-point-in-the-future-in-millis
+     * </a>
      */
-    public static long millisForAlarm(@IntRange(from = 0, to = 23) int hour,@IntRange(from = 0, to = 59) int minute){
+    public static long millisForAlarm(@IntRange(from = 0, to = 23) int hour, @IntRange(from = 0, to = 59) int minute) {
         ZonedDateTime currentZonedTime = Utils.getCurrentZonedTime();
-        LocalTime specificTime = LocalTime.of(hour,minute);
+        LocalTime specificTime = LocalTime.of(hour, minute);
         ZonedDateTime alarmTime = currentZonedTime;
-        if (currentZonedTime.toLocalTime().isBefore(specificTime))
-        {
+        if (currentZonedTime.toLocalTime().isBefore(specificTime)) {
             alarmTime = currentZonedTime.with(specificTime);
-        }
-        else if (currentZonedTime.toLocalTime().isAfter(specificTime))
-        {
+        } else if (currentZonedTime.toLocalTime().isAfter(specificTime)) {
             alarmTime = currentZonedTime.toLocalDate().plusDays(1).atStartOfDay(ZoneId.systemDefault()).with(specificTime);
 
         }
@@ -144,7 +146,6 @@ public final class Utils {
 
     //endregion
 
-
     public static String getRandomNotificationString(Context context, int type) {
 
         String rndString = "";
@@ -157,31 +158,43 @@ public final class Utils {
         if (type == TYPE_EVENING_TITLE) {
             rndString = getRandomString(context, rndString, R.array.evening_notification_titles);
         }
-            if (type == TYPE_EVENING_MESSAGE) {
-                rndString = getRandomString(context, rndString, R.array.evening_notification_messages);
-            }
-            return rndString;
+        if (type == TYPE_EVENING_MESSAGE) {
+            rndString = getRandomString(context, rndString, R.array.evening_notification_messages);
+        }
+        return rndString;
 
+    }
+
+    private static String getRandomString(Context context, String rndString, int p) {
+        Random random = new Random();
+
+        String[] strings = context.getResources().getStringArray(p);
+        switch (random.nextInt(strings.length)) {
+            case 0:
+                rndString = strings[0];
+                break;
+            case 1:
+                rndString = strings[1];
+                break;
+            case 2:
+                rndString = strings[2];
+            default:
+                break;
+        }
+        return rndString;
+    }
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
         }
 
-        private static String getRandomString (Context context, String rndString, int p){
-            Random random = new Random();
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
 
-            String[] strings = context.getResources().getStringArray(p);
-            switch (random.nextInt(strings.length)) {
-                case 0:
-                    rndString = strings[0];
-                    break;
-                case 1:
-                    rndString = strings[1];
-                    break;
-                case 2:
-                    rndString = strings[2];
-                default:
-                    break;
-            }
-            return rndString;
-        }
-
-
+        return bitmap;
+    }
 }
