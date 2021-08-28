@@ -85,6 +85,13 @@
 
         </LinearLayout>
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_add_entry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:srcCompat="@android:drawable/ic_menu_add" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_entries"
                 android:layout_width="match_parent"
@@ -96,6 +103,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/linear">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+
 
 
         </LinearLayout>
