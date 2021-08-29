@@ -1,4 +1,10 @@
 <resources>
+
+    //flavor text
+    <string name="greetings_flavor">Hallo $NAME,</string>
+    <string name="to_do_flavor">Das steht heute an:</string>
+    <string name="date_flavor">Heute ist der $DATE</string>
+
     <string name="app_name">Personal Agent</string>
     <string name="morning_notification_title">Guten morgen!</string>
     <string name="evening_notification_title">Heute alles erldigt?</string>

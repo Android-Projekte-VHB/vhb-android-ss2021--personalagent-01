@@ -5,15 +5,13 @@
     android:layout_width="match_parent">
 
     <androidx.preference.PreferenceCategory
-        android:title="@string/settings_category_notifications_title"
-        >
+        android:title="@string/settings_category_notifications_title">
 
         <androidx.preference.SwitchPreference
             android:defaultValue="true"
             android:key="notification_switch"
             android:summary="@string/settings_notification_switch_summary"
-            android:title="@string/settings_category_notifications_title"
-            />
+            android:title="@string/settings_category_notifications_title"/>
 
         <androidx.preference.Preference
             android:id="@+id/notification_one_preference"

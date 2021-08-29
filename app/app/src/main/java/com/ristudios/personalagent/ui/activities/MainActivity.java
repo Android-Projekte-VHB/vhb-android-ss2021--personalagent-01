@@ -42,6 +42,10 @@ import com.ristudios.personalagent.utils.notifications.NotificationHelper;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Locale;
+
 
 /**
  * LauncherActivity, shows tasks for current day as well as weather information.
@@ -53,7 +57,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     //For API-testing
     private WeatherDataProvider provider;
-    private TextView tempTV, tempMaxTV, tempMinTV, precipitationTV;
+    private TextView tempTV, tempMaxTV, tempMinTV, precipitationTV, greetingsTV, dateTV;
     private ImageView weatherIcon;
     private RecyclerView recyclerView;
     private EntryAdapter entryAdapter;
@@ -77,6 +81,13 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         initializeAlarms();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        greetingsTV.setText(R.string.greetings_flavor);
+        String userName = prefs.getString(Utils.SP_USERNAME_KEY, "");
+        greetingsTV.setText(greetingsTV.getText().toString().replace("$NAME", userName));
+    }
 
     private void initData() {
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -94,6 +105,12 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         tempMaxTV = findViewById(R.id.maxTV);
         tempMinTV = findViewById(R.id.minTV);
         precipitationTV = findViewById(R.id.precipitationTV);
+        greetingsTV = findViewById(R.id.greetings_flavor);
+        dateTV = findViewById(R.id.date_flavor);
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
+        String formattedDateText = dateTV.getText().toString().replace("$DATE", Utils.getFormattedDate(zonedDateTime));
+        dateTV.setText(formattedDateText);
+
         recyclerView = findViewById(R.id.recycler_view_entries);
 
         iconCheck = Utils.drawableToBitmap(getDrawable(R.drawable.ic_baseline_check_32));
