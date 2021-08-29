@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.preference.PreferenceManager;
@@ -42,6 +43,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 
 
 /**
@@ -101,7 +103,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     //TODO: SUBJECT TO CHANGE! only for testing purposes - nothing final
     private void initUI() {
         tempTV = findViewById(R.id.tv);
-        weatherIcon = findViewById(R.id.imageEEEE);
+        weatherIcon = findViewById(R.id.imv_weather_indicator);
         tempMaxTV = findViewById(R.id.maxTV);
         tempMinTV = findViewById(R.id.minTV);
         precipitationTV = findViewById(R.id.precipitationTV);
@@ -113,8 +115,8 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
         recyclerView = findViewById(R.id.recycler_view_entries);
 
-        iconCheck = Utils.drawableToBitmap(getDrawable(R.drawable.ic_baseline_check_32));
-        iconDelete = Utils.drawableToBitmap(getDrawable(R.drawable.ic_baseline_delete_sweep_32));
+        iconCheck = Utils.drawableToBitmap(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.ic_baseline_check_32));
+        iconDelete = Utils.drawableToBitmap(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.ic_baseline_delete_sweep_32));
         initAdapterGestures();
 
         Button btnNewEntry = findViewById(R.id.btn_new_entry);
@@ -169,9 +171,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         Alarm alarm = new Alarm();
         if (prefs.getBoolean(Utils.SP_NOTIFICATION_ENABLED_KEY, true)) {
             long triggerAt = Utils.millisForAlarm(prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7), prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
-
             alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
-
             triggerAt = Utils.millisForAlarm(prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, 7), prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, 0));
             alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
             Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
@@ -266,21 +266,24 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
             public void onChildDraw(@NonNull @NotNull Canvas c, @NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                     // Get RecyclerView item from the ViewHolder
+                    int h = iconCheck.getHeight();
                     View itemView = viewHolder.itemView;
+                    int itemViewHeight = itemView.getHeight();
+                    int dif = itemViewHeight - h;
                     if (dX > 0) {
 
                         swipeColor.setColor(itemView.getResources().getColor(R.color.easy, null));
                         // Draw Rect with varying right side, equal to displacement dX
-                        c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX,
+                        c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), itemView.getRight(),
                                 (float) itemView.getBottom(), swipeColor);
-                        c.drawBitmap(iconCheck, (float) itemView.getLeft(), (float) itemView.getTop(), swipeColor);
+                        c.drawBitmap(iconCheck, (float) itemView.getLeft(), (float) itemView.getTop()+ dif/2, swipeColor);
                     } else {
                         /* Set your color for negative displacement */
                         swipeColor.setColor(itemView.getResources().getColor(R.color.hard, null));
                         // Draw Rect with varying left side, equal to the item's right side plus negative displacement dX
                         c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
                                 (float) itemView.getRight(), (float) itemView.getBottom(), swipeColor);
-                        c.drawBitmap(iconDelete, (float) itemView.getLeft() + itemView.getWidth() -100, (float) itemView.getTop(), swipeColor);
+                        c.drawBitmap(iconDelete, (float) itemView.getLeft() + itemView.getWidth() - iconDelete.getWidth()- (iconDelete.getWidth()/10), (float) itemView.getTop()+ dif/2, swipeColor);
 
                     }
 

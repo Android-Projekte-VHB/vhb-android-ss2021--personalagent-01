@@ -90,8 +90,10 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
                     spnDifficulty.setEnabled(false);
             }
             ZonedDateTime zonedDateTime = Utils.getDateFromMillis(entry.getDate());
-            edtHours.setText(String.valueOf(zonedDateTime.getHour()));
-            edtMinutes.setText(String.valueOf(zonedDateTime.getMinute()));
+            if (entry.getCategory().equals(Category.APPOINTMENT)) {
+                edtHours.setText(String.valueOf(zonedDateTime.getHour()));
+                edtMinutes.setText(String.valueOf(zonedDateTime.getMinute()));
+            }
         }
     }
 
