@@ -23,8 +23,6 @@ import androidx.preference.PreferenceManager;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import com.ristudios.personalagent.R;
 import com.ristudios.personalagent.data.Category;
 import com.ristudios.personalagent.data.Difficulty;
@@ -44,7 +42,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Locale;
 
 
 /**
@@ -66,6 +63,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     private Paint swipeColor = new Paint();
     private Bitmap iconCheck, iconDelete;
     SharedPreferences.Editor editor;
+
 
 
     @Override
@@ -95,6 +93,8 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         manager = new EntryManager(this, this);
         entryAdapter = new EntryAdapter(this, this);
         recyclerView.setAdapter(entryAdapter);
+        manager.loadEntriesForToday();
+        //entryAdapter.updateEntries(manager.loadEntriesForToday());
     }
 
 
@@ -196,6 +196,10 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         entryAdapter.updateEntries(manager.getCurrentEntries());
     }
 
+    @Override
+    public void onListLoaded() {
+        manager.requestUpdate();
+    }
 
 
     //TODO: FÜR PATRICK

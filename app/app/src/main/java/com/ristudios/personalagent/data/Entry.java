@@ -1,18 +1,28 @@
 package com.ristudios.personalagent.data;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 import java.util.UUID;
-
+@Entity(tableName = "entries")
 public class Entry {
 
     //Represents an Entry for the To-Do-List
 
-    private final String uuid;
-    private final String name;
-    private final Category category;
-    private final Difficulty difficulty;
-    private final long date;
-
+    @PrimaryKey
+    @NonNull
+    public String uuid;
+    @ColumnInfo
+    public String name;
+    @ColumnInfo
+    public Category category;
+    @ColumnInfo
+    public Difficulty difficulty;
+    @ColumnInfo
+    public final long date;
 
     public Entry(String name, Category category, Difficulty difficulty, long date){
         this.uuid = UUID.randomUUID().toString();
