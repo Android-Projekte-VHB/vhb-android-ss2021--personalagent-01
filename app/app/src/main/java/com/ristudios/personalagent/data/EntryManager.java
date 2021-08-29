@@ -5,6 +5,7 @@ import android.provider.ContactsContract;
 
 import com.ristudios.personalagent.data.db.DatabaseOperationExecutor;
 import com.ristudios.personalagent.data.db.EntryDatabaseHelper;
+import com.ristudios.personalagent.utils.Utils;
 
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -19,7 +20,6 @@ public class EntryManager {
     private ArrayList<Entry> entries;
     private EntryManagerListener listener;
     private EntryDatabaseHelper db;
-    private ZonedDateTime zonedDateTime;
     private DatabaseOperationExecutor executor;
 
     public EntryManager(Context context, EntryManagerListener listener){
@@ -31,12 +31,8 @@ public class EntryManager {
     }
 
     public void loadEntriesForToday() {
-        zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
-        LocalTime start = LocalTime.of(0,0,0);
-        LocalTime end = LocalTime.of(23, 59, 59);
-        long startMillis = zonedDateTime.with(start).toInstant().toEpochMilli();
-        long endMillis = zonedDateTime.with(end).toInstant().toEpochMilli();
-        executor.executeLoadForDateOperation(startMillis, endMillis, new DatabaseOperationExecutor.DataLoadedListener() {
+        long [] searchMillis = Utils.getSearchTimesForToday();
+        executor.executeLoadForDateOperation(searchMillis[0], searchMillis[1], new DatabaseOperationExecutor.DataLoadedListener() {
             @Override
             public void onDataLoaded(List<Entry> loadedEntries) {
                 entries.addAll(loadedEntries);

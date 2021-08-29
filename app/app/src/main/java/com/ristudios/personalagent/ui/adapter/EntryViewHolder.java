@@ -1,6 +1,7 @@
 package com.ristudios.personalagent.ui.adapter;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.View;
 import android.widget.ImageView;
@@ -87,6 +88,7 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
                 txtTime.setText("");
                 break;
             case NONE:
+                txtTime.setTextColor(Color.BLACK);
                 txtTime.setText(Utils.getFormattedTime(Utils.getDateFromMillis(entry.getDate())));
                 imageView.setWillNotDraw(true);
             default:
