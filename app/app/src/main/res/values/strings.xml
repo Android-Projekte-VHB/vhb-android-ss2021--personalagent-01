@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+//flavor text
+<string name="greetings_flavor">Hello $NAME,</string>
+<string name="to_do_flavor">That\'s up for today:</string>
+<string name="date_flavor">Today is the $DATE</string>
+
 <string name="app_name">Personal Agent</string>
 <string name="morning_notification_title">Good morning!</string>
 <string name="evening_notification_title">Everything done for today?</string>
