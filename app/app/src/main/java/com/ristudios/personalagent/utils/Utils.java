@@ -10,18 +10,25 @@ import android.graphics.drawable.Drawable;
 import androidx.annotation.IntRange;
 
 import com.ristudios.personalagent.R;
+import com.ristudios.personalagent.data.Category;
+import com.ristudios.personalagent.data.Entry;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalField;
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 
 public final class Utils {
@@ -103,6 +110,61 @@ public final class Utils {
     }
 
     /**
+     * Converts the current date at 00:00:00 and 23:59:59 to millis that can then be used to
+     * search for entries of teh current day.
+     * @return long array with starttime and endtime.
+     */
+    public static long[] getSearchTimesForToday()
+    {
+        ZonedDateTime zonedDateTime = Utils.getCurrentZonedTime();
+        LocalTime startOfDay = LocalTime.of(0,0,0);
+        LocalTime endOfDay = LocalTime.of(23, 59, 59);
+        long startMillis = zonedDateTime.with(startOfDay).toInstant().toEpochMilli();
+        long endMillis = zonedDateTime.with(endOfDay).toInstant().toEpochMilli();
+        return new long[] {startMillis , endMillis};
+    }
+
+    /**
+     * Converts a specified date (in year, month, day) at 00:00:00 and 23:59:59 to millis that can then be used to search for
+     * entries of a specific day.
+     * @param year The year of the date.
+     * @param month The month of the date.
+     * @param day The day of the date.
+     * @return long array with starttime and endtime for the specified date.
+     */
+    public static long[] getSearchTimesForDate(int year, int month, int day)
+    {
+        LocalDate date = LocalDate.of(year, month, day);
+        LocalTime startOfDay = LocalTime.of(0,0,0);
+        LocalTime endOfDay = LocalTime.of(23, 59, 59);
+        long startMillis = ZonedDateTime.of(date, startOfDay, ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endMillis = ZonedDateTime.of(date, endOfDay, ZoneId.systemDefault()).toInstant().toEpochMilli();
+        return new long[] {startMillis, endMillis};
+    }
+
+    /**
+     * Converts two dates to long millis with time of date one being 00:00:00 and time of
+     * date two being 23:59:59. These can then be used to search for all items that are in the specified timespan.
+     * @param yearOne Year of date one.
+     * @param monthOne Month of date one.
+     * @param dayOne Day of date one.
+     * @param yearTwo Year of date two.
+     * @param monthTwo Month of date two.
+     * @param dayTwo Day of date two.
+     * @return long array with starttime and endtime.
+     */
+    public static long[] getSearchTimesForTimeSpan(int yearOne, int monthOne, int dayOne, int yearTwo, int monthTwo, int dayTwo)
+    {
+        LocalDate startDate = LocalDate.of(yearOne, monthOne, dayOne);
+        LocalDate endDate = LocalDate.of(yearTwo, monthTwo, dayTwo);
+        LocalTime startOfDay = LocalTime.of(0, 0, 0);
+        LocalTime endOfDay = LocalTime.of(23, 59, 59);
+        long startMillis = ZonedDateTime.of(startDate, startOfDay, ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endMillis = ZonedDateTime.of(endDate, endOfDay, ZoneId.systemDefault()).toInstant().toEpochMilli();
+        return new long[] {startMillis, endMillis};
+    }
+
+    /**
      * Converts milliseconds into a ZonedDateTime, used for converting the long date of entries back to
      * an actual date
      * @param millis the milliseconds of the entry
@@ -135,6 +197,16 @@ public final class Utils {
     }
 
     /**
+     * Formats a ZonedDateTime to display the current date in the default local format of the device.
+     * @param zonedDateTime Date to be formatted.
+     * @return Formatted string in local default format.
+     */
+    public static String getLocalizedFormattedDate(ZonedDateTime zonedDateTime){
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL);
+        return formatter.format(zonedDateTime);
+    }
+
+    /**
      * Formats a ZonedDateTime to display the current date with time
      * @param zonedDateTime The Date to be formatted.
      * @return Formatted String dd.MM.yyyy HH:mm
@@ -144,7 +216,46 @@ public final class Utils {
         return formatter.format(zonedDateTime);
     }
 
+
+
     //endregion
+
+
+    /**
+     * <p><font color="red">WARNING: EXPERIMENTAL METHOD DO NOT USE TO SORT ITEMS IN MANAGER/ADAPTER</font></p>
+     *
+     *Sorts an Arraylist by Category to make the ui look better.
+     * @param toSort The arraylist that will be sorted.
+     * @return The sorted arraylist.
+     */
+    public static ArrayList<Entry> sortListByCategory(ArrayList<Entry> toSort){
+        ArrayList<Entry> sortedList = new ArrayList<>();
+        for (Entry entry : toSort){
+                if (entry.getCategory().equals(Category.WORK))
+                {
+                    sortedList.add(entry);
+                }
+        }
+        for (Entry entry : toSort){
+            if (entry.getCategory().equals(Category.HOBBY))
+            {
+                sortedList.add(entry);
+            }
+        }
+        for (Entry entry : toSort){
+            if (entry.getCategory().equals(Category.FITNESS))
+            {
+                sortedList.add(entry);
+            }
+        }
+        for (Entry entry : toSort){
+            if (entry.getCategory().equals(Category.APPOINTMENT))
+            {
+                sortedList.add(entry);
+            }
+        }
+        return sortedList;
+    }
 
     public static String getRandomNotificationString(Context context, int type) {
 
