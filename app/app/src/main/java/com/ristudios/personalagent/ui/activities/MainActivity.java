@@ -177,7 +177,8 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
             Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
             Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, 0));
         }
-        alarm.setRepeatingAlarm(this, System.currentTimeMillis() + 10000, AlarmManager.INTERVAL_DAY*7, Alarm.REQUEST_CODE_RESET, Alarm.TYPE_RESET_ALARM);
+        long resetTime = Utils.millisForReset();
+        alarm.setRepeatingAlarm(this, resetTime, AlarmManager.INTERVAL_DAY*7, Alarm.REQUEST_CODE_RESET, Alarm.TYPE_RESET_ALARM);
         //alarm.cancelAlarm(this, Alarm.REQUEST_CODE_RESET, Alarm.TYPE_RESET_ALARM);
     }
 
@@ -245,8 +246,8 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                         Snackbar.make(recyclerView, manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName()+ " completed! You've earned " + manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getDifficulty().points + " points!", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, false);
                                 manager.addEntry(finalDeletedEntry);
+                                managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, false);
                                 updateAdapterWithAnimation(position);
                             }
                         }).show();
@@ -276,7 +277,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                         /* Set your color for negative displacement */
                         swipeColor.setColor(itemView.getResources().getColor(R.color.hard, null));
                         // Draw Rect with varying left side, equal to the item's right side plus negative displacement dX
-                        c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
+                        c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(),
                                 (float) itemView.getRight(), (float) itemView.getBottom(), swipeColor);
                         c.drawBitmap(iconDelete, (float) itemView.getLeft() + itemView.getWidth() - iconDelete.getWidth()- (iconDelete.getWidth()/10), (float) itemView.getTop()+ dif/2, swipeColor);
 
