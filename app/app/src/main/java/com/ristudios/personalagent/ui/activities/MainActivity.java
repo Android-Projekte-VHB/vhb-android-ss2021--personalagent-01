@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     private void initData() {
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = prefs.edit();
+        editor = prefs.edit();
         manager = new EntryManager(this, this);
         entryAdapter = new EntryAdapter(this, this);
         recyclerView.setAdapter(entryAdapter);
@@ -177,7 +177,8 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
             Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
             Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, 0));
         }
-
+        alarm.setRepeatingAlarm(this, System.currentTimeMillis() + 10000, AlarmManager.INTERVAL_DAY*7, Alarm.REQUEST_CODE_RESET, Alarm.TYPE_RESET_ALARM);
+        //alarm.cancelAlarm(this, Alarm.REQUEST_CODE_RESET, Alarm.TYPE_RESET_ALARM);
     }
 
     //TODO: pretty ugly, make it just pretty
@@ -232,15 +233,11 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                             @Override
                             public void onClick(View v) {
                                 manager.addEntry(finalDeletedEntry);
-                                entryAdapter.notifyItemRemoved(position);
-                                entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
-                                entryAdapter.updateEntries(manager.getCurrentEntries());
+                                updateAdapterWithAnimation(position);
                             }
                         }).show();
                         manager.removeEntry(manager.getCurrentEntries().remove(position));
-                        entryAdapter.notifyItemRemoved(position);
-                        entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
-                        entryAdapter.updateEntries(manager.getCurrentEntries());
+                        updateAdapterWithAnimation(position);
                         break;
 
                     case ItemTouchHelper.RIGHT:
@@ -248,16 +245,14 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                         Snackbar.make(recyclerView, manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName()+ " completed! You've earned " + manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getDifficulty().points + " points!", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, false);
                                 manager.addEntry(finalDeletedEntry);
-                                entryAdapter.notifyItemRemoved(position);
-                                entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
-                                entryAdapter.updateEntries(manager.getCurrentEntries());
+                                updateAdapterWithAnimation(position);
                             }
                         }).show();
+                        managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, true);
                         manager.removeEntry(manager.getCurrentEntries().remove(position));
-                        entryAdapter.notifyItemRemoved(position);
-                        entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
-                        entryAdapter.updateEntries(manager.getCurrentEntries());
+                        updateAdapterWithAnimation(position);
                         break;
                 }
             }
@@ -326,4 +321,51 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         }
     }
 
+    private void updateAdapterWithAnimation(int position){
+        entryAdapter.notifyItemRemoved(position);
+        entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
+        entryAdapter.updateEntries(manager.getCurrentEntries());
+    }
+
+    private void managePoints(Category category, Difficulty difficulty, Boolean addOrRemove){
+
+        switch (category){
+            case WORK:
+                int currentWorkPoints = prefs.getInt(Utils.SP_WORK_TOTAL_POINTS_KEY, 0);
+                if(addOrRemove){
+                    editor.putInt(Utils.SP_WORK_TOTAL_POINTS_KEY, currentWorkPoints + difficulty.points);
+                    editor.apply();
+                    break;
+                } else {
+                    editor.putInt(Utils.SP_WORK_TOTAL_POINTS_KEY, currentWorkPoints - difficulty.points);
+                    editor.apply();
+                    break;
+                }
+            case HOBBY:
+                int currentHobbyPoints = prefs.getInt(Utils.SP_HOBBY_TOTAL_POINTS_KEY, 0);
+                if(addOrRemove) {
+                    editor.putInt(Utils.SP_HOBBY_TOTAL_POINTS_KEY, currentHobbyPoints + difficulty.points);
+                    editor.apply();
+                    break;
+                } else {
+                    editor.putInt(Utils.SP_HOBBY_TOTAL_POINTS_KEY, currentHobbyPoints - difficulty.points);
+                    editor.apply();
+                    break;
+                }
+            case FITNESS:
+                int currentFitnessPoints = prefs.getInt(Utils.SP_FITNESS_TOTAL_POINTS_KEY, 0);
+                if(addOrRemove) {
+                    editor.putInt(Utils.SP_FITNESS_TOTAL_POINTS_KEY, currentFitnessPoints + difficulty.points);
+                    editor.apply();
+                    break;
+                } else {
+                    editor.putInt(Utils.SP_FITNESS_TOTAL_POINTS_KEY, currentFitnessPoints - difficulty.points);
+                    editor.apply();
+                    break;
+                }
+            default:
+                break;
+        }
+    }
+    
 }

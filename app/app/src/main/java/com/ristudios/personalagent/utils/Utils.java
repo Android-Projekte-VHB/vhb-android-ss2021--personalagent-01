@@ -13,6 +13,7 @@ import com.ristudios.personalagent.R;
 import com.ristudios.personalagent.data.Category;
 import com.ristudios.personalagent.data.Entry;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -39,6 +40,9 @@ public final class Utils {
     public static final int TYPE_EVENING_MESSAGE = 560;
     public static final int TYPE_EVENING_TITLE = 561;
     public static final int REQUEST_LOCATION_PERMISSIONS = 10;
+    public static final int FACTOR_GOAL_PER_WEEK = 7;
+    public static final float FACTOR_LIFE_BALANCE = 0.25f; //hobby and fitness
+    public static final float FACTOR_WORK_BALANCE = 0.5f;
 
     //region SharedPreferences Keys
 
@@ -47,7 +51,10 @@ public final class Utils {
     public static final String SP_NOTIFICATION_TIME_TWO_KEY = "notification_time_two";
     public static final String SP_LOCATION_PERMISSION_KEY = "permission_switch";
     public static final String SP_USERNAME_KEY = "username";
-    public static final String SP_WEEKLY_GOAL_KEY = "weekly_point_goal";
+    public static final String SP_DAILY_GOAL_KEY = "daily_point_goal";
+    public static final String SP_WORK_TOTAL_POINTS_KEY = "work_total";
+    public static final String SP_HOBBY_TOTAL_POINTS_KEY = "hobby_total";
+    public static final String SP_FITNESS_TOTAL_POINTS_KEY = "fitness_total";
     public static final String SP_NOTIFICATION_TIME_ONE_HOUR_KEY = "notification_time_one_hour";
     public static final String SP_NOTIFICATION_TIME_TWO_HOUR_KEY = "notification_time_two_hour";
     public static final String SP_NOTIFICATION_TIME_ONE_MINUTE_KEY = "notification_time_one_minute";
@@ -64,6 +71,17 @@ public final class Utils {
      */
     public static ZonedDateTime getCurrentZonedTime() {
         return ZonedDateTime.now(ZoneId.systemDefault());
+    }
+
+    public static long millisForReset(){
+        ZonedDateTime currentZonedTime = Utils.getCurrentZonedTime();
+        DayOfWeek dayOfWeek = currentZonedTime.getDayOfWeek();
+        while(dayOfWeek != DayOfWeek.MONDAY){
+            currentZonedTime = currentZonedTime.plusDays(1);
+            dayOfWeek = currentZonedTime.getDayOfWeek();
+        }
+        currentZonedTime.with(LocalTime.of(0,0,0));
+        return currentZonedTime.toInstant().toEpochMilli();
     }
 
     /**
@@ -308,4 +326,9 @@ public final class Utils {
 
         return bitmap;
     }
+
+
+
+
+
 }

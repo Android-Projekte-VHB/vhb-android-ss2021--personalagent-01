@@ -4,7 +4,7 @@
 //flavor text
 <string name="greetings_flavor">Hello $NAME,</string>
 <string name="to_do_flavor">That\'s up for today:</string>
-<string name="date_flavor">Today is the $DATE</string>
+<string name="date_flavor">today is the $DATE.</string>
 
 <string name="app_name">Personal Agent</string>
 <string name="morning_notification_title">Good morning!</string>
@@ -73,8 +73,8 @@
 <string name="settings_category_pa_title">PersonalAgent</string>
 <string name="settings_pa_username_title">Username</string>
 <string name="settings_pa_username_summary">Set how the PersonalAgent should call you</string>
-<string name="settings_pa_weekly_goal_title">Weekly Goal</string>
-<string name="settings_pa_weekly_goal_summary">Set your weekly Point Goal</string>
+<string name="settings_pa_weekly_goal_title">Daily Goal</string>
+<string name="settings_pa_weekly_goal_summary">Set your daily Point Goal (Multiple of 10)</string>
 
     <string name="toast_time_set_succes">Changes saved</string>
     <string name="toast_time_set_failure">Something went wrong</string>
@@ -102,5 +102,4 @@
         <item>Cross off tasks to collect all your points</item>
         <item>Reward yourself and get your points</item>
     </string-array>
-
 </resources>

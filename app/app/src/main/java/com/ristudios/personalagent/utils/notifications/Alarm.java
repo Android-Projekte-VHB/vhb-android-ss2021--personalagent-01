@@ -6,7 +6,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import androidx.preference.PreferenceManager;
 
 import com.ristudios.personalagent.ui.activities.MainActivity;
 import com.ristudios.personalagent.R;
@@ -16,8 +19,10 @@ public class Alarm extends BroadcastReceiver {
 
     public static final String TYPE_MORNING_ALARM = "com.ristudios.ALARM_MORNING_TRIGGERED";
     public static final String TYPE_EVENING_ALARM = "com.ristudios.ALARM_EVENING_TRIGGERED";
+    public static final String TYPE_RESET_ALARM = "com.ristudios.ALARM_RESET_TRIGGERED";
     public static final int REQUEST_CODE_MORNING = 99;
     public static final int REQUEST_CODE_EVENING = 199;
+    public static final int REQUEST_CODE_RESET = 7;
 
     /**
      * Creates a new instance of the class Alarm.
@@ -52,6 +57,11 @@ public class Alarm extends BroadcastReceiver {
             Notification notification = notificationHelper.createNotification(title, message, R.drawable.android_mascot_30dp, NotificationHelper.AUTOCANCEL, pendingIntent);
             notificationHelper.showNotification(NotificationHelper.EVENING_NOTIFICATION_ID, notification);
             Log.d(Utils.LOG_ALARM, "Alarm for evening!");
+        }
+        else if(intent.getAction().equals(Alarm.TYPE_RESET_ALARM)){
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            prefs.edit().putInt(Utils.SP_FITNESS_TOTAL_POINTS_KEY, 0).putInt(Utils.SP_WORK_TOTAL_POINTS_KEY, 0).putInt(Utils.SP_HOBBY_TOTAL_POINTS_KEY, 0).apply();
+            Log.d(Utils.LOG_ALARM, "Points reset");
         }
     }
 
