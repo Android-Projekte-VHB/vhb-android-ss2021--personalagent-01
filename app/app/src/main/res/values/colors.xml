@@ -26,5 +26,12 @@
     <color name="belize_hole">#2980b9</color>
     <color name="dupain">#60a3bc</color>
 
+    //progress bar
+    <color name="city_lights">#dfe6e9</color>
+    <color name="coastal_breeze">#dff9fb</color>
+    <color name="creamy_peach">#f3a683</color>
+    <color name="oasis_stream">#9AECDB</color>
+
+
 
 </resources>

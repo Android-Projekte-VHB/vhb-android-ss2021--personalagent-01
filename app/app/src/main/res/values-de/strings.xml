@@ -3,7 +3,7 @@
     //flavor text
     <string name="greetings_flavor">Hallo $NAME,</string>
     <string name="to_do_flavor">Das steht heute an:</string>
-    <string name="date_flavor">Heute ist der $DATE</string>
+    <string name="date_flavor">heute ist der $DATE.</string>
 
     <string name="app_name">Personal Agent</string>
     <string name="morning_notification_title">Guten morgen!</string>
@@ -72,8 +72,8 @@
     <string name="settings_category_pa_title">PersonalAgent</string>
     <string name="settings_pa_username_title">Nutzername</string>
     <string name="settings_pa_username_summary">Lege fest, wie dich dein PersonalAgent nennen soll</string>
-    <string name="settings_pa_weekly_goal_title">Wochenziel</string>
-    <string name="settings_pa_weekly_goal_summary">Lege dein Punkteziel pro Woche fest</string>
+    <string name="settings_pa_weekly_goal_title">Tagesziel</string>
+    <string name="settings_pa_weekly_goal_summary">Lege dein Punkteziel pro Tag fest (Vielfaches von 10)</string>
 
     <string name="toast_time_set_succes">Änderungen gespeichert</string>
     <string name="toast_time_set_failure">Etwas ist schief gelaufen</string>

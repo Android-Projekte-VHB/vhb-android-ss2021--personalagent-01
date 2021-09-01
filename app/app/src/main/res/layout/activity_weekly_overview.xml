@@ -8,13 +8,168 @@
     android:fitsSystemWindows="true"
     >
 
-    <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/work_progress_layout"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginLeft="30dp"
+                    >
+
+                    <ProgressBar
+                        android:id="@+id/work_progress_bar"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:indeterminate="false"
+                        android:progressDrawable="@drawable/work_chart_layout"
+                        />
+
+                    <TextView
+                        android:id="@+id/work_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/work"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        >
+                    </TextView>
+                    <TextView
+                        android:id="@+id/work_progress_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$CURRENT/$MAX"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/work_text"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:textSize="15sp"
+                        >
+                    </TextView>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/fitness_progress_layout"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    app:layout_constraintTop_toBottomOf="@+id/work_progress_layout"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginRight="10dp"
+                    >
+
+                    <ProgressBar
+                        android:id="@+id/fitness_progress_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:progressDrawable="@drawable/fitness_chart_layout"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:indeterminate="false"
+                        />
+
+                    <TextView
+                        android:id="@+id/fitness_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fitness"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        >
+                    </TextView>
+                    <TextView
+                        android:id="@+id/fitness_progress_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$CURRENT/$MAX"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/fitness_text"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:textSize="15sp"
+                        >
+                    </TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/hobby_progress_layout"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="50dp"
+                    app:layout_constraintTop_toBottomOf="@+id/fitness_progress_layout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    >
+
+                    <ProgressBar
+                        android:id="@+id/hobby_progress_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:progressDrawable="@drawable/hobby_chart_layout"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:indeterminate="false"
+                        />
+
+                    <TextView
+                        android:id="@+id/hobby_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hobby"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        >
+                    </TextView>
+                    <TextView
+                        android:id="@+id/hobby_progress_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$CURRENT/$MAX"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/hobby_text"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:textSize="15sp"
+                        >
+                    </TextView>
+
+                </RelativeLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"

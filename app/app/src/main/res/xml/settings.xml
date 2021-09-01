@@ -63,7 +63,7 @@
 
         <androidx.preference.EditTextPreference
             android:title="@string/settings_pa_weekly_goal_title"
-            android:key="weekly_point_goal"
+            android:key="daily_point_goal"
             android:summary="@string/settings_pa_weekly_goal_summary"
             />
 

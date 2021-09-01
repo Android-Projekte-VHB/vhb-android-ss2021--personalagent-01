@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     private SwitchPreference notificationPref, permissionPref;
-    private EditTextPreference weeklyGoalPref, usernamePref;
+    private EditTextPreference dailyGoalPref, usernamePref;
     private Preference notificationTimeOnePref, notificationTimeTwoPref;
     private TimeModeListener listener;
     public static int mode = 0;
@@ -44,7 +44,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         setPreferencesFromResource(R.xml.settings, rootKey);
         bindPrefs();
         mode = 0;
-        weeklyGoalPref.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
+        dailyGoalPref.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
             @Override
             public void onBindEditText(@NonNull @NotNull EditText editText) {
                 editText.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -103,7 +103,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         permissionPref = findPreference(Utils.SP_LOCATION_PERMISSION_KEY);
         notificationTimeOnePref = findPreference(Utils.SP_NOTIFICATION_TIME_ONE_KEY);
         notificationTimeTwoPref = findPreference(Utils.SP_NOTIFICATION_TIME_TWO_KEY);
-        weeklyGoalPref = findPreference(Utils.SP_WEEKLY_GOAL_KEY);
+        dailyGoalPref = findPreference(Utils.SP_DAILY_GOAL_KEY);
         usernamePref = findPreference(Utils.SP_USERNAME_KEY);
     }
 
