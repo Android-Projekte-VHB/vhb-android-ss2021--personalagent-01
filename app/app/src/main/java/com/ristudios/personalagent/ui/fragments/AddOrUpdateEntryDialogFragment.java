@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,7 +34,11 @@ import java.util.Objects;
 
 public class AddOrUpdateEntryDialogFragment extends DialogFragment {
 
+    public static final int MODE_NEW = 1;
+    public static final int MODE_UPDATE = -1;
+
     private AddEntryDialogClickListener listener;
+    private ZonedDateTime targetDateTime;
     private EditText edtName, edtHours, edtMinutes;
     private Spinner spnCategory, spnDifficulty;
     private TextView txtTimeSeparator, txtTimeHeader;
@@ -47,6 +52,10 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
         listener = (AddEntryDialogClickListener) context;
     }
 
+    public void setTargetDateTime(ZonedDateTime targetDateTime)
+    {
+        this.targetDateTime = targetDateTime;
+    }
 
     public void setMode(int mode){
         this.mode = mode;
@@ -89,10 +98,10 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
                     spnDifficulty.setSelection(3);
                     spnDifficulty.setEnabled(false);
             }
-            ZonedDateTime zonedDateTime = Utils.getDateFromMillis(entry.getDate());
+            targetDateTime = Utils.getDateFromMillis(entry.getDate());
             if (entry.getCategory().equals(Category.APPOINTMENT)) {
-                edtHours.setText(String.valueOf(zonedDateTime.getHour()));
-                edtMinutes.setText(String.valueOf(zonedDateTime.getMinute()));
+                edtHours.setText(String.valueOf(targetDateTime.getHour()));
+                edtMinutes.setText(String.valueOf(targetDateTime.getMinute()));
             }
         }
     }
@@ -141,10 +150,10 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
                                 if (timeValuesValid())
                                 {
                                     if (mode == 1) {
-                                        listener.onItemNew(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty());
+                                        listener.onItemNew(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty(), targetDateTime);
                                     }
                                     else if (mode == -1){
-                                        listener.onItemUpdate(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty(), entry, position);
+                                        listener.onItemUpdate(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty(), entry, position, targetDateTime);
                                     }
                                     dialog.dismiss();
                                 }
@@ -187,10 +196,13 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
     }
 
     private int getResultTimeHours() {
+        Log.d(Utils.LOG_ALARM, edtHours.getText().toString());
         return Integer.parseInt(edtHours.getText().toString());
+
     }
 
     private int getResultTimeMinutes() {
+        Log.d(Utils.LOG_ALARM, edtMinutes.getText().toString());
         return Integer.parseInt(edtMinutes.getText().toString());
     }
 
@@ -333,8 +345,8 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
     //endregion
 
     public interface AddEntryDialogClickListener {
-        void onItemNew(String name, int hour, int minute, Category category, Difficulty difficulty);
-        void onItemUpdate(String name, int hour, int minute, Category category, Difficulty difficulty, Entry oldEntry, int position);
+        void onItemNew(String name, int hour, int minute, Category category, Difficulty difficulty, ZonedDateTime targetDate);
+        void onItemUpdate(String name, int hour, int minute, Category category, Difficulty difficulty, Entry oldEntry, int position, ZonedDateTime targetDate);
         void onNegativeClicked(int mode);
     }
 }

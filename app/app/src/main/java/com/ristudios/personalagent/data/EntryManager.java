@@ -2,6 +2,8 @@ package com.ristudios.personalagent.data;
 
 import android.content.Context;
 import android.provider.ContactsContract;
+import android.util.Log;
+import android.widget.TextView;
 
 import com.ristudios.personalagent.data.db.DatabaseOperationExecutor;
 import com.ristudios.personalagent.data.db.EntryDatabaseHelper;
@@ -31,12 +33,27 @@ public class EntryManager {
     }
 
     public void loadEntriesForToday() {
+        entries.clear();
         long [] searchMillis = Utils.getSearchTimesForToday();
         executor.executeLoadForDateOperation(searchMillis[0], searchMillis[1], new DatabaseOperationExecutor.DataLoadedListener() {
             @Override
             public void onDataLoaded(List<Entry> loadedEntries) {
                 entries.addAll(loadedEntries);
                 listener.onListLoaded();
+            }
+        });
+    }
+
+    public void loadEntriesForDate(int year, int month, int day){
+        entries.clear();
+        long [] searchMillis = Utils.getSearchTimesForDate(year, month, day);
+        Log.d(Utils.LOG_ALARM, "searchtimes: " + Utils.getDateFromMillis(searchMillis[0]) + " and " + Utils.getDateFromMillis(searchMillis[1]));
+        executor.executeLoadForDateOperation(searchMillis[0], searchMillis[1], new DatabaseOperationExecutor.DataLoadedListener() {
+            @Override
+            public void onDataLoaded(List<Entry> loadedEntries) {
+                entries.addAll(loadedEntries);
+                listener.onListLoaded();
+
             }
         });
     }
@@ -63,6 +80,15 @@ public class EntryManager {
         listener.onEntryListUpdated();
     }
 
+    public int getCurrentPoints()
+    {
+        int points = 0;
+        for (Entry entry: entries){
+            points = points + entry.getDifficulty().points;
+        }
+        return points;
+    }
+
     public ArrayList<Entry> getCurrentEntries() {
         return new ArrayList<>(entries);
     }
@@ -75,5 +101,6 @@ public class EntryManager {
     public interface EntryManagerListener{
         void onEntryListUpdated();
         void onListLoaded();
+
     }
 }

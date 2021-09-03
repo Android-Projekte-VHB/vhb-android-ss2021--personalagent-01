@@ -120,11 +120,27 @@ public final class Utils {
      * @param minute The minute of the entry.
      * @return The milliseconds representing today at the time hour:minute.
      */
-    public static long millisForEntry(int hour, int minute)
+    public static long millisForEntryCurrentDay(int hour, int minute)
     {
         ZonedDateTime currentTime = Utils.getCurrentZonedTime();
         LocalTime specific = LocalTime.of(hour, minute);
         return currentTime.with(specific).toInstant().toEpochMilli();
+    }
+
+    /**
+     * Converts date and time (as year, month, day, hour, minute) to the epoch millis representing that time.
+     * @param year Year of date.
+     * @param month Month of date.
+     * @param day Day of month.
+     * @param hour Hour of day.
+     * @param minute Minute of day.
+     * @return The milliseconds representing the specified date.
+     */
+    public static long millisForEntryWithDate(int year, int month, int day, int hour, int minute){
+        ZonedDateTime currentTime = Utils.getCurrentZonedTime();
+        ZonedDateTime targetDateTime = currentTime.with(LocalDate.of(year, month, day));
+        targetDateTime = targetDateTime.with(LocalTime.of(hour, minute));
+        return targetDateTime.toInstant().toEpochMilli();
     }
 
     /**

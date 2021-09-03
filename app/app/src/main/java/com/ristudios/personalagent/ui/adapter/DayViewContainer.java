@@ -16,11 +16,9 @@ public class DayViewContainer extends ViewContainer {
 
     public final TextView calendarDayText;
     public CalendarDay day;
-    private CalendarClickListener listener;
 
     public DayViewContainer(@NotNull View view, CalendarClickListener listener) {
         super(view);
-        this.listener = listener;
         calendarDayText = view.findViewById(R.id.txt_calendar_day_text);
         calendarDayText.setOnClickListener(v -> {
             if (day.getOwner() == DayOwner.THIS_MONTH){
