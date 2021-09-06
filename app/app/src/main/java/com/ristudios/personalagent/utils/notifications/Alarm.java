@@ -13,6 +13,7 @@ import androidx.preference.PreferenceManager;
 
 import com.ristudios.personalagent.ui.activities.MainActivity;
 import com.ristudios.personalagent.R;
+import com.ristudios.personalagent.ui.activities.WeeklyOverviewActivity;
 import com.ristudios.personalagent.utils.Utils;
 
 public class Alarm extends BroadcastReceiver {
@@ -60,6 +61,12 @@ public class Alarm extends BroadcastReceiver {
         }
         else if(intent.getAction().equals(Alarm.TYPE_RESET_ALARM)){
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            if (prefs.getBoolean(Utils.SP_NOTIFICATION_ENABLED_KEY, true))
+            {
+                PendingIntent pendingIntent = notificationHelper.createContentIntent(new Intent(context, WeeklyOverviewActivity.class), 13);
+                Notification notification = notificationHelper.createNotification("Wochenübersicht", "Du hast letzte Woche blablabla Punkte erreicht", R.drawable.android_mascot_30dp, true, pendingIntent);
+                notificationHelper.showNotification(-12, notification);
+            }
             prefs.edit().putInt(Utils.SP_FITNESS_TOTAL_POINTS_KEY, 0).putInt(Utils.SP_WORK_TOTAL_POINTS_KEY, 0).putInt(Utils.SP_HOBBY_TOTAL_POINTS_KEY, 0).apply();
             Log.d(Utils.LOG_ALARM, "Points reset");
         }

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import androidx.annotation.IntRange;
 
@@ -81,7 +82,7 @@ public final class Utils {
             currentZonedTime = currentZonedTime.plusDays(1);
             dayOfWeek = currentZonedTime.getDayOfWeek();
         }
-        currentZonedTime.with(LocalTime.of(0,0,0));
+        currentZonedTime = currentZonedTime.with(LocalTime.of(0,0,0));
         return currentZonedTime.toInstant().toEpochMilli();
     }
 

@@ -253,8 +253,8 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                         Snackbar.make(recyclerView, manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName()+ " completed! You've earned " + manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getDifficulty().points + " points!", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, false);
                                 manager.addEntry(finalDeletedEntry);
+                                managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, false);
                                 updateAdapterWithAnimation(position);
                             }
                         }).show();
