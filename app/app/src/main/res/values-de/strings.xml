@@ -101,4 +101,30 @@
         <item>Hol gleich deine Punkte ab</item>
     </string-array>
 
+    //Calendar
+    <string-array name="months">
+        <item>JANUAR</item>
+        <item>FEBRUAR</item>
+        <item>MÄRZ</item>
+        <item>APRIL</item>
+        <item>MAI</item>
+        <item>JUNI</item>
+        <item>JULI</item>
+        <item>AUGUST</item>
+        <item>SEPTEMBER</item>
+        <item>OKTOBER</item>
+        <item>NOVEMBER</item>
+        <item>DEZEMBER</item>
+    </string-array>
+
+    <string-array name="weekdays_short">
+        <item>Mo</item>
+        <item>Di</item>
+        <item>Mi</item>
+        <item>Do</item>
+        <item>Fr</item>
+        <item>Sa</item>
+        <item>So</item>
+    </string-array>
+
 </resources>

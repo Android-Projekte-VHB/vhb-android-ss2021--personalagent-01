@@ -41,9 +41,9 @@ import com.ristudios.personalagent.utils.notifications.NotificationHelper;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 
 
 /**
@@ -81,12 +81,14 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         initializeAlarms();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         greetingsTV.setText(R.string.greetings_flavor);
         String userName = prefs.getString(Utils.SP_USERNAME_KEY, "");
         greetingsTV.setText(greetingsTV.getText().toString().replace("$NAME", userName));
+        manager.loadEntriesForToday();
     }
 
     private void initData() {
@@ -95,7 +97,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         manager = new EntryManager(this, this);
         entryAdapter = new EntryAdapter(this, this);
         recyclerView.setAdapter(entryAdapter);
-        manager.loadEntriesForToday();
         //entryAdapter.updateEntries(manager.loadEntriesForToday());
     }
 
@@ -110,7 +111,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         greetingsTV = findViewById(R.id.greetings_flavor);
         dateTV = findViewById(R.id.date_flavor);
         ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
-        String formattedDateText = dateTV.getText().toString().replace("$DATE", Utils.getFormattedDate(zonedDateTime));
+        String formattedDateText = dateTV.getText().toString().replace("$DATE", Utils.getLocalizedFormattedDate(zonedDateTime));
         dateTV.setText(formattedDateText);
 
         recyclerView = findViewById(R.id.recycler_view_entries);
@@ -167,7 +168,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
      */
     private void initializeAlarms() {
 
-        //TODO: fix app so alarms will be cancelled when user changes prefs in settings
         Alarm alarm = new Alarm();
         if (prefs.getBoolean(Utils.SP_NOTIFICATION_ENABLED_KEY, true)) {
             long triggerAt = Utils.millisForAlarm(prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7), prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
@@ -179,7 +179,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         }
         long resetTime = Utils.millisForReset();
         alarm.setRepeatingAlarm(this, resetTime, AlarmManager.INTERVAL_DAY*7, Alarm.REQUEST_CODE_RESET, Alarm.TYPE_RESET_ALARM);
-        //alarm.cancelAlarm(this, Alarm.REQUEST_CODE_RESET, Alarm.TYPE_RESET_ALARM);
     }
 
     //TODO: pretty ugly, make it just pretty
@@ -195,13 +194,21 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     @Override
     public void onEntryListUpdated() {
-        entryAdapter.updateEntries(manager.getCurrentEntries());
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                entryAdapter.updateEntries(manager.getCurrentEntries());
+                entryAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
 
     @Override
     public void onListLoaded() {
         manager.requestUpdate();
     }
+
 
 
     //TODO: FÜR PATRICK
@@ -295,18 +302,18 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
 
     @Override
-    public void onItemNew(String name, int hour, int minute, Category category, Difficulty difficulty) {
-        Entry entry = new Entry(name, category, difficulty, Utils.millisForEntry(hour, minute));
+    public void onItemNew(String name, int hour, int minute, Category category, Difficulty difficulty, ZonedDateTime targetDate) {
+        Entry entry = new Entry(name, category, difficulty, Utils.millisForEntryCurrentDay(hour, minute));
         manager.addEntry(entry);
-        Log.d("JAVA_TIME", "Item added with time " + Utils.getFormattedDateTime(Utils.getDateFromMillis(entry.getDate())));
+        Log.d(Utils.LOG_ALARM, "Item added with time " + Utils.getDateFromMillis(entry.getDate()));
     }
 
     @Override
-    public void onItemUpdate(String name, int hour, int minute, Category category, Difficulty difficulty, Entry oldEntry, int position) {
+    public void onItemUpdate(String name, int hour, int minute, Category category, Difficulty difficulty, Entry oldEntry, int position, ZonedDateTime targetDate) {
         manager.removeEntry(oldEntry);
         //entryAdapter.notifyItemRemoved(position);
         //entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
-        Entry entry = new Entry(name, category, difficulty, Utils.millisForEntry(hour, minute));
+        Entry entry = new Entry(name, category, difficulty, Utils.millisForEntryCurrentDay(hour, minute));
         manager.addEntryAtPosition(position, entry);
         entryAdapter.notifyDataSetChanged();
         Toast.makeText(this, getString(R.string.toast_changes_successful), Toast.LENGTH_SHORT).show();

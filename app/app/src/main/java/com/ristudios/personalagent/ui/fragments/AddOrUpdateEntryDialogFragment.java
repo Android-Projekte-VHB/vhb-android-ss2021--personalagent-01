@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,7 +34,11 @@ import java.util.Objects;
 
 public class AddOrUpdateEntryDialogFragment extends DialogFragment {
 
+    public static final int MODE_NEW = 1;
+    public static final int MODE_UPDATE = -1;
+
     private AddEntryDialogClickListener listener;
+    private ZonedDateTime targetDateTime;
     private EditText edtName, edtHours, edtMinutes;
     private Spinner spnCategory, spnDifficulty;
     private TextView txtTimeSeparator, txtTimeHeader;
@@ -47,16 +52,32 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
         listener = (AddEntryDialogClickListener) context;
     }
 
+    public void setTargetDateTime(ZonedDateTime targetDateTime)
+    {
+        this.targetDateTime = targetDateTime;
+    }
 
+    /**
+     * Sets the mode of the dialog to either create a new entry or update an old one.
+     * @param mode The mode to use.
+     */
     public void setMode(int mode){
         this.mode = mode;
     }
 
+    /**
+     * Sets the entry of the dialog if it is in update mode so the data of the existing entry can be displayed.
+     * @param entry The entry to edit.
+     * @param position The position the entry has in the RecyclerView.
+     */
     public void setEntry(Entry entry, int position){
         this.entry = entry;
         this.position = position;
     }
 
+    /**
+     * Fills out the dialog with data if an entry is set. If not all fields will remain default.
+     */
     public void setData()
     {
         if (entry != null) {
@@ -89,10 +110,10 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
                     spnDifficulty.setSelection(3);
                     spnDifficulty.setEnabled(false);
             }
-            ZonedDateTime zonedDateTime = Utils.getDateFromMillis(entry.getDate());
+            targetDateTime = Utils.getDateFromMillis(entry.getDate());
             if (entry.getCategory().equals(Category.APPOINTMENT)) {
-                edtHours.setText(String.valueOf(zonedDateTime.getHour()));
-                edtMinutes.setText(String.valueOf(zonedDateTime.getMinute()));
+                edtHours.setText(String.valueOf(targetDateTime.getHour()));
+                edtMinutes.setText(String.valueOf(targetDateTime.getMinute()));
             }
         }
     }
@@ -141,10 +162,10 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
                                 if (timeValuesValid())
                                 {
                                     if (mode == 1) {
-                                        listener.onItemNew(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty());
+                                        listener.onItemNew(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty(), targetDateTime);
                                     }
                                     else if (mode == -1){
-                                        listener.onItemUpdate(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty(), entry, position);
+                                        listener.onItemUpdate(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty(), entry, position, targetDateTime);
                                     }
                                     dialog.dismiss();
                                 }
@@ -172,6 +193,9 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
 
     //region information collectors
 
+    /**
+     * Checks if the time has been set. If the entry is not an appointment and no time is set the time will automatically be set to 12:00
+     */
     private void checkForTime() {
         if (spnCategory.getSelectedItemPosition() != 3) {
             if (!timeSet()){
@@ -182,18 +206,33 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
     }
 
 
+    /**
+     * Gets the name of edtName.
+     * @return Name.
+     */
     private String getResultName() {
         return edtName.getText().toString();
     }
 
+    /**
+     * Gets the hours of edtHours.
+     * @return Hours.
+     */
     private int getResultTimeHours() {
+        Log.d(Utils.LOG_ALARM, edtHours.getText().toString());
         return Integer.parseInt(edtHours.getText().toString());
+
     }
 
     private int getResultTimeMinutes() {
+        Log.d(Utils.LOG_ALARM, edtMinutes.getText().toString());
         return Integer.parseInt(edtMinutes.getText().toString());
     }
 
+    /**
+     * Gets the current selection of the categorySpinner.
+     * @return Category.
+     */
     private Category getResultCategory() {
         Category selected = Category.WORK;
         switch (spnCategory.getSelectedItemPosition()) {
@@ -238,7 +277,7 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
     /**
      * Checks if all the EditTexts contain a value. Only if all EditTexts aren't empty the app will proceed.
      *
-     * @return False if anyone of the TextViews is empty, else true.
+     * @return False if any of the TextViews is empty, else true.
      */
     private boolean nameEntered() {
         return !edtName.getText().toString().isEmpty();
@@ -333,8 +372,8 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
     //endregion
 
     public interface AddEntryDialogClickListener {
-        void onItemNew(String name, int hour, int minute, Category category, Difficulty difficulty);
-        void onItemUpdate(String name, int hour, int minute, Category category, Difficulty difficulty, Entry oldEntry, int position);
+        void onItemNew(String name, int hour, int minute, Category category, Difficulty difficulty, ZonedDateTime targetDate);
+        void onItemUpdate(String name, int hour, int minute, Category category, Difficulty difficulty, Entry oldEntry, int position, ZonedDateTime targetDate);
         void onNegativeClicked(int mode);
     }
 }
