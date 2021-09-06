@@ -57,15 +57,27 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
         this.targetDateTime = targetDateTime;
     }
 
+    /**
+     * Sets the mode of the dialog to either create a new entry or update an old one.
+     * @param mode The mode to use.
+     */
     public void setMode(int mode){
         this.mode = mode;
     }
 
+    /**
+     * Sets the entry of the dialog if it is in update mode so the data of the existing entry can be displayed.
+     * @param entry The entry to edit.
+     * @param position The position the entry has in the RecyclerView.
+     */
     public void setEntry(Entry entry, int position){
         this.entry = entry;
         this.position = position;
     }
 
+    /**
+     * Fills out the dialog with data if an entry is set. If not all fields will remain default.
+     */
     public void setData()
     {
         if (entry != null) {
@@ -181,6 +193,9 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
 
     //region information collectors
 
+    /**
+     * Checks if the time has been set. If the entry is not an appointment and no time is set the time will automatically be set to 12:00
+     */
     private void checkForTime() {
         if (spnCategory.getSelectedItemPosition() != 3) {
             if (!timeSet()){
@@ -191,10 +206,18 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
     }
 
 
+    /**
+     * Gets the name of edtName.
+     * @return Name.
+     */
     private String getResultName() {
         return edtName.getText().toString();
     }
 
+    /**
+     * Gets the hours of edtHours.
+     * @return Hours.
+     */
     private int getResultTimeHours() {
         Log.d(Utils.LOG_ALARM, edtHours.getText().toString());
         return Integer.parseInt(edtHours.getText().toString());
@@ -206,6 +229,10 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
         return Integer.parseInt(edtMinutes.getText().toString());
     }
 
+    /**
+     * Gets the current selection of the categorySpinner.
+     * @return Category.
+     */
     private Category getResultCategory() {
         Category selected = Category.WORK;
         switch (spnCategory.getSelectedItemPosition()) {
@@ -250,7 +277,7 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
     /**
      * Checks if all the EditTexts contain a value. Only if all EditTexts aren't empty the app will proceed.
      *
-     * @return False if anyone of the TextViews is empty, else true.
+     * @return False if any of the TextViews is empty, else true.
      */
     private boolean nameEntered() {
         return !edtName.getText().toString().isEmpty();

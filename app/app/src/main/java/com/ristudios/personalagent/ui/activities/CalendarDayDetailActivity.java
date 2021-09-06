@@ -24,6 +24,7 @@ import com.ristudios.personalagent.utils.Utils;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 
 public class CalendarDayDetailActivity extends AppCompatActivity implements EntryManager.EntryManagerListener, EntryAdapter.OnEntryEditedListener, AddOrUpdateEntryDialogFragment.AddEntryDialogClickListener {
 
@@ -40,9 +41,12 @@ public class CalendarDayDetailActivity extends AppCompatActivity implements Entr
 
     }
 
+    /**
+     * Initiates the UI of the Activity.
+     */
     private void initUI() {
         TextView txtHeader = findViewById(R.id.txt_detail_header);
-        txtHeader.setText(Utils.getFormattedDate(zonedDateTime));
+        txtHeader.setText(Utils.getLocalizedFormattedDate(zonedDateTime));
         ImageButton btnPreviousDate = findViewById(R.id.btn_previoius_date);
         ImageButton btnNextDate = findViewById(R.id.btn_next_date);
         btnPreviousDate.setOnClickListener(v -> {
@@ -62,6 +66,9 @@ public class CalendarDayDetailActivity extends AppCompatActivity implements Entr
         });
     }
 
+    /**
+     * Initiates the data of the current activity.
+     */
     private void initData() {
         entryManager = new EntryManager(this, this);
         entryAdapter = new EntryAdapter(this, this);
@@ -72,21 +79,22 @@ public class CalendarDayDetailActivity extends AppCompatActivity implements Entr
         entryManager.loadEntriesForDate(zonedDateTime.getYear(), zonedDateTime.getMonthValue(), zonedDateTime.getDayOfMonth());
     }
 
+    /**
+     * Updates the displayed data when the buttons for next or previous day are clicked.
+     */
     private void updateData() {
         TextView txtHeader = findViewById(R.id.txt_detail_header);
-        txtHeader.setText(Utils.getFormattedDate(zonedDateTime));
+        txtHeader.setText(Utils.getLocalizedFormattedDate(zonedDateTime));
         entryManager.loadEntriesForDate(zonedDateTime.getYear(), zonedDateTime.getMonthValue(), zonedDateTime.getDayOfMonth());
+        //ArrayList<Entry> sortedList = Utils.sortListByCategory(entryManager.getCurrentEntries());
 
     }
 
     @Override
     public void onEntryListUpdated() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                entryAdapter.updateEntries(entryManager.getCurrentEntries());
-                entryAdapter.notifyDataSetChanged();
-            }
+        runOnUiThread(() -> {
+            entryAdapter.updateEntries(entryManager.getCurrentEntries());
+            entryAdapter.notifyDataSetChanged();
         });
 
     }
@@ -105,6 +113,15 @@ public class CalendarDayDetailActivity extends AppCompatActivity implements Entr
         dialog.show(getSupportFragmentManager(), "pa:UpdateEntryDialog");
     }
 
+    /**
+     * Adds a new entry to the entryManager.
+     * @param name Name of the entry.
+     * @param hour Hour of day for the entry.
+     * @param minute Minute of hour for the new entry.
+     * @param category Category of the entry.
+     * @param difficulty difficulty of the entry.
+     * @param targetDate The date of the entry.
+     */
     @Override
     public void onItemNew(String name, int hour, int minute, Category category, Difficulty difficulty, ZonedDateTime targetDate) {
         Entry entry = new Entry(name, category, difficulty, Utils.millisForEntryWithDate(targetDate.getYear(), targetDate.getMonthValue(),
@@ -112,11 +129,20 @@ public class CalendarDayDetailActivity extends AppCompatActivity implements Entr
         entryManager.addEntry(entry);
     }
 
+    /**
+     * Updates an entry by removing the old one and then adding a new one to entrymanager.
+     * @param name Name of the entry.
+     * @param hour Hour of day for the entry.
+     * @param minute Minute of hour for the entry.
+     * @param category Category of the entry.
+     * @param difficulty Difficulty of the entry.
+     * @param oldEntry The entry to be removed.
+     * @param position Position of the edited entry.
+     * @param targetDate The date of the entry.
+     */
     @Override
     public void onItemUpdate(String name, int hour, int minute, Category category, Difficulty difficulty, Entry oldEntry, int position, ZonedDateTime targetDate) {
         entryManager.removeEntry(oldEntry);
-        //entryAdapter.notifyItemRemoved(position);
-        //entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
         Entry entry = new Entry(name, category, difficulty, Utils.millisForEntryWithDate(targetDate.getYear(),
                 targetDate.getMonthValue(), targetDate.getDayOfMonth(),
                 hour, minute));
@@ -125,6 +151,10 @@ public class CalendarDayDetailActivity extends AppCompatActivity implements Entr
         Toast.makeText(this, getString(R.string.toast_changes_successful), Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Displays a Toast when the user clicks the negative option of the {@link AddOrUpdateEntryDialogFragment}.
+     * @param mode Dialog mode (add or update).
+     */
     @Override
     public void onNegativeClicked(int mode) {
         if (mode == 1) {

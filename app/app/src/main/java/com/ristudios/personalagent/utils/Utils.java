@@ -29,6 +29,7 @@ import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalField;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -220,16 +221,7 @@ public final class Utils {
         return formatter.format(zonedDateTime);
     }
 
-    /**
-     * Formats a ZonedDateTime to display the current date
-     * @param zonedDateTime The Date to be formatted.
-     * @return Formatted String dd.MM.yyyy
-     */
-    public static String getFormattedDate(ZonedDateTime zonedDateTime){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        return formatter.format(zonedDateTime);
-    }
-
+   
     /**
      * Formats a ZonedDateTime to display the current date in the default local format of the device.
      * @param zonedDateTime Date to be formatted.
@@ -240,29 +232,19 @@ public final class Utils {
         return formatter.format(zonedDateTime);
     }
 
-    /**
-     * Formats a ZonedDateTime to display the current date with time
-     * @param zonedDateTime The Date to be formatted.
-     * @return Formatted String dd.MM.yyyy HH:mm
-     */
-    public static String getFormattedDateTime(ZonedDateTime zonedDateTime){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-        return formatter.format(zonedDateTime);
-    }
-
 
 
     //endregion
 
 
     /**
-     * <p><font color="red">WARNING: EXPERIMENTAL METHOD DO NOT USE TO SORT ITEMS IN MANAGER/ADAPTER</font></p>
+     * <p><font color="red">WARNING: MORE TESTING REQUIRED</font></p>
      *
      *Sorts an Arraylist by Category to make the ui look better.
      * @param toSort The arraylist that will be sorted.
      * @return The sorted arraylist.
      */
-    public static ArrayList<Entry> sortListByCategory(ArrayList<Entry> toSort){
+    public static ArrayList<Entry> sortListByCategory(List<Entry> toSort){
         ArrayList<Entry> sortedList = new ArrayList<>();
         for (Entry entry : toSort){
                 if (entry.getCategory().equals(Category.WORK))
@@ -291,44 +273,98 @@ public final class Utils {
         return sortedList;
     }
 
+    /**
+     * Returns a random String for notifications.
+     * @param context ApplicationContext
+     * @param type Type of the Notification.
+     * @return Random String.
+     */
     public static String getRandomNotificationString(Context context, int type) {
-
         String rndString = "";
         if (type == TYPE_MORNING_TITLE) {
-            rndString = getRandomString(context, rndString, R.array.morning_notification_titles);
+            rndString = getRandomString(context, R.array.morning_notification_titles);
         }
         if (type == TYPE_MORNING_MESSAGE) {
-            rndString = getRandomString(context, rndString, R.array.morning_notification_messages);
+            rndString = getRandomString(context, R.array.morning_notification_messages);
         }
         if (type == TYPE_EVENING_TITLE) {
-            rndString = getRandomString(context, rndString, R.array.evening_notification_titles);
+            rndString = getRandomString(context, R.array.evening_notification_titles);
         }
         if (type == TYPE_EVENING_MESSAGE) {
-            rndString = getRandomString(context, rndString, R.array.evening_notification_messages);
+            rndString = getRandomString(context, R.array.evening_notification_messages);
         }
         return rndString;
 
     }
 
-    private static String getRandomString(Context context, String rndString, int p) {
+    /**
+     * Returns a random String chosen from one of 4 arrays to change the notification messages randomly.
+     * @param context ApplicationContext.
+     * @param array The array to choose from.
+     * @return Random String.
+     */
+    private static String getRandomString(Context context, int array) {
         Random random = new Random();
-
-        String[] strings = context.getResources().getStringArray(p);
+        String randomString = "";
+        String[] strings = context.getResources().getStringArray(array);
         switch (random.nextInt(strings.length)) {
             case 0:
-                rndString = strings[0];
+                randomString = strings[0];
                 break;
             case 1:
-                rndString = strings[1];
+                randomString = strings[1];
                 break;
             case 2:
-                rndString = strings[2];
+                randomString = strings[2];
             default:
                 break;
         }
-        return rndString;
+        return randomString;
     }
 
+    /**
+     * Switches the name of a month with a string resource to display text in the correct language.
+     * @param name original name of month (by month.name()).
+     * @param context ApplicationContext.
+     * @return the name of month from stringRes.
+     */
+    public static String getLocalMonthName(String name, Context context){
+        String localName = "";
+        String[] months = context.getResources().getStringArray(R.array.months);
+        switch (name){
+            case "january": localName = months[0];
+                break;
+            case "february": localName = months[1];
+                break;
+            case "march":localName = months[2];
+                break;
+            case "april":localName = months[3];
+                break;
+            case "may":localName = months[4];
+                break;
+            case "june":localName = months[5];
+                break;
+            case "july":localName = months[6];
+                break;
+            case "august":localName = months[7];
+                break;
+            case "september":localName = months[8];
+                break;
+            case "october":localName = months[9];
+                break;
+            case "november":localName = months[10];
+                break;
+            case "december":localName = months[11];
+                break;
+        }
+        return localName;
+    }
+
+    /**
+     * Converts a drawable into a bitmap so it can be used in methods which require bitmap objects.
+     * @param drawable The drawable to convert.
+     * @return Bitmap object displaying the drawable.
+     */
     public static Bitmap drawableToBitmap(Drawable drawable) {
 
         if (drawable instanceof BitmapDrawable) {

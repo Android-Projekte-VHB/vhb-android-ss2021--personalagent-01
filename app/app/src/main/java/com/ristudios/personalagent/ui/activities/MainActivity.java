@@ -111,7 +111,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         greetingsTV = findViewById(R.id.greetings_flavor);
         dateTV = findViewById(R.id.date_flavor);
         ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.systemDefault());
-        String formattedDateText = dateTV.getText().toString().replace("$DATE", Utils.getFormattedDate(zonedDateTime));
+        String formattedDateText = dateTV.getText().toString().replace("$DATE", Utils.getLocalizedFormattedDate(zonedDateTime));
         dateTV.setText(formattedDateText);
 
         recyclerView = findViewById(R.id.recycler_view_entries);
@@ -194,8 +194,14 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     @Override
     public void onEntryListUpdated() {
-        entryAdapter.updateEntries(manager.getCurrentEntries());
-        entryAdapter.notifyDataSetChanged();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                entryAdapter.updateEntries(manager.getCurrentEntries());
+                entryAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
 
     @Override
@@ -278,7 +284,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                         /* Set your color for negative displacement */
                         swipeColor.setColor(itemView.getResources().getColor(R.color.hard, null));
                         // Draw Rect with varying left side, equal to the item's right side plus negative displacement dX
-                        c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
+                        c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(),
                                 (float) itemView.getRight(), (float) itemView.getBottom(), swipeColor);
                         c.drawBitmap(iconDelete, (float) itemView.getLeft() + itemView.getWidth() - iconDelete.getWidth()- (iconDelete.getWidth()/10), (float) itemView.getTop()+ dif/2, swipeColor);
 

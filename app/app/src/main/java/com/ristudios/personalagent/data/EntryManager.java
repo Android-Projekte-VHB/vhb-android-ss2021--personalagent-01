@@ -38,7 +38,7 @@ public class EntryManager {
         executor.executeLoadForDateOperation(searchMillis[0], searchMillis[1], new DatabaseOperationExecutor.DataLoadedListener() {
             @Override
             public void onDataLoaded(List<Entry> loadedEntries) {
-                entries.addAll(loadedEntries);
+                entries.addAll(Utils.sortListByCategory(loadedEntries));
                 listener.onListLoaded();
             }
         });
@@ -51,7 +51,7 @@ public class EntryManager {
         executor.executeLoadForDateOperation(searchMillis[0], searchMillis[1], new DatabaseOperationExecutor.DataLoadedListener() {
             @Override
             public void onDataLoaded(List<Entry> loadedEntries) {
-                entries.addAll(loadedEntries);
+                entries.addAll(Utils.sortListByCategory(loadedEntries));
                 listener.onListLoaded();
 
             }
@@ -61,6 +61,7 @@ public class EntryManager {
     public void addEntry(Entry entry) {
         entries.add(entry);
         executor.executeAddOrUpdateOperation(entry);
+        entries = Utils.sortListByCategory(entries);
         listener.onEntryListUpdated();
     }
 
@@ -80,14 +81,6 @@ public class EntryManager {
         listener.onEntryListUpdated();
     }
 
-    public int getCurrentPoints()
-    {
-        int points = 0;
-        for (Entry entry: entries){
-            points = points + entry.getDifficulty().points;
-        }
-        return points;
-    }
 
     public ArrayList<Entry> getCurrentEntries() {
         return new ArrayList<>(entries);

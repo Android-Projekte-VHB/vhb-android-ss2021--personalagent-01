@@ -10,11 +10,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class MonthViewContainer extends ViewContainer {
 
-    public final TextView textView, txtMon, txtTue, txtWed, txtThu, txtFri, txtSat, txtSun;
+    public final TextView txtHeader, txtMon, txtTue, txtWed, txtThu, txtFri, txtSat, txtSun;
 
     public MonthViewContainer(@NotNull View view) {
         super(view);
-        textView = view.findViewById(R.id.exTwoHeaderText);
+        txtHeader = view.findViewById(R.id.exTwoHeaderText);
         txtMon = view.findViewById(R.id.txt_mon);
         txtTue = view.findViewById(R.id.txt_tue);
         txtWed = view.findViewById(R.id.txt_wed);
