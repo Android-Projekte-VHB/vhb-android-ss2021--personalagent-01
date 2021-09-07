@@ -20,11 +20,8 @@
     <color name="hard">#eb2f06</color>
 
 
-    <color name="midnight_blue">#2c3e50</color>
-    <color name="mazarine_blue">#273c75</color>
-    <color name="livid">#6a89cc</color>
-    <color name="belize_hole">#2980b9</color>
-    <color name="dupain">#60a3bc</color>
+    <color name="pico_void">#192a56</color>
+    <color name="robins_egg_blue">#00cec9</color>
 
     //progress bar
     <color name="city_lights">#dfe6e9</color>
