@@ -229,7 +229,7 @@ public final class Utils {
      * @return Formatted string in local default format.
      */
     public static String getLocalizedFormattedDate(ZonedDateTime zonedDateTime){
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
         return formatter.format(zonedDateTime);
     }
 
