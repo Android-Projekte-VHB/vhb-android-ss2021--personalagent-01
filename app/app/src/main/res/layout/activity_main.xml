@@ -29,7 +29,7 @@
                 android:layout_marginLeft="10dp"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/greetings_flavor"
-                android:textColor="@color/livid"
+                android:textColor="@color/robins_egg_blue"
                 android:textSize="50sp">
 
             </TextView>
@@ -117,10 +117,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:clickable="true"
-                android:backgroundTint="@color/livid"
+                android:backgroundTint="@color/robins_egg_blue"
                 android:text="@string/btn_new_entry_text"
                 android:layout_margin="10dp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/pico_void"
+                android:textStyle="bold"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_entries"
