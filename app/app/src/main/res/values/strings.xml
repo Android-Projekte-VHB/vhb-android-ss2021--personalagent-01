@@ -26,6 +26,11 @@
     <string name="toast_changes_discarded">Changes discarded</string>
     <string name="toast_new_entry_discarded">Entry discarded</string>
 
+    //snackbar
+    <string name="item_deleted_snackbar">$ITEM deleted!</string>
+    <string name="item_done_snackbar">$ITEM completed! You\'ve earned $POINTS points!</string>
+    <string name="item_undo_snackbar_button">UNDO</string>
+
 
     //categories
     <string name="work">work</string>

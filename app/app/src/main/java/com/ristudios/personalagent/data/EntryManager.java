@@ -53,7 +53,6 @@ public class EntryManager {
             public void onDataLoaded(List<Entry> loadedEntries) {
                 entries.addAll(Utils.sortListByCategory(loadedEntries));
                 listener.onListLoaded();
-
             }
         });
     }

@@ -5,21 +5,20 @@ import android.content.Context;
 import com.ristudios.personalagent.R;
 
 public enum Category {
-    WORK (R.string.work, R.color.work_color),
-    HOBBY (R.string.hobby, R.color.hobby_color),
-    FITNESS (R.string.fitness, R.color.fitness_color),
-    APPOINTMENT (R.string.appointment, R.color.appointment_color);
+    WORK (R.string.work),
+    HOBBY (R.string.hobby),
+    FITNESS (R.string.fitness),
+    APPOINTMENT (R.string.appointment);
+
+
+
+    public final int name;
 
     /**
      * tasks are divided into four categories (work, fitness, hobby, appointment)
      * and are colored accordingly to achieve an easy distinction in the UI
      */
-
-    public final int name;
-    public final int color;
-
-    Category(int name, int color){
+    Category(int name){
         this.name = name;
-        this.color = color;
     }
 }

@@ -25,6 +25,10 @@
     <string name="toast_changes_discarded">Änderungen verworfen</string>
     <string name="toast_new_entry_discarded">Eintrag verworfen</string>
 
+    //snackbar
+    <string name="item_deleted_snackbar">$ITEM gelöscht!</string>
+    <string name="item_done_snackbar">$ITEM erledigt!Du hast $POINTS Punkte erhalten!</string>
+    <string name="item_undo_snackbar_button">RÜCKGÄNGIG</string>
 
     //categories
     <string name="work">Arbeit</string>
@@ -33,7 +37,6 @@
     <string name="appointment">Termin</string>
 
     //dialog add entry
-
     <string-array name="category_array">
         <item>Arbeit</item>
         <item>Hobby</item>

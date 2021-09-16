@@ -10,7 +10,11 @@ import com.ristudios.personalagent.data.Entry;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
+/**
+ * operations and queries for database
+ */
 @Dao
 public interface EntryDAO {
 
@@ -24,7 +28,7 @@ public interface EntryDAO {
     void deleteEntry(Entry entry);
 
     @Query("SELECT * from entries WHERE uuid= :id")
-    Entry getEntryForId(String id);
+    Entry getEntryForId(UUID id);
 
     @Query("SELECT * from entries WHERE date>= :start AND date<= :end ")
     List<Entry> getEntriesForDate(long start, long end);

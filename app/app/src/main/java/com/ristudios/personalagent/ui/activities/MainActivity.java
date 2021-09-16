@@ -1,6 +1,7 @@
 package com.ristudios.personalagent.ui.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -47,7 +48,7 @@ import java.time.ZonedDateTime;
 
 
 /**
- * LauncherActivity, shows tasks for current day as well as weather information.
+ * LauncherActivity, shows tasks for current day and weather information.
  */
 
 
@@ -65,8 +66,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     private Paint swipeColor = new Paint();
     private Bitmap iconCheck, iconDelete;
     SharedPreferences.Editor editor;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,11 +96,8 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         manager = new EntryManager(this, this);
         entryAdapter = new EntryAdapter(this, this);
         recyclerView.setAdapter(entryAdapter);
-        //entryAdapter.updateEntries(manager.loadEntriesForToday());
     }
 
-
-    //TODO: SUBJECT TO CHANGE! only for testing purposes - nothing final
     private void initUI() {
         tempTV = findViewById(R.id.tv);
         weatherIcon = findViewById(R.id.imv_weather_indicator);
@@ -129,6 +125,10 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     }
 
+    /**
+     * Starts the process of requesting the user's permission for accessing the device's location and then creating a
+     * WeatherDataRequest for the Location via the WeatherDataProvider.
+     */
     private void initAPI() {
         requestLocationPermissions();
         provider = new WeatherDataProvider(getApplicationContext(), this);
@@ -136,13 +136,21 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     }
 
 
-    //TODO: Request Permissions outside of OnCreate() or check if they were denied
+    /**
+     * If not already given, this method requests the user to allow accessing the device's location.
+     */
     private void requestLocationPermissions() {
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
         requestPermissions(permissions, Utils.REQUEST_LOCATION_PERMISSIONS);
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[]
             grantResults) {
         switch (requestCode) {
@@ -181,14 +189,14 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         alarm.setRepeatingAlarm(this, resetTime, AlarmManager.INTERVAL_DAY*7, Alarm.REQUEST_CODE_RESET, Alarm.TYPE_RESET_ALARM);
     }
 
-    //TODO: pretty ugly, make it just pretty
+
     @Override
     public void onWeatherDataUpdated() {
         Weather weather = provider.getWeather();
         tempTV.setText(weather.getTemperature() + "°C");
         tempMinTV.setText("Min: " + weather.getMinTemp() + "°C");
         tempMaxTV.setText("Max: " + weather.getMaxTemp() + "°C");
-        precipitationTV.setText("Niederschlag: " + (int) weather.getPrecipitation() + "%");
+        precipitationTV.setText("Niederschlag: " + (int) weather.getPrecipitation() * 100 + "%");
         Glide.with(this).load(weather.getImageURL()).into(weatherIcon);
     }
 
@@ -211,7 +219,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
 
 
-    //TODO: FÜR PATRICK
     @Override
     public void onEntryEdited(Entry entry, int position) {
         AddOrUpdateEntryDialogFragment dialog = new AddOrUpdateEntryDialogFragment();
@@ -221,14 +228,27 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     }
 
+    /**
+     * Sets Swipe-Gestures on the RecyclerView via the ItemTouchHelper class.
+     */
     private void initAdapterGestures(){
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
+            /**
+             * Handles Drag-And-Drop Gestured. Not used.
+             */
             @Override
             public boolean onMove(@NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, @NonNull @NotNull RecyclerView.ViewHolder target) {
                 return false;
             }
 
+            /**
+             * Handles the Swipe-Gestures on Entries in the RecyclerView.
+             * The SwitchCase determines what happens if the user swipes left or right.
+             * Swiping from Left to Right will mark an Entry as completed and points will be awarded to the user.
+             * Swiping from Right to Left will delete an Entry. No points will be rewarded.
+             * After each successfully performed Gesture, a Snackbar will appear at the bottom of the screen to inform the user about his action. It holds an UNDO-Button for easy reversal of actions.
+             */
             @Override
             public void onSwiped(@NonNull @NotNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
@@ -250,14 +270,14 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
                     case ItemTouchHelper.RIGHT:
                         finalDeletedEntry = deletedEntry;
-                        Snackbar.make(recyclerView, manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName()+ " completed! You've earned " + manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getDifficulty().points + " points!", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+                       /* Snackbar.make(recyclerView, (R.string.item_done_snackbar)).setAction("Undo", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 manager.addEntry(finalDeletedEntry);
                                 managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, false);
                                 updateAdapterWithAnimation(position);
                             }
-                        }).show();
+                        }).show();*/
                         managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, true);
                         manager.removeEntry(manager.getCurrentEntries().remove(position));
                         updateAdapterWithAnimation(position);
@@ -265,6 +285,12 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                 }
             }
 
+            /**
+             * Here, the animation of Swiping is creating.
+             * Swiping from Left to Right (dX > 0), a green Bar will appear, indicating that this action will mark an entry as completed.
+             * Swiping from Right to Left, a red Bar will appear, indicating that this action will delete an entry.
+             * Fitting Drawables help to understand the actions.
+             */
             @Override
             public void onChildDraw(@NonNull @NotNull Canvas c, @NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
@@ -289,7 +315,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                         c.drawBitmap(iconDelete, (float) itemView.getLeft() + itemView.getWidth() - iconDelete.getWidth()- (iconDelete.getWidth()/10), (float) itemView.getTop()+ dif/2, swipeColor);
 
                     }
-
                     super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
                 }
             }
@@ -329,12 +354,24 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         }
     }
 
+    /**
+     * Instead of calling notifyDataSetChanged on the adapter, this method will inform it of the changes.
+     * The adapter will move up every Entry in the RecyclerView with an animation instead of refreshing the list.
+     * @param position the adapter position of the removed Entry
+     */
     private void updateAdapterWithAnimation(int position){
         entryAdapter.notifyItemRemoved(position);
         entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
         entryAdapter.updateEntries(manager.getCurrentEntries());
     }
 
+    /**
+     * Awards points for completion of Entries or removes them from the User's total count.
+     * Accesses and modifies the User's total points by calling the SharedPreferences of the according Category.
+     * @param category The Category of the Entry.
+     * @param difficulty The Difficulty of the Entry. Used to determine the amount to be added/removed.
+     * @param addOrRemove True = add, False = remove
+     */
     private void managePoints(Category category, Difficulty difficulty, Boolean addOrRemove){
 
         switch (category){

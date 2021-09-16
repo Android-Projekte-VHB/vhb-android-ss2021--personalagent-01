@@ -15,13 +15,17 @@ public class EntryDatabaseHelper {
     private EntryDatabase db;
     private final Context context;
 
+    /**
+     * binds database and Manager class
+     * access point to database
+     * @param context the application context
+     */
     public EntryDatabaseHelper(Context context) {
         this.context = context;
         initDatabase(context);
     }
 
     private void initDatabase(Context context) {
-        //@TODO: no main thread queries!!!
         db = Room.databaseBuilder(context, EntryDatabase.class, DATABASE_NAME).build();
     }
 

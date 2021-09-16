@@ -29,7 +29,7 @@
                 android:layout_marginLeft="10dp"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/greetings_flavor"
-                android:textColor="@color/robins_egg_blue"
+                android:textColor="@color/devil_blue"
                 android:textSize="50sp">
 
             </TextView>
@@ -42,7 +42,6 @@
             android:textSize="30sp"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="13dp">
-
         </TextView>
 
         <LinearLayout
@@ -111,17 +110,16 @@
                 android:textAlignment="center">
             </TextView>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_new_entry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:clickable="true"
-                android:backgroundTint="@color/robins_egg_blue"
+                style="@style/Base.Widget.PersonalAgent.Button"
                 android:text="@string/btn_new_entry_text"
                 android:layout_margin="10dp"
-                android:textColor="@color/pico_void"
-                android:textStyle="bold"/>
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_entries"
@@ -132,7 +130,6 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linear">
-
             </androidx.recyclerview.widget.RecyclerView>
 
 

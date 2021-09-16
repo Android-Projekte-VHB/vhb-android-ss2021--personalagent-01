@@ -9,6 +9,11 @@ import java.util.concurrent.Executors;
 public class DatabaseOperationExecutor {
 
     private EntryDatabaseHelper helper;
+    /**
+     * this class executes database operations within an extra thread
+     * @param helper instance of DatabaseHelper which gives access to the database
+     */
+
 
     public DatabaseOperationExecutor (EntryDatabaseHelper helper) {
         this.helper = helper;
@@ -32,6 +37,9 @@ public class DatabaseOperationExecutor {
         );
     }
 
+    /**
+     * listener informs manager when data is loaded
+     */
     public interface DataLoadedListener{
         void onDataLoaded(List<Entry> loadedEntries);
     }

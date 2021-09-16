@@ -19,11 +19,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class EntryViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView textView, txtTime;
-    private ImageView imageView;
-    private ConstraintLayout constraint;
-    private OnEntryClickedListener listener;
+    private final TextView textView;
+    private final TextView txtTime;
+    private final ImageView imageView;
+    private final ConstraintLayout constraint;
+    private final OnEntryClickedListener listener;
 
+    /**
+     * ViewHolder represents one view for one entry
+     */
     @SuppressLint("UseCompatLoadingForDrawables")
     public EntryViewHolder(@NonNull @NotNull View itemView, OnEntryClickedListener listener) {
         super(itemView);
@@ -32,7 +36,6 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
         imageView = itemView.findViewById(R.id.difficulty_indicator);
         constraint = itemView.findViewById(R.id.entry_constraint);
         txtTime = itemView.findViewById(R.id.txt_viewholder_appointment_time);
-
     }
 
     public void bindView(Entry entry) {
@@ -49,9 +52,12 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    /**
+     * this method colors the background according to the category of one entry
+     * @param entry that should be represented
+     */
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setBackgroundForCategory(Entry entry) {
-
         switch(entry.getCategory()) {
             case WORK:
                 constraint.setBackground(itemView.getResources().getDrawable(R.drawable.background_gradient_work, null));
@@ -69,7 +75,10 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
                 break;
         }
     }
-
+    /**
+     * this method colors the android mascot according to the difficulty of one entry
+     * @param entry that should be represented
+     */
     private void setDifficultyIndicator(Entry entry) {
         switch (entry.getDifficulty()) {
             case EASY:
@@ -95,6 +104,7 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
                 break;
         }
     }
+    // listener informs adapter when one entry was clicked
     public interface OnEntryClickedListener {
         void onEntryClicked(int position);
     }

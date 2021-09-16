@@ -6,9 +6,9 @@ public enum Difficulty {
     MEDIUM (20),
     HARD (30);
 
-    //points to be rewarded for fulfilling tasks
-    public final int points;
 
+    public final int points;
+    //points to be rewarded for fulfilling tasks
     Difficulty(int points){
         this.points = points;
     }

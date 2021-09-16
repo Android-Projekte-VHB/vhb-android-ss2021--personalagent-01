@@ -6,11 +6,11 @@ import androidx.room.TypeConverters;
 
 import com.ristudios.personalagent.data.Entry;
 
-@Database(entities = {Entry.class}, version = 2)
+@Database(entities = {Entry.class}, version = 3)
 @TypeConverters({EntryAttributeTypeConverter.class})
 
 public abstract class EntryDatabase extends RoomDatabase {
-
+    //holds instance of EntryDAO class for DataBaseHelper class
     public abstract EntryDAO entryDAO();
 
 }

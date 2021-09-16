@@ -3,29 +3,36 @@ package com.ristudios.personalagent.data;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.UUID;
+//Represents an Entry for the To-Do-List
 @Entity(tableName = "entries")
 public class Entry {
 
-    //Represents an Entry for the To-Do-List
-
     @PrimaryKey
     @NonNull
-    public String uuid;
-    @ColumnInfo
-    public String name;
-    @ColumnInfo
-    public Category category;
-    @ColumnInfo
-    public Difficulty difficulty;
-    @ColumnInfo
+    public final UUID uuid;
+    public final String name;
+    public final Category category;
+    public final Difficulty difficulty;
     public final long date;
 
+    @Ignore
     public Entry(String name, Category category, Difficulty difficulty, long date){
-        this.uuid = UUID.randomUUID().toString();
+        this.uuid = UUID.randomUUID();
+        this.name = name;
+        this.category = category;
+        this.difficulty = difficulty;
+        this.date = date;
+    }
+
+    public Entry(String name, Category category, Difficulty difficulty, long date, @NotNull UUID uuid){
+        this.uuid = uuid;
         this.name = name;
         this.category = category;
         this.difficulty = difficulty;
@@ -48,7 +55,7 @@ public class Entry {
         return date;
     }
 
-    public String getId() {
+    public UUID getId() {
         return uuid;
     }
 

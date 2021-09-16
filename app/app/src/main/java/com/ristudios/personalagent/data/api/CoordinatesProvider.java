@@ -18,12 +18,25 @@ public class CoordinatesProvider {
     private final CancellationTokenSource token = new CancellationTokenSource();
     private final CoordinatesListener listener;
 
+
+    /**
+     * Creates a new Instance of the CoordinatesProvider Class.
+     * If permissions were granted, It accesses the current Location of the Device in Coordinates of Longitude and Latitude via Android's FusedLocationProviderClient.
+     *
+     * @param context The Activity's Context
+     * @param listener A CoordinatesListener that will receive the current Location when ready
+     */
+
     public CoordinatesProvider(Context context, CoordinatesListener listener) {
         this.context = context;
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         this.listener = listener;
     }
 
+    /**
+     * Starts the CoordinatesProvider. On Success, it notifies the CoordinatesListener and provides it the Devices current Location.
+     *
+     */
     public void start() {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -43,7 +56,15 @@ public class CoordinatesProvider {
         });
     }
 
+    /**
+     * Implementation of this Interface will notify the Class when the CoordinatesProvider has successfully accessed the Device's Location.
+     */
     interface CoordinatesListener{
+        /**
+         * Override to work with the results of the CoordinatesProvider.
+         * @param longitude Current Location's Longitude
+         * @param latitude Current Location's Latitude
+         */
         void onCoordinatesReady(double longitude, double latitude);
     }
 
