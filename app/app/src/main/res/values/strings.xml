@@ -25,6 +25,7 @@
     <string name="toast_changes_successful">Changes successful</string>
     <string name="toast_changes_discarded">Changes discarded</string>
     <string name="toast_new_entry_discarded">Entry discarded</string>
+    <string name="missing_permission">Missing Permission</string>
 
     //snackbar
     <string name="item_deleted_snackbar">$ITEM deleted!</string>
@@ -79,7 +80,7 @@
     <string name="settings_pa_username_title">Username</string>
     <string name="settings_pa_username_summary">Set how the PersonalAgent should call you</string>
     <string name="settings_pa_weekly_goal_title">Daily Goal</string>
-    <string name="settings_pa_weekly_goal_summary">Set your daily Point Goal (Multiple of 10)</string>
+    <string name="settings_pa_weekly_goal_summary">Set your daily Point Goal</string>
 
     <string name="toast_time_set_succes">Changes saved</string>
     <string name="toast_time_set_failure">Something went wrong</string>

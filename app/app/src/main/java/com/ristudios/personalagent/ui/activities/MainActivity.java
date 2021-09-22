@@ -131,8 +131,6 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
      */
     private void initAPI() {
         requestLocationPermissions();
-        provider = new WeatherDataProvider(getApplicationContext(), this);
-        provider.update();
     }
 
 
@@ -145,18 +143,17 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         requestPermissions(permissions, Utils.REQUEST_LOCATION_PERMISSIONS);
     }
 
-    /**
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[]
             grantResults) {
         switch (requestCode) {
             case Utils.REQUEST_LOCATION_PERMISSIONS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    provider = new WeatherDataProvider(getApplicationContext(), this);
+                    provider.update();
                     break;
+                } else {
+                    tempTV.setText(R.string.missing_permission);
                 }
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -197,6 +194,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         tempMinTV.setText("Min: " + weather.getMinTemp() + "°C");
         tempMaxTV.setText("Max: " + weather.getMaxTemp() + "°C");
         precipitationTV.setText("Niederschlag: " + (int) weather.getPrecipitation() * 100 + "%");
+        Log.d("kek", String.valueOf(weather.getPrecipitation()));
         Glide.with(this).load(weather.getImageURL()).into(weatherIcon);
     }
 
@@ -253,11 +251,13 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
             public void onSwiped(@NonNull @NotNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
                 Entry deletedEntry = manager.getCurrentEntries().get(position);
+                String snackbarUndoString = getResources().getString(R.string.item_undo_snackbar_button);
 
                 switch (direction){
-                    case ItemTouchHelper.LEFT:
+                    case ItemTouchHelper.LEFT: //ITEM DELETED
                         Entry finalDeletedEntry = deletedEntry;
-                        Snackbar.make(recyclerView, manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName() + " deleted!", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+                        String snackbarDeletedString = getResources().getString(R.string.item_deleted_snackbar).replace("$ITEM", manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName() );
+                        Snackbar.make(recyclerView, snackbarDeletedString, Snackbar.LENGTH_LONG).setAction(snackbarUndoString, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 manager.addEntry(finalDeletedEntry);
@@ -268,16 +268,17 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                         updateAdapterWithAnimation(position);
                         break;
 
-                    case ItemTouchHelper.RIGHT:
+                    case ItemTouchHelper.RIGHT: //ITEM DONE
                         finalDeletedEntry = deletedEntry;
-                       /* Snackbar.make(recyclerView, (R.string.item_done_snackbar)).setAction("Undo", new View.OnClickListener() {
+                        String snackbarDoneString = getResources().getString(R.string.item_done_snackbar).replace("$ITEM", manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName()).replace("$POINTS", String.valueOf(manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).difficulty.points));
+                        Snackbar.make(recyclerView, snackbarDoneString, Snackbar.LENGTH_LONG).setAction(snackbarUndoString, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 manager.addEntry(finalDeletedEntry);
                                 managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, false);
                                 updateAdapterWithAnimation(position);
                             }
-                        }).show();*/
+                        }).show();
                         managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, true);
                         manager.removeEntry(manager.getCurrentEntries().remove(position));
                         updateAdapterWithAnimation(position);
