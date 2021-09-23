@@ -7,5 +7,5 @@ _Beschreiben Sie hier kurz und knapp die wesentlichen Ziele und Funktionen Ihrer
 
 - [_User Guide_ zur App](App.md)
 - [Das Team](Team.md)
-- [Link zum Trailer]()
+- [Link zum Trailer](https://www.youtube.com/watch?v=pbt9cjAteQ0)
 - [APK-Datei der fertigen Version]()
