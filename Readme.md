@@ -20,7 +20,8 @@ Schließlich handelt es sich um den **PersonalAgent**.
 
 
 ![readmegif](https://user-images.githubusercontent.com/79211586/134596597-e1cf07d6-b396-4e90-89b2-6b35d33b26bd.gif)
-<img src="https://user-images.githubusercontent.com/79211586/134593842-039be796-cb29-4599-8920-d487dc19d49d.png"  width="418" height="874" align="right">
+![screenshot1](https://user-images.githubusercontent.com/79211586/134598470-d0276353-512a-44d0-8d7f-260b2a2f5164.png)
+
 
 
 
