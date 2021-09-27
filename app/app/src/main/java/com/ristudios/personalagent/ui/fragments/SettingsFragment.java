@@ -26,6 +26,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
+    /**
+     * The fragment implemented in the SettingsActivity. It inherits from PreferenceFragmentCompat to easily build functioning Settings.
+     */
+
     private SwitchPreference notificationPref;
     private EditTextPreference dailyGoalPref, usernamePref;
     private Preference notificationTimeOnePref, notificationTimeTwoPref;
@@ -35,7 +39,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onAttach(@NonNull @NotNull Context context) {
         super.onAttach(context);
-        listener = (TimeModeListener) context;
+        listener = (TimeModeListener) context; //Registers the Activity that uses this Fragment as the TimeModeListener
     }
 
     @Override
@@ -84,19 +88,25 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 Alarm alarm = new Alarm();
                 alarm.cancelAlarm(getActivity().getApplicationContext(), Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
                 alarm.cancelAlarm(getActivity().getApplicationContext(), Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
-
             }
             return false;
         });
 
-
     }
 
+
+    /*
+    Shows the TimePicker as an animation for setting the Notification Time.
+     */
     public void showTimePickerDialog(View view) {
         DialogFragment fragment = new TimePickerFragment();
         fragment.show(getActivity().getSupportFragmentManager(), "myApp:timePicker");
     }
 
+
+    /*
+    It connects the Settings specified in the settings.xml file with their Java Representation.
+     */
     private void bindPrefs() {
         notificationPref = findPreference(Utils.SP_NOTIFICATION_ENABLED_KEY);
         notificationTimeOnePref = findPreference(Utils.SP_NOTIFICATION_TIME_ONE_KEY);

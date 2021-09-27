@@ -16,7 +16,7 @@ import com.ristudios.personalagent.utils.Utils;
 import com.ristudios.personalagent.utils.notifications.Alarm;
 
 /**
- * Responsible for handling the settings of the app.
+ * Responsible for handling the settings of the app by loading the SettingsFragment.
  */
 public class SettingsActivity extends BaseActivity implements TimePickerFragment.TimeSetListener, SettingsFragment.TimeModeListener {
 
@@ -32,6 +32,13 @@ public class SettingsActivity extends BaseActivity implements TimePickerFragment
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, new SettingsFragment()).commit();
     }
 
+    /**
+     * Writes data to shared preferences when the user chooses a time for the notifications.
+     * Based on the mode set by {@link #onTimeModeChanged(int)} the method knows whether to overwrite
+     * the saved time for evening or morning.
+     * @param h Hour to send Notification at.
+     * @param m Minute to send Notification at.
+     */
     private void writeDataToPrefs(int h, int m) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Alarm alarm = new Alarm();
@@ -51,11 +58,20 @@ public class SettingsActivity extends BaseActivity implements TimePickerFragment
         }
     }
 
+    /**
+     * Retrieves data from the {@link TimePickerFragment}.
+     * @param h Set hour.
+     * @param m Set minute.
+     */
     @Override
     public void onTimeDataSet(int h, int m) {
         writeDataToPrefs(h, m);
     }
 
+    /**
+     * Sets the mode of the activity where 1 is for editing morning reminders while -1 is for evening.
+     * @param mode The mode of the activity.
+     */
     @Override
     public void onTimeModeChanged(int mode) {
         this.mode = mode;

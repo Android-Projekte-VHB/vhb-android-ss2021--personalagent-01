@@ -12,7 +12,7 @@ import com.ristudios.personalagent.R;
 import com.ristudios.personalagent.utils.Utils;
 
 /**
- * Responsible for displaying a weekly overview.
+ * Responsible for displaying a weekly overview of the users achieved points and goals.
  */
 public class WeeklyOverviewActivity extends BaseActivity {
 
@@ -33,9 +33,11 @@ public class WeeklyOverviewActivity extends BaseActivity {
         initProgressBars();
         setProgressOnBars();
         setProgressOnText();
-
     }
 
+    /**
+     * Loads the users daily goal. Then, it calculates the total value of the weekly goal by multiplying it by the factor of the categories and 7 (for days).
+     */
     private void initData() {
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         dailyGoalInPoints = prefs.getString(Utils.SP_DAILY_GOAL_KEY, "100");
@@ -45,6 +47,9 @@ public class WeeklyOverviewActivity extends BaseActivity {
         lifePercentageValue = (int) (dailyGoalInPointsValue * Utils.FACTOR_GOAL_PER_WEEK * Utils.FACTOR_LIFE_BALANCE);
     }
 
+    /*
+    Initializes the Charts and sets the maximum value to the calculated weekly goals.
+     */
     private void initProgressBars() {
         workProgressBar = findViewById(R.id.work_progress_bar);
         fitnessProgressBar = findViewById(R.id.fitness_progress_bar);
@@ -57,12 +62,18 @@ public class WeeklyOverviewActivity extends BaseActivity {
         hobbyProgressBar.setMax(lifePercentageValue);
     }
 
+    /*
+    Loads the users progress for each category from the according SharedPreference and sets the progress on the charts.
+     */
     private void setProgressOnBars() {
         workProgressBar.setProgress(prefs.getInt(Utils.SP_WORK_TOTAL_POINTS_KEY, 0));
         hobbyProgressBar.setProgress(prefs.getInt(Utils.SP_HOBBY_TOTAL_POINTS_KEY, 0));
         fitnessProgressBar.setProgress(prefs.getInt(Utils.SP_FITNESS_TOTAL_POINTS_KEY, 0));
     }
 
+    /*
+    Shows the users current points and goal for each category.
+     */
     private void setProgressOnText() {
         String workText = workProgressTV.getText().toString().replace("$CURRENT", String.valueOf(prefs.getInt(Utils.SP_WORK_TOTAL_POINTS_KEY, 0))).replace("$MAX", String.valueOf(workPercentageValue));
         workProgressTV.setText(workText);

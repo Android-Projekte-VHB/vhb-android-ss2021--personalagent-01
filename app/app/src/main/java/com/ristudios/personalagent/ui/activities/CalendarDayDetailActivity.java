@@ -195,7 +195,7 @@ public class CalendarDayDetailActivity extends AppCompatActivity implements Entr
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             /**
-             * Handles Drag-And-Drop Gestured. Not used.
+             * Handles Drag-And-Drop Gestures. Not used.
              */
             @Override
             public boolean onMove(@NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, @NonNull @NotNull RecyclerView.ViewHolder target) {

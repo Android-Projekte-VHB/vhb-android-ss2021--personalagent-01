@@ -105,6 +105,10 @@
         <item>Hol gleich deine Punkte ab</item>
     </string-array>
 
+    <string name="notif_reset_message">Letzte Woche hast du $AMOUNT Punkte erricht und somit dein Ziel $NOT erreicht</string>
+    <string name="notif_not">nicht</string>
+    <string name="notif_reset_title">Wochenübersicht</string>
+
     //Calendar
     <string-array name="months">
         <item>JANUAR</item>
