@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    private SwitchPreference notificationPref, permissionPref;
+    private SwitchPreference notificationPref;
     private EditTextPreference dailyGoalPref, usernamePref;
     private Preference notificationTimeOnePref, notificationTimeTwoPref;
     private TimeModeListener listener;
@@ -36,7 +36,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onAttach(@NonNull @NotNull Context context) {
         super.onAttach(context);
         listener = (TimeModeListener) context;
-
     }
 
     @Override
@@ -100,7 +99,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     private void bindPrefs() {
         notificationPref = findPreference(Utils.SP_NOTIFICATION_ENABLED_KEY);
-        permissionPref = findPreference(Utils.SP_LOCATION_PERMISSION_KEY);
         notificationTimeOnePref = findPreference(Utils.SP_NOTIFICATION_TIME_ONE_KEY);
         notificationTimeTwoPref = findPreference(Utils.SP_NOTIFICATION_TIME_TWO_KEY);
         dailyGoalPref = findPreference(Utils.SP_DAILY_GOAL_KEY);

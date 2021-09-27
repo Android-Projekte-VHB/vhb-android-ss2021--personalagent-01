@@ -38,16 +38,6 @@
         </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
 
-    <androidx.preference.PreferenceCategory
-        android:title="@string/settings_category_permissions_title"
-        >
-        <androidx.preference.SwitchPreference
-            android:defaultValue="true"
-            android:key="permission_switch"
-            android:summary="@string/settings_location_permission_summary"
-            android:title="@string/settings_location_permission_title"
-            />
-    </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory
         android:title="@string/settings_category_pa_title"

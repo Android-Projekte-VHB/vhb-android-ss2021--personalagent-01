@@ -24,10 +24,11 @@
     <string name="toast_changes_successful">Änderungen gespeichert</string>
     <string name="toast_changes_discarded">Änderungen verworfen</string>
     <string name="toast_new_entry_discarded">Eintrag verworfen</string>
+    <string name="missing_permission">Erlaubnis fehlt</string>
 
     //snackbar
     <string name="item_deleted_snackbar">$ITEM gelöscht!</string>
-    <string name="item_done_snackbar">$ITEM erledigt!Du hast $POINTS Punkte erhalten!</string>
+    <string name="item_done_snackbar">$ITEM erledigt! Du hast $POINTS Punkte erhalten!</string>
     <string name="item_undo_snackbar_button">RÜCKGÄNGIG</string>
 
     //categories
@@ -76,7 +77,7 @@
     <string name="settings_pa_username_title">Nutzername</string>
     <string name="settings_pa_username_summary">Lege fest, wie dich dein PersonalAgent nennen soll</string>
     <string name="settings_pa_weekly_goal_title">Tagesziel</string>
-    <string name="settings_pa_weekly_goal_summary">Lege dein Punkteziel pro Tag fest (Vielfaches von 10)</string>
+    <string name="settings_pa_weekly_goal_summary">Lege dein Punkteziel pro Tag fest</string>
 
     <string name="toast_time_set_succes">Änderungen gespeichert</string>
     <string name="toast_time_set_failure">Etwas ist schief gelaufen</string>
