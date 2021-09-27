@@ -60,6 +60,7 @@ public class NotificationHelper {
     public Notification createNotification(String title, String message, int icon, boolean autoCancel, @Nullable PendingIntent pendingIntent) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, MAIN_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(icon)
+                .setStyle(new NotificationCompat.BigTextStyle())
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
