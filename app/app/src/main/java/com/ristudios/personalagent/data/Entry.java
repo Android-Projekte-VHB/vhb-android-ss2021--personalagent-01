@@ -23,6 +23,9 @@ public class Entry {
     public final Difficulty difficulty;
     public final long date;
 
+    /*
+    Constructor used to create a new Entry
+     */
     @Ignore
     public Entry(String name, Category category, Difficulty difficulty, long date) {
         this.uuid = UUID.randomUUID();
@@ -32,6 +35,9 @@ public class Entry {
         this.date = date;
     }
 
+    /*
+    Constructor used to recreate Entries in the Database
+     */
     public Entry(String name, Category category, Difficulty difficulty, long date, @NotNull UUID uuid) {
         this.uuid = uuid;
         this.name = name;

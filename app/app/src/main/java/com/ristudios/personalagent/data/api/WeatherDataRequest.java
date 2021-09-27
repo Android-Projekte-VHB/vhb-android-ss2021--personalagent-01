@@ -28,7 +28,7 @@ public class WeatherDataRequest implements Response.Listener<String>, Response.E
      * @param context   The Application Context
      * @param listener  A listener to be notified when the Request is answered
      * @param longitude The longitude of the Location for the Weather forecast
-     * @param latitude  the latitude of the Location for the Weather forecast
+     * @param latitude  The latitude of the Location for the Weather forecast
      */
     public WeatherDataRequest(Context context, WeatherDataRequestListener listener, double longitude, double latitude) {
         this.context = context;

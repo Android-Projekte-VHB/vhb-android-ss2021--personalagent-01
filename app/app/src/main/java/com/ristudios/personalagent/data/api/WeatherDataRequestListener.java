@@ -3,7 +3,7 @@ package com.ristudios.personalagent.data.api;
 import org.json.JSONObject;
 
 /**
- * Informs the implementing Class that a WeatherDataRequest as been finished and answered.
+ * Informs the implementing Class that a WeatherDataRequest has been finished and answered.
  */
 public interface WeatherDataRequestListener {
 

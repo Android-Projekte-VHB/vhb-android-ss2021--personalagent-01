@@ -109,6 +109,10 @@
         <item>Reward yourself and get your points</item>
     </string-array>
 
+    <string name="notif_reset_message">Last week you achieved $AMOUNT points and did $NOT reach your goal</string>
+    <string name="notif_not">not</string>
+    <string name="notif_reset_title">Weekly overview</string>
+
     //Calendar
     <string-array name="months">
         <item>JANUARY</item>
