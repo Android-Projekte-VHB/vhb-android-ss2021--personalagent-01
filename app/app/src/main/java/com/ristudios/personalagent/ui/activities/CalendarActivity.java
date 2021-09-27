@@ -57,7 +57,7 @@ public class CalendarActivity extends BaseActivity implements DayViewContainer.C
     private void setUpOnActivityResult() {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK){
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         int y = data.getIntExtra("resultYear", 0);
                         int m = data.getIntExtra("resultMonth", 0);
@@ -72,6 +72,7 @@ public class CalendarActivity extends BaseActivity implements DayViewContainer.C
     /**
      * Sets up the calendar by creating and binding a {@link DayViewContainer} to display texts for single days and also a
      * {@link MonthViewContainer} to display a Header for the current selected month.
+     *
      * @param context Application context.
      */
     private void setUpCalendar(Context context) {
@@ -87,7 +88,7 @@ public class CalendarActivity extends BaseActivity implements DayViewContainer.C
             public void bind(@NotNull DayViewContainer dayViewContainer, @NotNull CalendarDay calendarDay) {
                 dayViewContainer.day = calendarDay;
                 dayViewContainer.calendarDayText.setText(String.valueOf(calendarDay.getDate().getDayOfMonth()));
-                if (calendarDay.getOwner() != DayOwner.THIS_MONTH){
+                if (calendarDay.getOwner() != DayOwner.THIS_MONTH) {
                     dayViewContainer.calendarDayText.setText("");
                 }
 
@@ -136,7 +137,8 @@ public class CalendarActivity extends BaseActivity implements DayViewContainer.C
     /**
      * starts the {@link CalendarDayDetailActivity} class with a year, month, day which will then display
      * all entries for the selected date.
-     * @param year The year of the date.
+     *
+     * @param year       The year of the date.
      * @param monthValue The month of the date.
      * @param dayOfMonth The day of month.
      */

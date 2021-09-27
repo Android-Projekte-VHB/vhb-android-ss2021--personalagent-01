@@ -18,6 +18,7 @@ public class EntryDatabaseHelper {
     /**
      * binds database and Manager class
      * access point to database
+     *
      * @param context the application context
      */
     public EntryDatabaseHelper(Context context) {

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalTime;
 
-public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
+public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
     TimeSetListener listener;
 
@@ -31,12 +31,11 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         int m = current.getMinute();
         int mode = SettingsFragment.mode;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        if (prefs.contains(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY) && mode ==1)
-       {
+        if (prefs.contains(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY) && mode == 1) {
             h = prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7);
             m = prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0);
         }
-        if (prefs.contains(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY) && mode == -1){
+        if (prefs.contains(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY) && mode == -1) {
             h = prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, 19);
             m = prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, 0);
         }
@@ -55,7 +54,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         listener.onTimeDataSet(hourOfDay, minute);
     }
 
-    public interface TimeSetListener{
+    public interface TimeSetListener {
         void onTimeDataSet(int h, int m);
     }
 }

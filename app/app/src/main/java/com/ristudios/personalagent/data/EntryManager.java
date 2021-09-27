@@ -24,7 +24,7 @@ public class EntryManager {
     private EntryDatabaseHelper db;
     private DatabaseOperationExecutor executor;
 
-    public EntryManager(Context context, EntryManagerListener listener){
+    public EntryManager(Context context, EntryManagerListener listener) {
         this.context = context;
         this.listener = listener;
         this.entries = new ArrayList<>();
@@ -34,7 +34,7 @@ public class EntryManager {
 
     public void loadEntriesForToday() {
         entries.clear();
-        long [] searchMillis = Utils.getSearchTimesForToday();
+        long[] searchMillis = Utils.getSearchTimesForToday();
         executor.executeLoadForDateOperation(searchMillis[0], searchMillis[1], new DatabaseOperationExecutor.DataLoadedListener() {
             @Override
             public void onDataLoaded(List<Entry> loadedEntries) {
@@ -44,9 +44,9 @@ public class EntryManager {
         });
     }
 
-    public void loadEntriesForDate(int year, int month, int day){
+    public void loadEntriesForDate(int year, int month, int day) {
         entries.clear();
-        long [] searchMillis = Utils.getSearchTimesForDate(year, month, day);
+        long[] searchMillis = Utils.getSearchTimesForDate(year, month, day);
         Log.d(Utils.LOG_ALARM, "searchtimes: " + Utils.getDateFromMillis(searchMillis[0]) + " and " + Utils.getDateFromMillis(searchMillis[1]));
         executor.executeLoadForDateOperation(searchMillis[0], searchMillis[1], new DatabaseOperationExecutor.DataLoadedListener() {
             @Override
@@ -64,13 +64,13 @@ public class EntryManager {
         listener.onEntryListUpdated();
     }
 
-    public void removeEntry(Entry entry){
+    public void removeEntry(Entry entry) {
         Iterator<Entry> iter = entries.iterator();
         while (iter.hasNext()) {
             Entry str = iter.next();
             if (str.getId().equals(entry.getId()))
                 iter.remove();
-                executor.executeDeleteOperation(entry);
+            executor.executeDeleteOperation(entry);
         }
     }
 
@@ -85,13 +85,14 @@ public class EntryManager {
         return new ArrayList<>(entries);
     }
 
-    
+
     public void requestUpdate() {
         listener.onEntryListUpdated();
     }
 
-    public interface EntryManagerListener{
+    public interface EntryManagerListener {
         void onEntryListUpdated();
+
         void onListLoaded();
 
     }

@@ -22,6 +22,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.preference.PreferenceManager;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -159,6 +160,9 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
         }
     }
 
+    /**
+     * Sets up a notification channel for the app.
+     */
     private void setupNotificationChannel() {
         NotificationHelper notificationHelper = new NotificationHelper(this);
         notificationHelper.createNotificationChannel(this,
@@ -179,11 +183,9 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
             alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
             triggerAt = Utils.millisForAlarm(prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, 7), prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, 0));
             alarm.setRepeatingAlarm(this, triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
-            Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, 0));
-            Log.d(Utils.LOG_ALARM, "Alarm set for " + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, 7) + ":" + prefs.getInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, 0));
         }
         long resetTime = Utils.millisForReset();
-        alarm.setRepeatingAlarm(this, resetTime, AlarmManager.INTERVAL_DAY*7, Alarm.REQUEST_CODE_RESET, Alarm.TYPE_RESET_ALARM);
+        alarm.setRepeatingAlarm(this, resetTime, AlarmManager.INTERVAL_DAY * 7, Alarm.REQUEST_CODE_RESET, Alarm.TYPE_RESET_ALARM);
     }
 
 
@@ -210,11 +212,11 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
 
     }
 
+
     @Override
     public void onListLoaded() {
         manager.requestUpdate();
     }
-
 
 
     @Override
@@ -229,7 +231,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     /**
      * Sets Swipe-Gestures on the RecyclerView via the ItemTouchHelper class.
      */
-    private void initAdapterGestures(){
+    private void initAdapterGestures() {
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             /**
@@ -253,10 +255,10 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                 Entry deletedEntry = manager.getCurrentEntries().get(position);
                 String snackbarUndoString = getResources().getString(R.string.item_undo_snackbar_button);
 
-                switch (direction){
+                switch (direction) {
                     case ItemTouchHelper.LEFT: //ITEM DELETED
                         Entry finalDeletedEntry = deletedEntry;
-                        String snackbarDeletedString = getResources().getString(R.string.item_deleted_snackbar).replace("$ITEM", manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName() );
+                        String snackbarDeletedString = getResources().getString(R.string.item_deleted_snackbar).replace("$ITEM", manager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName());
                         Snackbar.make(recyclerView, snackbarDeletedString, Snackbar.LENGTH_LONG).setAction(snackbarUndoString, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -275,11 +277,11 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                             @Override
                             public void onClick(View v) {
                                 manager.addEntry(finalDeletedEntry);
-                                managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, false);
+                                managePoints(manager.getCurrentEntries().get(position).category, manager.getCurrentEntries().get(position).difficulty, false);
                                 updateAdapterWithAnimation(position);
                             }
                         }).show();
-                        managePoints(manager.getCurrentEntries().get(position).category,manager.getCurrentEntries().get(position).difficulty, true);
+                        managePoints(manager.getCurrentEntries().get(position).category, manager.getCurrentEntries().get(position).difficulty, true);
                         manager.removeEntry(manager.getCurrentEntries().remove(position));
                         updateAdapterWithAnimation(position);
                         break;
@@ -295,26 +297,20 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
             @Override
             public void onChildDraw(@NonNull @NotNull Canvas c, @NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                    // Get RecyclerView item from the ViewHolder
                     int h = iconCheck.getHeight();
                     View itemView = viewHolder.itemView;
                     int itemViewHeight = itemView.getHeight();
                     int dif = itemViewHeight - h;
                     if (dX > 0) {
-
                         swipeColor.setColor(itemView.getResources().getColor(R.color.easy, null));
-                        // Draw Rect with varying right side, equal to displacement dX
                         c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), itemView.getRight(),
                                 (float) itemView.getBottom(), swipeColor);
-                        c.drawBitmap(iconCheck, (float) itemView.getLeft(), (float) itemView.getTop()+ dif/2, swipeColor);
+                        c.drawBitmap(iconCheck, (float) itemView.getLeft(), (float) itemView.getTop() + dif / 2, swipeColor);
                     } else {
-                        /* Set your color for negative displacement */
                         swipeColor.setColor(itemView.getResources().getColor(R.color.hard, null));
-                        // Draw Rect with varying left side, equal to the item's right side plus negative displacement dX
                         c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(),
                                 (float) itemView.getRight(), (float) itemView.getBottom(), swipeColor);
-                        c.drawBitmap(iconDelete, (float) itemView.getLeft() + itemView.getWidth() - iconDelete.getWidth()- (iconDelete.getWidth()/10), (float) itemView.getTop()+ dif/2, swipeColor);
-
+                        c.drawBitmap(iconDelete, (float) itemView.getLeft() + itemView.getWidth() - iconDelete.getWidth() - (iconDelete.getWidth() / 10), (float) itemView.getTop() + dif / 2, swipeColor);
                     }
                     super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
                 }
@@ -331,14 +327,11 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     public void onItemNew(String name, int hour, int minute, Category category, Difficulty difficulty, ZonedDateTime targetDate) {
         Entry entry = new Entry(name, category, difficulty, Utils.millisForEntryCurrentDay(hour, minute));
         manager.addEntry(entry);
-        Log.d(Utils.LOG_ALARM, "Item added with time " + Utils.getDateFromMillis(entry.getDate()));
     }
 
     @Override
     public void onItemUpdate(String name, int hour, int minute, Category category, Difficulty difficulty, Entry oldEntry, int position, ZonedDateTime targetDate) {
         manager.removeEntry(oldEntry);
-        //entryAdapter.notifyItemRemoved(position);
-        //entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
         Entry entry = new Entry(name, category, difficulty, Utils.millisForEntryCurrentDay(hour, minute));
         manager.addEntryAtPosition(position, entry);
         entryAdapter.notifyDataSetChanged();
@@ -349,8 +342,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     public void onNegativeClicked(int mode) {
         if (mode == 1) {
             Toast.makeText(this, getString(R.string.toast_new_entry_discarded), Toast.LENGTH_SHORT).show();
-        }
-        else if (mode == -1){
+        } else if (mode == -1) {
             Toast.makeText(this, getString(R.string.toast_changes_discarded), Toast.LENGTH_SHORT).show();
         }
     }
@@ -358,9 +350,10 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     /**
      * Instead of calling notifyDataSetChanged on the adapter, this method will inform it of the changes.
      * The adapter will move up every Entry in the RecyclerView with an animation instead of refreshing the list.
+     *
      * @param position the adapter position of the removed Entry
      */
-    private void updateAdapterWithAnimation(int position){
+    private void updateAdapterWithAnimation(int position) {
         entryAdapter.notifyItemRemoved(position);
         entryAdapter.notifyItemRangeChanged(position, manager.getCurrentEntries().size());
         entryAdapter.updateEntries(manager.getCurrentEntries());
@@ -369,16 +362,17 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
     /**
      * Awards points for completion of Entries or removes them from the User's total count.
      * Accesses and modifies the User's total points by calling the SharedPreferences of the according Category.
-     * @param category The Category of the Entry.
-     * @param difficulty The Difficulty of the Entry. Used to determine the amount to be added/removed.
+     *
+     * @param category    The Category of the Entry.
+     * @param difficulty  The Difficulty of the Entry. Used to determine the amount to be added/removed.
      * @param addOrRemove True = add, False = remove
      */
-    private void managePoints(Category category, Difficulty difficulty, Boolean addOrRemove){
+    private void managePoints(Category category, Difficulty difficulty, Boolean addOrRemove) {
 
-        switch (category){
+        switch (category) {
             case WORK:
                 int currentWorkPoints = prefs.getInt(Utils.SP_WORK_TOTAL_POINTS_KEY, 0);
-                if(addOrRemove){
+                if (addOrRemove) {
                     editor.putInt(Utils.SP_WORK_TOTAL_POINTS_KEY, currentWorkPoints + difficulty.points);
                     editor.apply();
                     break;
@@ -389,7 +383,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                 }
             case HOBBY:
                 int currentHobbyPoints = prefs.getInt(Utils.SP_HOBBY_TOTAL_POINTS_KEY, 0);
-                if(addOrRemove) {
+                if (addOrRemove) {
                     editor.putInt(Utils.SP_HOBBY_TOTAL_POINTS_KEY, currentHobbyPoints + difficulty.points);
                     editor.apply();
                     break;
@@ -400,7 +394,7 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                 }
             case FITNESS:
                 int currentFitnessPoints = prefs.getInt(Utils.SP_FITNESS_TOTAL_POINTS_KEY, 0);
-                if(addOrRemove) {
+                if (addOrRemove) {
                     editor.putInt(Utils.SP_FITNESS_TOTAL_POINTS_KEY, currentFitnessPoints + difficulty.points);
                     editor.apply();
                     break;
@@ -413,5 +407,5 @@ public class MainActivity extends BaseActivity implements WeatherDataListener, E
                 break;
         }
     }
-    
+
 }

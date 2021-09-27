@@ -52,25 +52,26 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
         listener = (AddEntryDialogClickListener) context;
     }
 
-    public void setTargetDateTime(ZonedDateTime targetDateTime)
-    {
+    public void setTargetDateTime(ZonedDateTime targetDateTime) {
         this.targetDateTime = targetDateTime;
     }
 
     /**
      * Sets the mode of the dialog to either create a new entry or update an old one.
+     *
      * @param mode The mode to use.
      */
-    public void setMode(int mode){
+    public void setMode(int mode) {
         this.mode = mode;
     }
 
     /**
      * Sets the entry of the dialog if it is in update mode so the data of the existing entry can be displayed.
-     * @param entry The entry to edit.
+     *
+     * @param entry    The entry to edit.
      * @param position The position the entry has in the RecyclerView.
      */
-    public void setEntry(Entry entry, int position){
+    public void setEntry(Entry entry, int position) {
         this.entry = entry;
         this.position = position;
     }
@@ -78,8 +79,7 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
     /**
      * Fills out the dialog with data if an entry is set. If not all fields will remain default.
      */
-    public void setData()
-    {
+    public void setData() {
         if (entry != null) {
             edtName.setText(entry.getName());
             switch (entry.getCategory()) {
@@ -155,29 +155,22 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         checkForTime();
-                        if (nameEntered())
-                        {
-                            if (timeSet())
-                            {
-                                if (timeValuesValid())
-                                {
+                        if (nameEntered()) {
+                            if (timeSet()) {
+                                if (timeValuesValid()) {
                                     if (mode == 1) {
                                         listener.onItemNew(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty(), targetDateTime);
-                                    }
-                                    else if (mode == -1){
+                                    } else if (mode == -1) {
                                         listener.onItemUpdate(getResultName(), getResultTimeHours(), getResultTimeMinutes(), getResultCategory(), getResultDifficulty(), entry, position, targetDateTime);
                                     }
                                     dialog.dismiss();
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(getActivity(), getResources().getString(R.string.toast_entry_invalid_time), Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(getActivity(), getResources().getString(R.string.toast_entry_invalid_time), Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        else {
+                        } else {
                             Toast.makeText(getActivity(), getResources().getString(R.string.toast_entry_invalid_name), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -189,8 +182,6 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
     }
 
 
-
-
     //region information collectors
 
     /**
@@ -198,7 +189,7 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
      */
     private void checkForTime() {
         if (spnCategory.getSelectedItemPosition() != 3) {
-            if (!timeSet()){
+            if (!timeSet()) {
                 edtHours.setText("12");
                 edtMinutes.setText("00");
             }
@@ -208,6 +199,7 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
 
     /**
      * Gets the name of edtName.
+     *
      * @return Name.
      */
     private String getResultName() {
@@ -216,6 +208,7 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
 
     /**
      * Gets the hours of edtHours.
+     *
      * @return Hours.
      */
     private int getResultTimeHours() {
@@ -231,6 +224,7 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
 
     /**
      * Gets the current selection of the categorySpinner.
+     *
      * @return Category.
      */
     private Category getResultCategory() {
@@ -264,8 +258,9 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
             case 2:
                 selected = Difficulty.HARD;
                 break;
-            case 3: selected = Difficulty.NONE;
-            break;
+            case 3:
+                selected = Difficulty.NONE;
+                break;
         }
         return selected;
     }
@@ -357,9 +352,9 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
         spnDifficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (position == 3 && spnCategory.getSelectedItemPosition() != 3){
-                        spnDifficulty.setSelection(0);
-                    }
+                if (position == 3 && spnCategory.getSelectedItemPosition() != 3) {
+                    spnDifficulty.setSelection(0);
+                }
             }
 
             @Override
@@ -373,7 +368,9 @@ public class AddOrUpdateEntryDialogFragment extends DialogFragment {
 
     public interface AddEntryDialogClickListener {
         void onItemNew(String name, int hour, int minute, Category category, Difficulty difficulty, ZonedDateTime targetDate);
+
         void onItemUpdate(String name, int hour, int minute, Category category, Difficulty difficulty, Entry oldEntry, int position, ZonedDateTime targetDate);
+
         void onNegativeClicked(int mode);
     }
 }

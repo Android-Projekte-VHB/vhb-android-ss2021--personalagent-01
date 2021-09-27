@@ -178,27 +178,6 @@ public final class Utils {
         return new long[] {startMillis, endMillis};
     }
 
-    /**
-     * Converts two dates to long millis with time of date one being 00:00:00 and time of
-     * date two being 23:59:59. These can then be used to search for all items that are in the specified timespan.
-     * @param yearOne Year of date one.
-     * @param monthOne Month of date one.
-     * @param dayOne Day of date one.
-     * @param yearTwo Year of date two.
-     * @param monthTwo Month of date two.
-     * @param dayTwo Day of date two.
-     * @return long array with starttime and endtime.
-     */
-    public static long[] getSearchTimesForTimeSpan(int yearOne, int monthOne, int dayOne, int yearTwo, int monthTwo, int dayTwo)
-    {
-        LocalDate startDate = LocalDate.of(yearOne, monthOne, dayOne);
-        LocalDate endDate = LocalDate.of(yearTwo, monthTwo, dayTwo);
-        LocalTime startOfDay = LocalTime.of(0, 0, 0);
-        LocalTime endOfDay = LocalTime.of(23, 59, 59);
-        long startMillis = ZonedDateTime.of(startDate, startOfDay, ZoneId.systemDefault()).toInstant().toEpochMilli();
-        long endMillis = ZonedDateTime.of(endDate, endOfDay, ZoneId.systemDefault()).toInstant().toEpochMilli();
-        return new long[] {startMillis, endMillis};
-    }
 
     /**
      * Converts milliseconds into a ZonedDateTime, used for converting the long date of entries back to
@@ -239,8 +218,6 @@ public final class Utils {
 
 
     /**
-     * <p><font color="red">WARNING: MORE TESTING REQUIRED</font></p>
-     *
      *Sorts an Arraylist by Category to make the ui look better.
      * @param toSort The arraylist that will be sorted.
      * @return The sorted arraylist.

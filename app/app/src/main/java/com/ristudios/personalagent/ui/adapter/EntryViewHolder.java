@@ -54,11 +54,12 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * this method colors the background according to the category of one entry
+     *
      * @param entry that should be represented
      */
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setBackgroundForCategory(Entry entry) {
-        switch(entry.getCategory()) {
+        switch (entry.getCategory()) {
             case WORK:
                 constraint.setBackground(itemView.getResources().getDrawable(R.drawable.background_gradient_work, null));
                 break;
@@ -75,8 +76,10 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
                 break;
         }
     }
+
     /**
      * this method colors the android mascot according to the difficulty of one entry
+     *
      * @param entry that should be represented
      */
     private void setDifficultyIndicator(Entry entry) {
@@ -104,6 +107,7 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
                 break;
         }
     }
+
     // listener informs adapter when one entry was clicked
     public interface OnEntryClickedListener {
         void onEntryClicked(int position);

@@ -32,26 +32,21 @@ public class SettingsActivity extends BaseActivity implements TimePickerFragment
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, new SettingsFragment()).commit();
     }
 
-    private void writeDataToPrefs(int h, int m)
-    {
+    private void writeDataToPrefs(int h, int m) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Alarm alarm = new Alarm();
 
-        if (mode == 1){ //HINT: Time for morning notifications
+        if (mode == 1) {
             prefs.edit().putInt(Utils.SP_NOTIFICATION_TIME_ONE_HOUR_KEY, h).putInt(Utils.SP_NOTIFICATION_TIME_ONE_MINUTE_KEY, m).apply();
             long triggerAt = Utils.millisForAlarm(h, m);
-            //alarm.cancelAlarm(getApplicationContext(), Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
             alarm.setRepeatingAlarm(getApplicationContext(), triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_MORNING, Alarm.TYPE_MORNING_ALARM);
             Toast.makeText(this, getResources().getString(R.string.toast_time_set_succes), Toast.LENGTH_SHORT).show();
-        }
-        else if (mode == -1){ //HINT: Time for evening notifications
+        } else if (mode == -1) {
             prefs.edit().putInt(Utils.SP_NOTIFICATION_TIME_TWO_HOUR_KEY, h).putInt(Utils.SP_NOTIFICATION_TIME_TWO_MINUTE_KEY, m).apply();
             long triggerAt = Utils.millisForAlarm(h, m);
-            //alarm.cancelAlarm(getApplicationContext(), Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
             alarm.setRepeatingAlarm(getApplicationContext(), triggerAt, AlarmManager.INTERVAL_DAY, Alarm.REQUEST_CODE_EVENING, Alarm.TYPE_EVENING_ALARM);
             Toast.makeText(this, getResources().getString(R.string.toast_time_set_succes), Toast.LENGTH_SHORT).show();
-        }
-        else{
+        } else {
             Toast.makeText(this, getResources().getString(R.string.toast_time_set_failure), Toast.LENGTH_SHORT).show();
         }
     }

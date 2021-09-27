@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.UUID;
+
 //Represents an Entry for the To-Do-List
 @Entity(tableName = "entries")
 public class Entry {
@@ -23,7 +24,7 @@ public class Entry {
     public final long date;
 
     @Ignore
-    public Entry(String name, Category category, Difficulty difficulty, long date){
+    public Entry(String name, Category category, Difficulty difficulty, long date) {
         this.uuid = UUID.randomUUID();
         this.name = name;
         this.category = category;
@@ -31,7 +32,7 @@ public class Entry {
         this.date = date;
     }
 
-    public Entry(String name, Category category, Difficulty difficulty, long date, @NotNull UUID uuid){
+    public Entry(String name, Category category, Difficulty difficulty, long date, @NotNull UUID uuid) {
         this.uuid = uuid;
         this.name = name;
         this.category = category;

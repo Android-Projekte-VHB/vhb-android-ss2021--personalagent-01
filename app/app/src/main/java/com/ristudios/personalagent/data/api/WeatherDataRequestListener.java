@@ -9,6 +9,7 @@ public interface WeatherDataRequestListener {
 
     /**
      * Called when the API-Response is ready.
+     *
      * @param object The response as a JSONObject
      */
     void onDataRequestFinished(JSONObject object);

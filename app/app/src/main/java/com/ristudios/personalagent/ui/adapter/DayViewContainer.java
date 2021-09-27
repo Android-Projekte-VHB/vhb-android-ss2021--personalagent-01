@@ -21,7 +21,7 @@ public class DayViewContainer extends ViewContainer {
         super(view);
         calendarDayText = view.findViewById(R.id.txt_calendar_day_text);
         calendarDayText.setOnClickListener(v -> {
-            if (day.getOwner() == DayOwner.THIS_MONTH){
+            if (day.getOwner() == DayOwner.THIS_MONTH) {
                 listener.onDateClicked(day);
             }
 
@@ -29,8 +29,7 @@ public class DayViewContainer extends ViewContainer {
     }
 
 
-
-    public interface CalendarClickListener{
+    public interface CalendarClickListener {
         void onDateClicked(CalendarDay day);
     }
 

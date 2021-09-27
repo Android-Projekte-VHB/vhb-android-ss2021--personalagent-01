@@ -218,7 +218,7 @@ public class CalendarDayDetailActivity extends AppCompatActivity implements Entr
                 switch (direction) {
                     case ItemTouchHelper.LEFT: //ITEM DELETED
                         Entry finalDeletedEntry = deletedEntry;
-                        String snackbarDeletedString = getResources().getString(R.string.item_deleted_snackbar).replace("$ITEM", entryManager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName() );
+                        String snackbarDeletedString = getResources().getString(R.string.item_deleted_snackbar).replace("$ITEM", entryManager.getCurrentEntries().get(viewHolder.getAdapterPosition()).getName());
                         Snackbar.make(recyclerView, snackbarDeletedString, Snackbar.LENGTH_LONG).setAction(snackbarUndoString, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -253,7 +253,7 @@ public class CalendarDayDetailActivity extends AppCompatActivity implements Entr
                         // Draw Rect with varying left side, equal to the item's right side plus negative displacement dX
                         c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(),
                                 (float) itemView.getRight(), (float) itemView.getBottom(), swipeColor);
-                        c.drawBitmap(iconDelete, (float) itemView.getLeft() + itemView.getWidth() - iconDelete.getWidth()- (iconDelete.getWidth()/10), (float) itemView.getTop()+ dif/2, swipeColor);
+                        c.drawBitmap(iconDelete, (float) itemView.getLeft() + itemView.getWidth() - iconDelete.getWidth() - (iconDelete.getWidth() / 10), (float) itemView.getTop() + dif / 2, swipeColor);
 
                     }
                     super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
@@ -266,7 +266,7 @@ public class CalendarDayDetailActivity extends AppCompatActivity implements Entr
 
     }
 
-    private void updateAdapterWithAnimation(int position){
+    private void updateAdapterWithAnimation(int position) {
         entryAdapter.notifyItemRemoved(position);
         entryAdapter.notifyItemRangeChanged(position, entryManager.getCurrentEntries().size());
         entryAdapter.updateEntries(entryManager.getCurrentEntries());
