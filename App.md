@@ -46,18 +46,34 @@ In drei Wochendiagrammen - pro Kategorie eins - wird der entsprechende aktuelle 
 <img src="https://user-images.githubusercontent.com/79211586/134607625-0e0e75c3-e46b-47a6-8e77-1be8a19638b9.png">
 
 
-### Einstellungen
+### Einstellungen, Benachrichtigungen und Darkmode
+Hier können die Benachrichtigungen ein- und ausgeschaltet bzw. deren Zeitpunkte festgelegt werden. Bei Aktivierung erhält der User zu zwei ausgesuchten Uhrzeiten Benachrichtigungen, die daran erinnern sollen, den aktuellen Tag zu planen und abgeschlossene Aufgaben abzuhaken. Außerdem werden hier der am Startbildschirm angezeigte Name sowie das tägliche Punkte Ziel festgelegt. Das Design der App passt sich dem im System eingestellten Light- oder Darkmode an.
+
+![rsz_einstellungsscrrrenshot](https://user-images.githubusercontent.com/79211586/134966460-f3c94472-1222-4009-9cec-5783f4a04860.png) <img src="https://user-images.githubusercontent.com/79211586/134970759-9cb53f45-a4fa-4304-abcd-7a906440cb58.png"> ![ezgif com-gif-maker (7)](https://user-images.githubusercontent.com/79211586/134971875-ea3c8cce-a3b5-4824-a199-e7df03caa1cc.gif)
 
 
+## Szenario 1
+**Max, 21, ist Jurastudent** und bemerkt, wie er ständig gestresst und schlecht gelaunt ist. In sein Studium steckt er sehr viel Zeit, vergisst dabei aber häufig, auch auf sich selbst zu achten. Er fühlt sich unausgeglichen und möchte deshalb etwas mehr Struktur in seinen Alltag bringen. Da er selbst allerdings nur seine Arbeiten im Kopf hat und sonstige Aktivitäten schnell vernachlässigt, benutzt der den PersonalAgent, um den Überblick über seine Zeiteinteilung zu behalten. Dazu geht er folgendermaßen vor:
 
+* Er lädt sich die App herunter und stellt sich zuerst seinen Nutzernamen und ein Tagesziel in den Einstellungen ein. Da er neben dem Studium keinen Job hat, setzt er sich ein Ziel von 60 Punkten am Tag. Er geht täglich um 22:00 Uhr ins Bett und setzt sich dementsprechend den Benachrichtigungszeitpunkt.
+* Danach wechselt er auf den Startbildschirm und fügt seine Lerneinheiten als Einträge der Kategorie _Arbeit_ hinzu. Da es sich um anstrengende & ermüdende Aufgaben handelt, stellt er die Schwierigkeit auf _schwer_.
+* Nun da er diese Pflichtaufgaben vor Augen hat, kann er sich überlegen, wie er den restlichen Tag mit Sport und seinen Hobbys ausgleicht. Da auf der Startseite eine gute Wettervorhersage für den heuten Tag sieht, beschließt er, eine Runde zu laufen und danach etwas zu zeichnen. Die Einträge versieht er mit _mittlerer_ und _einfacher_ Schwierigkeit. 
+* Damit erreicht er am Ende des Tages die selbe Punktzahl in _Arbeit_ wie in den beiden Ausgleichsaktegorien. Zufrieden geht er Nachts ins Bett, erhält eine Erinnerung seine Ziele abzuhaken und überlegt sich bereits, was er am nächsten Tag machen möchte.
 
+## Szenario 2
+**Sabine, 34, ist in einer Führungsposition eines Automobilhändlers.** Sie führte bereits einen Tagesplaner in schriftlicher Form, allerdings fällt es ihr schwer diesen von Termin zu Termin mitzunehmen und gleichzeitig unterwegs den Überblick über ihren Tagesplan zu behalten. Deswegen entscheidet sie sich dazu, den PersonalAgent auf ihrem Smartphone zu installieren:
 
-_Beschreiben Sie die wichtigsten Funktionen Ihrer Anwendung. Was können die Nutzer\*innen mit Ihrer Anwendung tun? Verwenden Sie zur Beschreibung Beschreiben dieser zentralen Features auch Screenshots oder animierte Gifs aus Ihrer Anwendung. Dokumentieren Sie im Anschluss anhand ausgewählter Szenarien einige ausgesuchte, wichtige Arten der Nutzung der App durch die Zielgruppe. Beschreiben Sie dazu anhand eines gedachten Walkthroughs durch die Anwendung, in welcher Reihenfolge die Nutzer\*innen die genannten Funktionen der Anwendung verwenden, um wichtige Ziele zu erreichen._
+* Zuerst setzt sie sich in den Einstellungen ihr Tagesziel auf 100 Punkte. Da sie sich sich für ihre langen Arbeitstage mehr als 30 Punkte (_schwer_) gutschreiben würde, teilt sie ihre Einträge der _Arbeit_-Kategorie in zwei mit jeweils _schwierig_ als Aufwandsgrad.
+* Danach klickt sie in der Navigation auf den Kalender und fügt bereits im Voraus ihre Termine an den entsprechenden Tagen hinzu.
+* Da Sabine aufgrund ihres Berufs bereits viel im Voraus planen muss klickt sie im Kalender auf den heutigen Tag und fügt ihre Ausgleichsaktivitäten hinzu. Daraufhin navigiert sie einfach Tag für Tag durch die ganze Woche und wiederholt dies für jeden Tag.
+* Nun kann sie zwischen ihren vielen Terminen im Beruf auch unterwegs auf dem Smartphone ihre erledigten Aufgaben abschließen und im Blick behalten, was heute noch ansteht.
+* Am Ende der Woche betrachtet sie in der Wochenübersicht ihre gesammelten Punkte. Sie stellt fest, dass immernoch ein großes Defizit an _Fitness_-Aktivitäten hat und plant deshalb für die nächste Woche bereits mehrere Einträge in dieser Kategorie ein.
+
 
 ## Erreichter Stand
 
-_Beschreiben Sie kurz, ob und wenn ja wie, der erreichte Stand Ihrer Anwendung von dem ursprünglich geplanten Konzept abweicht. Begründen Sie ggf. aufgetreten Abweichungen._
+Grundsätzlich kommt die finale Umsetzung unseres Projekts dem geplanten Konzept sehr nahe. In der Entwicklung der einzelnen Features kamen meist zusätzliche Ideen zur Verbesserung. So etwa, dass das Wetter anstelle eines festgelegten Orts dynamisch nach der aktuellen Position des Geräts angezeigt wird und Einträge der To-Do-Liste über Swipe-Gesten verwaltet werden.
 
-## Weitere Hinweise
+Die Einfärbung der Tage im Kalender entsprechend der erreichten Punkte wurde zunächst ausgelassen, da der Fokus eher auf das Punkteergebnis einer Woche anstatt eines Tages gelegt wird.
 
-_Notieren Sie hier falls nötig weitere Hinweise zur Ihrer App wie Informationen zum Testen Ihrer Anwendung (z.B. vorbereitete Zugangsdaten) oder NUtzungseinschränkungen (z.B. Abhängigkeit von besonderer Hardware)._
+Insgesamt wurden alle geplanten Activities & Kernfunktionen umgesetzt.
