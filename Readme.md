@@ -35,5 +35,6 @@ Schließlich handelt es sich um den **PersonalAgent**.
 - [Das Team](Team.md)
 - [Link zum Trailer](https://www.youtube.com/watch?v=pbt9cjAteQ0)
 - [APK-Datei der fertigen Version](https://github.com/Android-Projekte-VHB/vhb-android-ss2021--personalagent-01/releases/download/v1.0/app-debug.apk)
+- [finaler Release](https://github.com/Android-Projekte-VHB/vhb-android-ss2021--personalagent-01/releases/tag/v1.0)
 - [Ursprüngliche Projektbeschreibung](https://github.com/Android-Projekte-VHB/vhb-android-ss2021--personalagent-01/blob/a58c29e1b3634db774e85beeb439d04843ee2748/docs/Projektbeschreibung_Gruppe_01.pdf)
 - [Erstes Klassendiagramm](https://github.com/Android-Projekte-VHB/vhb-android-ss2021--personalagent-01/blob/a58c29e1b3634db774e85beeb439d04843ee2748/docs/klassendiagramm.png)
