@@ -1,7 +1,6 @@
 package com.ristudios.personalagent.utils.notifications;
 
 
-import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -11,15 +10,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.view.ViewDebug;
+
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.preference.PreferenceManager;
 
-import com.ristudios.personalagent.R;
+
 import com.ristudios.personalagent.utils.Utils;
 
 /**
@@ -29,7 +28,7 @@ public class NotificationHelper {
 
     private Context context;
 
-    //AUTOCANCEL and NO_AUTOCANCEL define if the notification is removed when clicked.
+
     public static final boolean AUTOCANCEL = true;
     public static final boolean NO_AUTOCANCEL = false;
 
@@ -122,15 +121,5 @@ public class NotificationHelper {
         }
     }
 
-    /*
-     *┈┈┈╲┈┈┈┈╱┈┈┈┈┈┈┈
-     * ┈┈┈╱▔▔▔▔╲┈┈┈┈┈┈┈
-     * ┈┈┃┈▇┈┈▇┈┃┈┈┈┈┈┈
-     * ╭╮┣━━━━━━┫╭╮┈┈┈┈
-     * ┃┃┃┈┈┈┈┈┈┃┃┃┈┈┈┈
-     * ╰╯┃┈┈┈┈┈┈┃╰╯┈┈┈┈
-     * ┈┈╰┓┏━━┓┏╯┈┈┈┈┈┈
-     * ┈┈┈╰╯┈┈╰╯┈
-     */
 
 }
