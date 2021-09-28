@@ -4,15 +4,160 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.activities.MainActivity"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/linear"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:id="@+id/greetings_flavor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/greetings_flavor"
+                android:textColor="@color/devil_blue"
+                android:textSize="50sp">
+
+            </TextView>
+
+        <TextView
+            android:id="@+id/date_flavor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/date_flavor"
+            android:textSize="30sp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="13dp">
+        </TextView>
+
+        <LinearLayout
+            android:id="@+id/test"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="20dp">
+
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:textSize="30sp"
+                android:textAlignment="textEnd"
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loading...">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/imv_weather_indicator"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                >
+            </ImageView>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/minTV"
+                    android:text="Min:">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/maxTV"
+                    android:text="Max:">
+                </TextView>
+                <TextView
+                    android:id="@+id/precipitationTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Niederschlag:">
+                </TextView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+            <TextView
+                android:id="@+id/to_do_flavor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/to_do_flavor"
+                android:textSize="30sp"
+                android:textAlignment="center">
+            </TextView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_new_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                style="@style/Base.Widget.PersonalAgent.Button"
+                android:text="@string/btn_new_entry_text"
+                android:layout_margin="10dp"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_entries"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linear">
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:menu="@menu/drawer_menu"
+            app:headerLayout="@layout/drawer_header_layout"
+            >
+        </com.google.android.material.navigation.NavigationView>
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+    <include layout="@layout/toolbar_layout"
+        android:id="@+id/custom_toolbar"/>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

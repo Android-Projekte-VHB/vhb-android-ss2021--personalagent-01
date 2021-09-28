@@ -1,3 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    //flavor text
+    <string name="greetings_flavor">Hello $NAME,</string>
+    <string name="to_do_flavor">That\'s up for today:</string>
+    <string name="date_flavor">today is the $DATE.</string>
+
     <string name="app_name">Personal Agent</string>
+    <string name="morning_notification_title">Good morning!</string>
+    <string name="evening_notification_title">Everything done for today?</string>
+    <string name="morning_notification_text">Take a look at your tasks for today</string>
+    <string name="evening_notification_text">Don\'t forget to cross off all finished tasks</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="settings">Settings</string>
+    <string name="weekly_overview">Weekly overview</string>
+    <string name="calendar">Calendar</string>
+    <string name="start">Start</string>
+    <string name="options">Options</string>
+    <string name="navigation">Navigation</string>
+    <string name="notification_channel_name">Notifications</string>
+    <string name="notification_channel_description">Handles all notifications</string>
+    <string name="btn_new_entry_text">Add entry</string>
+    <string name="toast_changes_successful">Changes successful</string>
+    <string name="toast_changes_discarded">Changes discarded</string>
+    <string name="toast_new_entry_discarded">Entry discarded</string>
+    <string name="missing_permission">Missing Permission</string>
+
+    //snackbar
+    <string name="item_deleted_snackbar">$ITEM deleted!</string>
+    <string name="item_done_snackbar">$ITEM completed! You\'ve earned $POINTS points!</string>
+    <string name="item_undo_snackbar_button">UNDO</string>
+
+
+    //categories
+    <string name="work">work</string>
+    <string name="fitness">fitness</string>
+    <string name="hobby">hobby</string>
+    <string name="appointment">appointment</string>
+
+
+    //dialog add entry
+
+    <string-array name="category_array">
+        <item>work</item>
+        <item>hobby</item>
+        <item>fitness</item>
+        <item>appointment</item>
+    </string-array>
+
+    <string-array name="difficulty_array">
+        <item>easy</item>
+        <item>medium</item>
+        <item>hard</item>
+        <item>none</item>
+    </string-array>
+
+    <string name="entry_name">Name</string>
+    <string name="category">Category</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="time">Time</string>
+    <string name="dialog_yes_option">Save</string>
+    <string name="dialog_no_option">Dismiss</string>
+    <string name="toast_entry_invalid_name">Please enter a name</string>
+    <string name="toast_entry_invalid_time">Please enter a valid time</string>
+
+    //Settings
+    <string name="settings_category_notifications_title">Notifications</string>
+    <string name="settings_notification_switch_summary">Enable Notifications</string>
+    <string name="settings_notification_time_one_title">Notification Time 1</string>
+    <string name="settings_notification_time_two_title">Notification Time 2</string>
+    <string name="settings_notification_time_summary">Set a time to receive notifications</string>
+
+    <string name="settings_category_permissions_title">Permission</string>
+    <string name="settings_location_permission_title">Location</string>
+    <string name="settings_location_permission_summary">Allow accessing your Location to provide Weather Information</string>
+
+    <string name="settings_category_pa_title">PersonalAgent</string>
+    <string name="settings_pa_username_title">Username</string>
+    <string name="settings_pa_username_summary">Set how the PersonalAgent should call you</string>
+    <string name="settings_pa_weekly_goal_title">Daily Goal</string>
+    <string name="settings_pa_weekly_goal_summary">Set your daily Point Goal</string>
+
+    <string name="toast_time_set_succes">Changes saved</string>
+    <string name="toast_time_set_failure">Something went wrong</string>
+    <string name="toast_notifications_disabled">Turned off notifications</string>
+    <string name="toast_notifications_enabled">Turned on notifications</string>
+
+
+    <string-array name="morning_notification_titles">
+        <item>Good morning!</item>
+        <item>Did you sleep well?</item>
+        <item>Let\'s get started!</item>
+    </string-array>
+    <string-array name="morning_notification_messages">
+        <item>Let\'s see what\'s on the todo list</item>
+        <item>Take a look at your tasks for today</item>
+        <item>Ready for your daily tasks?</item>
+    </string-array>
+    <string-array name="evening_notification_titles">
+        <item>Everything done for today?</item>
+        <item>How was your day?</item>
+        <item>Another day over</item>
+    </string-array>
+    <string-array name="evening_notification_messages">
+        <item>Don\'t forget to cross off all finished tasks</item>
+        <item>Cross off tasks to collect all your points</item>
+        <item>Reward yourself and get your points</item>
+    </string-array>
+
+    <string name="notif_reset_message">Last week you achieved $AMOUNT points and did $NOT reach your goal</string>
+    <string name="notif_not">not</string>
+    <string name="notif_reset_title">Weekly overview</string>
+
+    //Calendar
+    <string-array name="months">
+        <item>JANUARY</item>
+        <item>FEBRUARY</item>
+        <item>MARCH</item>
+        <item>APRIL</item>
+        <item>MAY</item>
+        <item>JUNE</item>
+        <item>JULY</item>
+        <item>AUGUST</item>
+        <item>SEPTEMBER</item>
+        <item>OCTOBER</item>
+        <item>NOVEMBER</item>
+        <item>DECEMBER</item>
+    </string-array>
+
+    <string-array name="weekdays_short">
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
 </resources>

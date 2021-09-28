@@ -1,0 +1,138 @@
+<resources>
+
+    //flavor text
+    <string name="greetings_flavor">Hallo $NAME,</string>
+    <string name="to_do_flavor">Das steht heute an:</string>
+    <string name="date_flavor">heute ist der $DATE.</string>
+
+    <string name="app_name">Personal Agent</string>
+    <string name="morning_notification_title">Guten morgen!</string>
+    <string name="evening_notification_title">Heute alles erldigt?</string>
+    <string name="morning_notification_text">Schau dir an was du heute zu tun hast</string>
+    <string name="evening_notification_text">Nicht vergessen deine Aufgaben abzuhaken</string>
+    <string name="drawer_open">Öffnet die Navigation</string>
+    <string name="drawer_close">Schließt die Navigation</string>
+    <string name="settings">Einstellungen</string>
+    <string name="weekly_overview">Wochenübersicht</string>
+    <string name="calendar">Kalender</string>
+    <string name="start">Start</string>
+    <string name="options">Optionen</string>
+    <string name="navigation">Navigation</string>
+    <string name="notification_channel_name">Benachrichtigungen</string>
+    <string name="notification_channel_description">Alle Benachrichtigungen werden über diesen Kanal geschickt</string>
+    <string name="btn_new_entry_text">Eintrag hinzufügen</string>
+    <string name="toast_changes_successful">Änderungen gespeichert</string>
+    <string name="toast_changes_discarded">Änderungen verworfen</string>
+    <string name="toast_new_entry_discarded">Eintrag verworfen</string>
+    <string name="missing_permission">Erlaubnis fehlt</string>
+
+    //snackbar
+    <string name="item_deleted_snackbar">$ITEM gelöscht!</string>
+    <string name="item_done_snackbar">$ITEM erledigt! Du hast $POINTS Punkte erhalten!</string>
+    <string name="item_undo_snackbar_button">RÜCKGÄNGIG</string>
+
+    //categories
+    <string name="work">Arbeit</string>
+    <string name="fitness">Fitness</string>
+    <string name="hobby">Hobby</string>
+    <string name="appointment">Termin</string>
+
+    //dialog add entry
+    <string-array name="category_array">
+        <item>Arbeit</item>
+        <item>Hobby</item>
+        <item>Fitness</item>
+        <item>Termin</item>
+    </string-array>
+
+    <string-array name="difficulty_array">
+        <item>einfach</item>
+        <item>mittel</item>
+        <item>schwer</item>
+        <item>Keine</item>
+    </string-array>
+
+    <string name="entry_name">Name</string>
+    <string name="dialog_yes_option">Speichern</string>
+    <string name="dialog_no_option">Verwerfen</string>
+    <string name="category">Kategorie</string>
+    <string name="difficulty">Schwierigkeit</string>
+    <string name="time">Uhrzeit</string>
+    <string name="toast_entry_invalid_name">Bitte gib einen Namen ein</string>
+    <string name="toast_entry_invalid_time">Gib bitte eine korrekte Zeit an</string>
+
+
+    //Settings
+    <string name="settings_category_notifications_title">Benachrichtigungen</string>
+    <string name="settings_notification_switch_summary">Aktiviere Benachrichtigungen</string>
+    <string name="settings_notification_time_one_title">Benachrichtungszeitpunkt morgens</string>
+    <string name="settings_notification_time_two_title">Benachrichtungszeitpunkt abends</string>
+    <string name="settings_notification_time_summary">Lege die Zeit fest, an der du Benachrichtigungen erhalten möchtest</string>
+
+    <string name="settings_category_permissions_title">Berechtigungen</string>
+    <string name="settings_location_permission_title">Standort</string>
+    <string name="settings_location_permission_summary">Erlaube deinen Standort zu erfassen, um Wetterdaten zu erhalten</string>
+
+    <string name="settings_category_pa_title">PersonalAgent</string>
+    <string name="settings_pa_username_title">Nutzername</string>
+    <string name="settings_pa_username_summary">Lege fest, wie dich dein PersonalAgent nennen soll</string>
+    <string name="settings_pa_weekly_goal_title">Tagesziel</string>
+    <string name="settings_pa_weekly_goal_summary">Lege dein Punkteziel pro Tag fest</string>
+
+    <string name="toast_time_set_succes">Änderungen gespeichert</string>
+    <string name="toast_time_set_failure">Etwas ist schief gelaufen</string>
+    <string name="toast_notifications_disabled">Benachrichtigungen wurden deaktiviert</string>
+    <string name="toast_notifications_enabled">Benachrichtigungen wurden aktiviert</string>
+
+    <string-array name="morning_notification_titles">
+        <item>Guten morgen!</item>
+        <item>Gut geschlafen?</item>
+        <item>Los geht der neue Tag!</item>
+    </string-array>
+    <string-array name="morning_notification_messages">
+        <item>Schau dir an was du heute zu tun hast</item>
+        <item>Schau gleich nach was heute ansteht</item>
+        <item>Bereit für deine heutigen Aufgaben?</item>
+    </string-array>
+    <string-array name="evening_notification_titles">
+        <item>Heute alles erledigt?</item>
+        <item>Wie war dein Tag?</item>
+        <item>Ein weiterer Tag vorüber</item>
+    </string-array>
+    <string-array name="evening_notification_messages">
+        <item>Vergiss nicht deine Aufgaben abzuhaken</item>
+        <item>Hake alle erledigten Aufgaben ab um deine Punkte zu erhalten</item>
+        <item>Hol gleich deine Punkte ab</item>
+    </string-array>
+
+    <string name="notif_reset_message">Letzte Woche hast du $AMOUNT Punkte erricht und somit dein Ziel $NOT erreicht</string>
+    <string name="notif_not">nicht</string>
+    <string name="notif_reset_title">Wochenübersicht</string>
+
+    //Calendar
+    <string-array name="months">
+        <item>JANUAR</item>
+        <item>FEBRUAR</item>
+        <item>MÄRZ</item>
+        <item>APRIL</item>
+        <item>MAI</item>
+        <item>JUNI</item>
+        <item>JULI</item>
+        <item>AUGUST</item>
+        <item>SEPTEMBER</item>
+        <item>OKTOBER</item>
+        <item>NOVEMBER</item>
+        <item>DEZEMBER</item>
+    </string-array>
+
+    <string-array name="weekdays_short">
+        <item>Mo</item>
+        <item>Di</item>
+        <item>Mi</item>
+        <item>Do</item>
+        <item>Fr</item>
+        <item>Sa</item>
+        <item>So</item>
+    </string-array>
+
+</resources>
